@@ -8,7 +8,14 @@ from typing import Any
 
 from .data_fetcher import DataFetcher
 import pandas as pd
-from .indicators import add_core_indicators, is_candidate, is_price_above_ma200, is_price_above_ma50_and_ma200, is_golden_cross_weekly_candidate
+from .indicators import (
+    add_core_indicators,
+    is_candidate,
+    is_price_above_ma200,
+    is_price_above_ma50_and_ma200,
+    is_golden_cross_weekly_candidate,
+    is_rsi_oversold_bounce_ma200,
+)
 
 LOGGER = logging.getLogger(__name__)
 
@@ -24,6 +31,8 @@ class Screener:
     strategy: str = "default"
 
     def _matches_strategy(self, enriched: Any) -> bool:
+        if self.strategy == "rsi_oversold_bounce_ma200":
+            return is_rsi_oversold_bounce_ma200(enriched)
         if self.strategy == "price_above_ma200":
             return is_price_above_ma200(enriched)
         if self.strategy == "price_above_ma50_ma200":
@@ -33,6 +42,8 @@ class Screener:
         return is_candidate(enriched)
 
     def _reason_for_strategy(self) -> str:
+        if self.strategy == "rsi_oversold_bounce_ma200":
+            return "RSI 14 touched ≤ 30 within last 5 days & Close > MA200"
         if self.strategy == "price_above_ma200":
             return "Daily close is above the 200-day moving average"
         if self.strategy == "price_above_ma50_ma200":

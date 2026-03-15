@@ -26,14 +26,14 @@ LOGGER = logging.getLogger(__name__)
 OUTPUT_DIR   = Path("data/output")
 SECTORS_DIR  = Path("data/sectors")
 
-# Two screening passes — filename_prefix + "-<sector_id>" = final filename base.
+# Three screening passes in priority order — shown first to last.
 _PASSES = [
     {
-        "strategy": "price_above_ma50_ma200",
-        "filename_prefix": "daily-candidates-ma",
-        "title": "Price Above MA50 & MA200",
-        "rule": "Close > MA50 & Close > MA200 on D1",
-        "telegram_label": "1⃣ *Price > MA50 & MA200*",
+        "strategy": "rsi_oversold_bounce_ma200",
+        "filename_prefix": "daily-candidates-rsi-oversold",
+        "title": "RSI Oversold Bounce + Price Above MA200",
+        "rule": "RSI 14 touched ≤ 30 within last 5 trading days & Close > MA200 on D1",
+        "telegram_label": "1⃣ *RSI Oversold Bounce (last 5 days) + Price > MA200*",
     },
     {
         "strategy": "golden_cross_weekly",
@@ -41,6 +41,13 @@ _PASSES = [
         "title": "Golden Cross (MA50 × MA200 last 5 days)",
         "rule": "Close > MA50 & MA200 on D1; MA50 crossed above MA200 within last 5 trading days",
         "telegram_label": "2⃣ *Golden Cross (last 5 days)*",
+    },
+    {
+        "strategy": "price_above_ma50_ma200",
+        "filename_prefix": "daily-candidates-ma",
+        "title": "Price Above MA50 & MA200",
+        "rule": "Close > MA50 & Close > MA200 on D1",
+        "telegram_label": "3⃣ *Price > MA50 & MA200*",
     },
 ]
 
@@ -107,6 +114,7 @@ def _candidate_payload(candidate: dict[str, Any]) -> dict[str, Any]:
         "close": close,
         "ma_200": ma_200,
         "ma_50": ma_50,
+        "rsi_14": indicators.get("rsi_14"),
         "pct_above_ma200": _pct_above(close, ma_200),
         "pct_above_ma50":  _pct_above(close, ma_50),
     }
@@ -158,33 +166,48 @@ def _build_markdown_report(
 
 
 def _build_telegram_message(
-    sector_results: list[dict[str, Any]],  # [{sector_name, ma_count, gc_count, gc_candidates}]
+    sector_results: list[dict[str, Any]],  # [{sector_name, rsi_ob_count, gc_count, ma_count, rsi_ob_candidates, gc_candidates}]
     run_date: str,
     ai_summary: str | None = None,
 ) -> str:
-    total_ma = sum(r["ma_count"] for r in sector_results)
+    total_rsi_ob = sum(r["rsi_ob_count"] for r in sector_results)
     total_gc = sum(r["gc_count"] for r in sector_results)
+    sectors_with_rsi_ob = [r for r in sector_results if r["rsi_ob_count"] > 0]
     sectors_with_gc = [r for r in sector_results if r["gc_count"] > 0]
 
     lines = [
         f"📈 *Daily Screen* \u2014 {run_date}",
         f"Sectors screened: {len(sector_results)}",
         "",
-        f"1⃣ *Price > MA50 & MA200*: {total_ma} candidates",
+        f"1⃣ *RSI Oversold Bounce + Price > MA200*: {total_rsi_ob} candidates",
         f"2⃣ *Golden Cross (last 5 days)*: {total_gc} candidates",
         "",
     ]
 
-    # Summary table — only sectors that have any candidates
-    active = [r for r in sector_results if r["ma_count"] > 0 or r["gc_count"] > 0]
+    # Summary table — only sectors that have RSI OB or GC candidates
+    active = [r for r in sector_results if r["rsi_ob_count"] > 0 or r["gc_count"] > 0]
     if active:
         lines.extend([
             "*Sectors with candidates:*",
-            "| Sector | MA | GC |",
-            "|--------|----|----|" ,
+            "| Sector | RSI OB | GC |",
+            "|--------|--------|----|",
         ])
         for r in active:
-            lines.append(f"| {r['sector_name']} | {r['ma_count']} | {r['gc_count']} |")
+            lines.append(f"| {r['sector_name']} | {r['rsi_ob_count']} | {r['gc_count']} |")
+        lines.append("")
+
+    # RSI oversold bounce detail — high-priority signal
+    if sectors_with_rsi_ob:
+        lines.append("🔔 *RSI Oversold Bounce candidates (Price > MA200):*")
+        for r in sectors_with_rsi_ob:
+            for c in r["rsi_ob_candidates"]:
+                p = _candidate_payload(c)
+                lines.append(
+                    f"- *{p['symbol']}* [{r['sector_name']}]: "
+                    f"Close {_fmt_float(p['close'])} | "
+                    f"RSI {_fmt_float(p['rsi_14'])} | "
+                    f"MA200 {_fmt_float(p['ma_200'])} ({_fmt_pct(p['pct_above_ma200'])})"
+                )
         lines.append("")
 
     # Golden cross detail — list every candidate (rare signal)
@@ -252,8 +275,9 @@ def _build_html_page(
     """Build a combined HTML dashboard for GitHub Pages deployment."""
     esc = _html.escape
     run_date = run_timestamp[:10]
-    total_ma = sum(r["ma_count"] for r in sector_results)
+    total_rsi_ob = sum(r["rsi_ob_count"] for r in sector_results)
     total_gc = sum(r["gc_count"] for r in sector_results)
+    total_ma = sum(r["ma_count"] for r in sector_results)
 
     css = (
         "body{font-family:system-ui,sans-serif;max-width:1100px;margin:2rem auto;"
@@ -274,31 +298,34 @@ def _build_html_page(
 
     cards = (
         '<div class="summary-grid">'
-        f'<div class="card"><div class="card-num">{total_ma}</div>'
-        '<div class="card-label">Price &gt; MA50 &amp; MA200</div></div>'
+        f'<div class="card"><div class="card-num">{total_rsi_ob}</div>'
+        '<div class="card-label">RSI Oversold Bounce + Price &gt; MA200</div></div>'
         f'<div class="card"><div class="card-num">{total_gc}</div>'
         '<div class="card-label">Golden Cross</div></div>'
+        f'<div class="card"><div class="card-num">{total_ma}</div>'
+        '<div class="card-label">Price &gt; MA50 &amp; MA200</div></div>'
         f'<div class="card"><div class="card-num">{len(sector_results)}</div>'
         '<div class="card-label">Sectors screened</div></div>'
         "</div>"
     )
 
-    active_sectors = [r for r in sector_results if r["ma_count"] > 0 or r["gc_count"] > 0]
+    active_sectors = [r for r in sector_results if r["rsi_ob_count"] > 0 or r["ma_count"] > 0 or r["gc_count"] > 0]
     if active_sectors:
         sector_rows = "".join(
             f"<tr><td>{esc(r['sector_name'])}</td>"
-            f"<td>{r['ma_count']}</td><td>{r['gc_count']}</td></tr>"
+            f"<td>{r['rsi_ob_count']}</td><td>{r['gc_count']}</td><td>{r['ma_count']}</td></tr>"
             for r in active_sectors
         )
         sector_table = (
             f"<h2>Sectors with Candidates ({len(active_sectors)} of {len(sector_results)})</h2>"
-            "<table><thead><tr><th>Sector</th><th>MA Rule</th><th>Golden Cross</th></tr></thead>"
+            "<table><thead><tr><th>Sector</th><th>RSI Oversold Bounce</th>"
+            "<th>Golden Cross</th><th>MA Rule</th></tr></thead>"
             f"<tbody>{sector_rows}</tbody></table>"
         )
     else:
         sector_table = (
             "<h2>Sectors with Candidates</h2>"
-            '<table><tbody><tr><td colspan="3">No candidates in any sector today.</td>'
+            '<table><tbody><tr><td colspan="4">No candidates in any sector today.</td>'
             "</tr></tbody></table>"
         )
 
@@ -316,19 +343,20 @@ def _build_html_page(
                 f"<td><strong>{esc(p['symbol'])}</strong></td>"
                 f"<td>{esc(p['sector_name'])}</td>"
                 f"<td>{_fmt_float(p['close'])}</td>"
+                f"<td>{_fmt_float(p['rsi_14'])}</td>"
                 f"<td>{_fmt_float(p['ma_50'])}</td>"
                 f"<td class='{cls50}'>{esc(_fmt_pct(p['pct_above_ma50']))}</td>"
                 f"<td>{_fmt_float(p['ma_200'])}</td>"
                 f"<td class='{cls200}'>{esc(_fmt_pct(p['pct_above_ma200']))}</td>"
                 "</tr>"
             )
-        no_results = '<tr><td colspan="7">No candidates matched.</td></tr>'
+        no_results = '<tr><td colspan="8">No candidates matched.</td></tr>'
         passes_html += (
             f"<h2>{esc(pass_cfg['title'])} \u2014 {len(candidates)} candidate(s)</h2>"
             f'<p style="color:#555;font-size:.85rem">Rule: {esc(pass_cfg["rule"])}</p>'
             "<table><thead><tr>"
             "<th>Symbol</th><th>Sector</th><th>Close</th>"
-            "<th>MA50</th><th>% vs MA50</th><th>MA200</th><th>% vs MA200</th>"
+            "<th>RSI 14</th><th>MA50</th><th>% vs MA50</th><th>MA200</th><th>% vs MA200</th>"
             f"</tr></thead><tbody>{rows if rows else no_results}</tbody></table>"
         )
 
@@ -411,6 +439,7 @@ def main() -> None:
         LOGGER.info("Sector [%s] %s — %d symbols", sector_id, sector_name, len(symbols))
 
         pass_counts: dict[str, int] = {}
+        rsi_ob_candidates: list[dict[str, Any]] = []
         gc_candidates: list[dict[str, Any]] = []
 
         for pass_cfg in _PASSES:
@@ -424,24 +453,29 @@ def main() -> None:
 
             candidates_by_pass[strategy].extend(candidates)
             pass_counts[strategy] = len(candidates)
+            if strategy == "rsi_oversold_bounce_ma200":
+                rsi_ob_candidates = candidates
             if strategy == "golden_cross_weekly":
                 gc_candidates = candidates
 
         sector_results.append(
             {
-                "sector_id":     sector_id,
-                "sector_name":   sector_name,
-                "ma_count":      pass_counts.get("price_above_ma50_ma200", 0),
-                "gc_count":      pass_counts.get("golden_cross_weekly", 0),
-                "gc_candidates": gc_candidates,
+                "sector_id":          sector_id,
+                "sector_name":        sector_name,
+                "rsi_ob_count":       pass_counts.get("rsi_oversold_bounce_ma200", 0),
+                "ma_count":           pass_counts.get("price_above_ma50_ma200", 0),
+                "gc_count":           pass_counts.get("golden_cross_weekly", 0),
+                "rsi_ob_candidates":  rsi_ob_candidates,
+                "gc_candidates":      gc_candidates,
             }
         )
 
+    total_rsi_ob = sum(r["rsi_ob_count"] for r in sector_results)
     total_ma = sum(r["ma_count"] for r in sector_results)
     total_gc = sum(r["gc_count"] for r in sector_results)
     LOGGER.info(
-        "Done — MA: %d, Golden Cross: %d across %d sectors",
-        total_ma, total_gc, len(sectors),
+        "Done — RSI OB: %d, Golden Cross: %d, MA: %d across %d sectors",
+        total_rsi_ob, total_gc, total_ma, len(sectors),
     )
 
     # ── 4. Write exactly two merged output files ───────────────────────────────
