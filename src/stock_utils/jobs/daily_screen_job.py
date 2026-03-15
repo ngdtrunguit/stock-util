@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import html as _html
 import json
 import logging
 from datetime import datetime, timezone
@@ -234,6 +235,124 @@ def _write_output_files(
     LOGGER.info("Wrote %s (%d candidates)", json_path, len(candidates))
 
 
+_PCT_CSS: dict[bool | None, str] = {True: "pos", False: "neg", None: ""}
+
+
+def _pct_class(val: float | None) -> str:
+    """Return a safe CSS class name for a percentage value ('pos', 'neg', or '')."""
+    key = None if val is None else val >= 0
+    return _PCT_CSS[key]
+
+
+def _build_html_page(
+    candidates_by_pass: dict[str, list[dict[str, Any]]],
+    run_timestamp: str,
+    sector_results: list[dict[str, Any]],
+) -> str:
+    """Build a combined HTML dashboard for GitHub Pages deployment."""
+    esc = _html.escape
+    run_date = run_timestamp[:10]
+    total_ma = sum(r["ma_count"] for r in sector_results)
+    total_gc = sum(r["gc_count"] for r in sector_results)
+
+    css = (
+        "body{font-family:system-ui,sans-serif;max-width:1100px;margin:2rem auto;"
+        "padding:0 1rem;color:#222}"
+        "h1{font-size:1.6rem}"
+        "h2{font-size:1.2rem;margin-top:2rem;border-bottom:1px solid #ddd;padding-bottom:.4rem}"
+        "table{border-collapse:collapse;width:100%;margin-top:.6rem;font-size:.9rem}"
+        "th,td{border:1px solid #ddd;padding:.45rem .7rem;text-align:left}"
+        "th{background:#f5f5f5}"
+        "tr:nth-child(even){background:#fafafa}"
+        ".meta{color:#666;font-size:.85rem;margin:.3rem 0 1.5rem}"
+        ".summary-grid{display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0 2rem}"
+        ".card{border:1px solid #ddd;border-radius:6px;padding:1rem 1.4rem;min-width:140px}"
+        ".card-num{font-size:2rem;font-weight:bold}"
+        ".card-label{font-size:.85rem;color:#555}"
+        ".pos{color:#28a745}.neg{color:#dc3545}"
+    )
+
+    cards = (
+        '<div class="summary-grid">'
+        f'<div class="card"><div class="card-num">{total_ma}</div>'
+        '<div class="card-label">Price &gt; MA50 &amp; MA200</div></div>'
+        f'<div class="card"><div class="card-num">{total_gc}</div>'
+        '<div class="card-label">Golden Cross</div></div>'
+        f'<div class="card"><div class="card-num">{len(sector_results)}</div>'
+        '<div class="card-label">Sectors screened</div></div>'
+        "</div>"
+    )
+
+    active_sectors = [r for r in sector_results if r["ma_count"] > 0 or r["gc_count"] > 0]
+    if active_sectors:
+        sector_rows = "".join(
+            f"<tr><td>{esc(r['sector_name'])}</td>"
+            f"<td>{r['ma_count']}</td><td>{r['gc_count']}</td></tr>"
+            for r in active_sectors
+        )
+        sector_table = (
+            f"<h2>Sectors with Candidates ({len(active_sectors)} of {len(sector_results)})</h2>"
+            "<table><thead><tr><th>Sector</th><th>MA Rule</th><th>Golden Cross</th></tr></thead>"
+            f"<tbody>{sector_rows}</tbody></table>"
+        )
+    else:
+        sector_table = (
+            "<h2>Sectors with Candidates</h2>"
+            '<table><tbody><tr><td colspan="3">No candidates in any sector today.</td>'
+            "</tr></tbody></table>"
+        )
+
+    passes_html = ""
+    for pass_cfg in _PASSES:
+        strategy = pass_cfg["strategy"]
+        candidates = candidates_by_pass.get(strategy, [])
+        rows = ""
+        for c in candidates:
+            p = _candidate_payload(c)
+            cls50 = _pct_class(p["pct_above_ma50"])
+            cls200 = _pct_class(p["pct_above_ma200"])
+            rows += (
+                "<tr>"
+                f"<td><strong>{esc(p['symbol'])}</strong></td>"
+                f"<td>{esc(p['sector_name'])}</td>"
+                f"<td>{_fmt_float(p['close'])}</td>"
+                f"<td>{_fmt_float(p['ma_50'])}</td>"
+                f"<td class='{cls50}'>{esc(_fmt_pct(p['pct_above_ma50']))}</td>"
+                f"<td>{_fmt_float(p['ma_200'])}</td>"
+                f"<td class='{cls200}'>{esc(_fmt_pct(p['pct_above_ma200']))}</td>"
+                "</tr>"
+            )
+        no_results = '<tr><td colspan="7">No candidates matched.</td></tr>'
+        passes_html += (
+            f"<h2>{esc(pass_cfg['title'])} \u2014 {len(candidates)} candidate(s)</h2>"
+            f'<p style="color:#555;font-size:.85rem">Rule: {esc(pass_cfg["rule"])}</p>'
+            "<table><thead><tr>"
+            "<th>Symbol</th><th>Sector</th><th>Close</th>"
+            "<th>MA50</th><th>% vs MA50</th><th>MA200</th><th>% vs MA200</th>"
+            f"</tr></thead><tbody>{rows if rows else no_results}</tbody></table>"
+        )
+
+    return (
+        "<!DOCTYPE html>\n"
+        '<html lang="en">\n'
+        "<head>"
+        '<meta charset="UTF-8">'
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+        f"<title>Daily Stock Screen \u2014 {esc(run_date)}</title>"
+        f"<style>{css}</style>"
+        "</head>\n"
+        "<body>\n"
+        "<h1>&#x1F4C8; Daily Stock Screen</h1>\n"
+        f'<div class="meta">Run date: <strong>{esc(run_date)}</strong>'
+        f" &middot; Generated at {esc(run_timestamp)}</div>\n"
+        f"{cards}\n"
+        f"{sector_table}\n"
+        f"{passes_html}\n"
+        "</body>\n"
+        "</html>\n"
+    )
+
+
 def main() -> None:
     """Screen all sector stocks; write two merged output files (MA and golden-cross)."""
     load_dotenv()
@@ -355,6 +474,14 @@ def main() -> None:
         chat_id=settings.telegram_chat_id,
         text=msg,
     )
+
+    # ── 6. Write HTML dashboard for GitHub Pages ──────────────────────────────
+    html_index = OUTPUT_DIR / "index.html"
+    html_index.write_text(
+        _build_html_page(candidates_by_pass, run_timestamp, sector_results),
+        encoding="utf-8",
+    )
+    LOGGER.info("Wrote %s", html_index)
 
     LOGGER.info("Daily screen job completed")
 

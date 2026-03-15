@@ -10,7 +10,8 @@ computes indicators, summarizes candidates, and sends Telegram notifications.
 - Candidate filtering based on configurable screening rules
 - Optional Azure AI Foundry summary generation
 - Telegram markdown notifications
-- Scheduled run template via GitHub Actions
+- Scheduled daily run via GitHub Actions (Mon–Fri 13:00 UTC)
+- HTML report automatically deployed to **GitHub Pages** after each run
 
 ## Project Layout
 
@@ -74,3 +75,14 @@ python -m stock_utils.jobs.weekly_screen_job
 - If Azure settings are missing the app falls back to a local markdown summary.
 - Telegram notification is silently skipped when credentials are not set.
 - `sector_scraper.py` reads `window.__initState__` JSON embedded by Webull pages.
+
+## GitHub Pages
+
+The daily screening report (`data/output/index.html`) is automatically deployed to
+GitHub Pages after each successful workflow run. To enable it:
+
+1. Go to **Settings → Pages** in the repository.
+2. Set **Source** to **GitHub Actions**.
+3. Trigger the workflow manually (or wait for the next weekday at 13:00 UTC).
+4. Once the first run completes successfully, the report URL will be
+   `https://<owner>.github.io/<repo>/` and will update on each subsequent run.
