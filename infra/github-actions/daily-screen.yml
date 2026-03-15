@@ -8,6 +8,7 @@ on:
 jobs:
   screen:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -16,9 +17,12 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.13"
 
       - name: Install dependencies
+        id: install
+        env:
+          PIP_CACHE_DIR: ~/.cache/pip
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
@@ -30,11 +34,13 @@ jobs:
           AGENT_NAME: ${{ secrets.AGENT_NAME }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          PYTHONUNBUFFERED: "1"
         run: |
           python -m stock_utils.jobs.daily_screen_job
 
       - name: Upload daily output artifacts
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: daily-screen-output
           path: data/output/

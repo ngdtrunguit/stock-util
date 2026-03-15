@@ -22,9 +22,60 @@ logging.basicConfig(
 )
 LOGGER = logging.getLogger(__name__)
 
-OUTPUT_DIR = Path("data/output")
-DAILY_CANDIDATES_JSON = OUTPUT_DIR / "daily-candidates.json"
-DAILY_CANDIDATES_MD = OUTPUT_DIR / "daily-candidates.md"
+OUTPUT_DIR   = Path("data/output")
+SECTORS_DIR  = Path("data/sectors")
+
+# Two screening passes — filename_prefix + "-<sector_id>" = final filename base.
+_PASSES = [
+    {
+        "strategy": "price_above_ma50_ma200",
+        "filename_prefix": "daily-candidates-ma",
+        "title": "Price Above MA50 & MA200",
+        "rule": "Close > MA50 & Close > MA200 on D1",
+        "telegram_label": "1⃣ *Price > MA50 & MA200*",
+    },
+    {
+        "strategy": "golden_cross_weekly",
+        "filename_prefix": "daily-candidates-golden-cross",
+        "title": "Golden Cross (MA50 × MA200 last 5 days)",
+        "rule": "Close > MA50 & MA200 on D1; MA50 crossed above MA200 within last 5 trading days",
+        "telegram_label": "2⃣ *Golden Cross (last 5 days)*",
+    },
+]
+
+
+def _load_all_sectors() -> list[dict[str, Any]]:
+    """Read all per-sector JSON files and return a list of sector dicts.
+
+    Each entry: {sector_id, sector_name, symbols: [str]}
+    Falls back to an empty list when the directory does not exist yet.
+    """
+    if not SECTORS_DIR.exists():
+        LOGGER.warning(
+            "%s not found — run monthly_sector_job first to populate sector files",
+            SECTORS_DIR,
+        )
+        return []
+
+    sectors: list[dict[str, Any]] = []
+    for path in sorted(SECTORS_DIR.glob("*.json")):
+        try:
+            raw = json.loads(path.read_text())
+            symbols = [s["symbol"] for s in raw.get("stocks", []) if s.get("symbol")]
+            if not symbols:
+                continue
+            sectors.append(
+                {
+                    "sector_id": raw["sector_id"],
+                    "sector_name": raw["sector_name"],
+                    "symbols": symbols,
+                }
+            )
+        except Exception as exc:
+            LOGGER.warning("Skipping sector file %s: %s", path.name, exc)
+
+    LOGGER.info("Loaded %d sectors from %s", len(sectors), SECTORS_DIR)
+    return sectors
 
 
 def _fmt_float(value: Any) -> str:
@@ -34,34 +85,46 @@ def _fmt_float(value: Any) -> str:
         return "n/a"
 
 
+def _pct_above(close: Any, ma: Any) -> float | None:
+    try:
+        c, m = float(close), float(ma)
+        return ((c / m) - 1.0) * 100.0 if m != 0 else None
+    except (TypeError, ValueError, ZeroDivisionError):
+        return None
+
+
 def _candidate_payload(candidate: dict[str, Any]) -> dict[str, Any]:
     indicators = candidate.get("indicators", {})
-    close = indicators.get("close")
+    close  = indicators.get("close")
     ma_200 = indicators.get("ma_200")
-
-    pct_above_ma200: float | None = None
-    try:
-        close_value = float(close)
-        ma_200_value = float(ma_200)
-        if ma_200_value != 0:
-            pct_above_ma200 = ((close_value / ma_200_value) - 1.0) * 100.0
-    except (TypeError, ValueError, ZeroDivisionError):
-        pct_above_ma200 = None
+    ma_50  = indicators.get("ma_50")
 
     return {
         "symbol": candidate.get("symbol", "UNKNOWN"),
         "reason": candidate.get("reason", ""),
+            "sector_name": candidate.get("sector_name", ""),
         "close": close,
         "ma_200": ma_200,
-        "pct_above_ma200": pct_above_ma200,
+        "ma_50": ma_50,
+        "pct_above_ma200": _pct_above(close, ma_200),
+        "pct_above_ma50":  _pct_above(close, ma_50),
     }
 
 
-def _build_markdown_report(candidates: list[dict[str, Any]], run_date: str) -> str:
+def _fmt_pct(value: float | None) -> str:
+    return f"{value:+.2f}%" if value is not None else "n/a"
+
+
+def _build_markdown_report(
+    candidates: list[dict[str, Any]],
+    run_date: str,
+    title: str,
+    rule: str,
+) -> str:
     lines = [
-        f"# Daily Candidates - {run_date}",
+            f"# {title} \u2014 {run_date}",
         "",
-        "Rule: Daily close above MA200.",
+        f"Rule: {rule}",
         "",
         f"Candidates found: {len(candidates)}",
         "",
@@ -73,110 +136,224 @@ def _build_markdown_report(candidates: list[dict[str, Any]], run_date: str) -> s
 
     lines.extend(
         [
-            "| Symbol | Close | MA200 | % Above MA200 |",
-            "|--------|-------|-------|---------------|",
+                "| Symbol | Sector | Close | MA50 | % vs MA50 | MA200 | % vs MA200 |",
+                "|--------|--------|-------|------|-----------|-------|------------|",
         ]
     )
 
     for candidate in candidates:
-        payload = _candidate_payload(candidate)
-        pct_text = "n/a"
-        if payload["pct_above_ma200"] is not None:
-            pct_text = f"{payload['pct_above_ma200']:+.2f}%"
+        p = _candidate_payload(candidate)
         lines.append(
-            f"| {payload['symbol']} | {_fmt_float(payload['close'])} | {_fmt_float(payload['ma_200'])} | {pct_text} |"
+            f"| {p['symbol']} "
+                f"| {p['sector_name']} "
+            f"| {_fmt_float(p['close'])} "
+            f"| {_fmt_float(p['ma_50'])} "
+            f"| {_fmt_pct(p['pct_above_ma50'])} "
+            f"| {_fmt_float(p['ma_200'])} "
+            f"| {_fmt_pct(p['pct_above_ma200'])} |"
         )
 
     return "\n".join(lines)
 
 
 def _build_telegram_message(
-    candidates: list[dict[str, Any]],
+    sector_results: list[dict[str, Any]],  # [{sector_name, ma_count, gc_count, gc_candidates}]
     run_date: str,
     ai_summary: str | None = None,
 ) -> str:
+    total_ma = sum(r["ma_count"] for r in sector_results)
+    total_gc = sum(r["gc_count"] for r in sector_results)
+    sectors_with_gc = [r for r in sector_results if r["gc_count"] > 0]
+
     lines = [
-        f"📈 *Daily Screen* — {run_date}",
-        "Rule: Close > MA200 on D1",
-        f"Candidates: {len(candidates)}",
+        f"📈 *Daily Screen* \u2014 {run_date}",
+        f"Sectors screened: {len(sector_results)}",
+        "",
+        f"1⃣ *Price > MA50 & MA200*: {total_ma} candidates",
+        f"2⃣ *Golden Cross (last 5 days)*: {total_gc} candidates",
         "",
     ]
 
-    if not candidates:
-        lines.append("No candidates matched today's rule.")
-    else:
-        for candidate in candidates:
-            payload = _candidate_payload(candidate)
-            pct_text = "n/a"
-            if payload["pct_above_ma200"] is not None:
-                pct_text = f"{payload['pct_above_ma200']:+.2f}%"
-            lines.append(
-                f"- *{payload['symbol']}*: Close {_fmt_float(payload['close'])} | MA200 {_fmt_float(payload['ma_200'])} | {pct_text}"
-            )
+    # Summary table — only sectors that have any candidates
+    active = [r for r in sector_results if r["ma_count"] > 0 or r["gc_count"] > 0]
+    if active:
+        lines.extend([
+            "*Sectors with candidates:*",
+            "| Sector | MA | GC |",
+            "|--------|----|----|" ,
+        ])
+        for r in active:
+            lines.append(f"| {r['sector_name']} | {r['ma_count']} | {r['gc_count']} |")
+        lines.append("")
+
+    # Golden cross detail — list every candidate (rare signal)
+    if sectors_with_gc:
+        lines.append("🔔 *Golden Cross candidates:*")
+        for r in sectors_with_gc:
+            for c in r["gc_candidates"]:
+                p = _candidate_payload(c)
+                lines.append(
+                    f"- *{p['symbol']}* [{r['sector_name']}]: "
+                    f"Close {_fmt_float(p['close'])} | "
+                    f"MA50 {_fmt_float(p['ma_50'])} ({_fmt_pct(p['pct_above_ma50'])}) | "
+                    f"MA200 {_fmt_float(p['ma_200'])} ({_fmt_pct(p['pct_above_ma200'])})"
+                )
+        lines.append("")
 
     if ai_summary:
-        lines.extend(["", "*AI Analysis*", ai_summary])
+        lines.extend(["*AI Analysis*", ai_summary])
 
     return "\n".join(lines)
 
 
-def _write_output_files(candidates: list[dict[str, Any]], run_timestamp: str) -> None:
+def _write_output_files(
+    candidates: list[dict[str, Any]],
+    run_timestamp: str,
+    filename_base: str,
+    strategy: str,
+    title: str,
+    rule: str,
+) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     run_date = run_timestamp[:10]
+
     payload = {
         "generated_at": run_timestamp,
-        "strategy": "price_above_ma200",
+        "strategy": strategy,
         "timeframe": "1d",
         "candidate_count": len(candidates),
-        "candidates": [_candidate_payload(candidate) for candidate in candidates],
+        "candidates": [_candidate_payload(c) for c in candidates],
     }
 
-    DAILY_CANDIDATES_JSON.write_text(json.dumps(payload, indent=2))
-    DAILY_CANDIDATES_MD.write_text(_build_markdown_report(candidates, run_date))
+    json_path = OUTPUT_DIR / f"{filename_base}.json"
+    md_path   = OUTPUT_DIR / f"{filename_base}.md"
 
-    LOGGER.info("Wrote candidate snapshot to %s", DAILY_CANDIDATES_JSON)
-    LOGGER.info("Wrote candidate report to %s", DAILY_CANDIDATES_MD)
+    json_path.write_text(json.dumps(payload, indent=2))
+    md_path.write_text(_build_markdown_report(candidates, run_date, title, rule))
+
+    LOGGER.info("Wrote %s (%d candidates)", json_path, len(candidates))
 
 
 def main() -> None:
-    """Run daily screener, summarize results, and publish to Telegram."""
+    """Screen all sector stocks; write two merged output files (MA and golden-cross)."""
     load_dotenv()
     settings = Settings.from_env()
 
-    LOGGER.info("Starting daily screen job")
+    LOGGER.info("Starting daily screen job (sector-driven, 2 passes)")
 
-    data_fetcher = DataFetcher()
-    screener = Screener(
-        data_fetcher=data_fetcher,
-        watchlist_file=settings.watchlist_file,
-        period="1y",
-        interval="1d",
-        strategy="price_above_ma200",
+    data_fetcher   = DataFetcher()
+    run_timestamp  = datetime.now(timezone.utc).isoformat()
+    run_date       = run_timestamp[:10]
+
+    sectors = _load_all_sectors()
+    if not sectors:
+        LOGGER.error("No sector data found — aborting. Run monthly_sector_job first.")
+        return
+
+    # ── 1. Collect unique symbols across all sectors then bulk-fetch once ─────
+    seen: set[str] = set()
+    all_symbols: list[str] = []
+    for sector in sectors:
+        for sym in sector["symbols"]:
+            upper = sym.upper()
+            if upper not in seen:
+                seen.add(upper)
+                all_symbols.append(upper)
+
+    LOGGER.info(
+        "Bulk-fetching %d unique symbols across %d sectors",
+        len(all_symbols), len(sectors),
+    )
+    data_cache = data_fetcher.get_ohlcv_bulk(all_symbols, period="1y", interval="1d")
+    LOGGER.info("Cache ready: %d / %d symbols", len(data_cache), len(all_symbols))
+
+    # ── 2. Build one Screener per pass (all share the same data_cache) ────────
+    screeners = {
+        pass_cfg["strategy"]: Screener(
+            data_fetcher=data_fetcher,
+            period="1y",
+            interval="1d",
+            strategy=pass_cfg["strategy"],
+        )
+        for pass_cfg in _PASSES
+    }
+
+    # Accumulate merged candidates per pass; sector counts for Telegram
+    candidates_by_pass: dict[str, list[dict[str, Any]]] = {
+        p["strategy"]: [] for p in _PASSES
+    }
+    sector_results: list[dict[str, Any]] = []
+
+    # ── 3. Screen — no I/O, data already in memory ────────────────────────────
+    for sector in sectors:
+        sector_id   = sector["sector_id"]
+        sector_name = sector["sector_name"]
+        symbols     = sector["symbols"]
+        LOGGER.info("Sector [%s] %s — %d symbols", sector_id, sector_name, len(symbols))
+
+        pass_counts: dict[str, int] = {}
+        gc_candidates: list[dict[str, Any]] = []
+
+        for pass_cfg in _PASSES:
+            strategy  = pass_cfg["strategy"]
+            candidates = screeners[strategy].run_screen(symbols=symbols, data_cache=data_cache)
+
+            # Tag every candidate with its originating sector
+            for c in candidates:
+                c["sector_name"] = sector_name
+                c["sector_id"]   = sector_id
+
+            candidates_by_pass[strategy].extend(candidates)
+            pass_counts[strategy] = len(candidates)
+            if strategy == "golden_cross_weekly":
+                gc_candidates = candidates
+
+        sector_results.append(
+            {
+                "sector_id":     sector_id,
+                "sector_name":   sector_name,
+                "ma_count":      pass_counts.get("price_above_ma50_ma200", 0),
+                "gc_count":      pass_counts.get("golden_cross_weekly", 0),
+                "gc_candidates": gc_candidates,
+            }
+        )
+
+    total_ma = sum(r["ma_count"] for r in sector_results)
+    total_gc = sum(r["gc_count"] for r in sector_results)
+    LOGGER.info(
+        "Done — MA: %d, Golden Cross: %d across %d sectors",
+        total_ma, total_gc, len(sectors),
     )
 
-    LOGGER.info("Running symbol screen")
-    candidates = screener.run_screen()
+    # ── 4. Write exactly two merged output files ───────────────────────────────
+    for pass_cfg in _PASSES:
+        strategy = pass_cfg["strategy"]
+        _write_output_files(
+            candidates_by_pass[strategy],
+            run_timestamp,
+            pass_cfg["filename_prefix"],   # "daily-candidates-ma" or "daily-candidates-golden-cross"
+            strategy,
+            pass_cfg["title"],
+            pass_cfg["rule"],
+        )
 
-    run_timestamp = datetime.now(timezone.utc).isoformat()
-    run_date = run_timestamp[:10]
-    _write_output_files(candidates, run_timestamp)
-
+    # ── 5. Optional AI summary on golden-cross candidates ─────────────────────
+    all_gc = candidates_by_pass["golden_cross_weekly"]
     ai_summary: str | None = None
-    if candidates and settings.project_endpoint and settings.agent_name:
-        LOGGER.info("Summarizing %d candidates", len(candidates))
+    if all_gc and settings.project_endpoint and settings.agent_name:
+        LOGGER.info("Getting AI summary for %d golden-cross candidates", len(all_gc))
         ai_agent = TradingAnalysisAgent(
             project_endpoint=settings.project_endpoint,
             agent_name=settings.agent_name,
         )
-        ai_summary = ai_agent.summarize_screening_results(candidates)
+        ai_summary = ai_agent.summarize_screening_results(all_gc)
 
-    summary = _build_telegram_message(candidates, run_date, ai_summary)
-
+    msg = _build_telegram_message(sector_results, run_date, ai_summary)
     LOGGER.info("Sending Telegram notification")
     send_markdown_message(
         bot_token=settings.telegram_bot_token,
         chat_id=settings.telegram_chat_id,
-        text=summary,
+        text=msg,
     )
 
     LOGGER.info("Daily screen job completed")

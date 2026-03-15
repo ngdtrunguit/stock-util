@@ -30,33 +30,47 @@ infra/github-actions/daily-screen.yml
 
 ## Quickstart
 
-1. Install dependencies:
+> Requires Python 3.10 or later. No third-party TA library needed — all indicators are
+> implemented with plain `pandas` / `numpy`.
+
+1. Create a virtual environment and install:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install --upgrade pip
 pip install -r requirements.txt
 pip install -e .
 ```
 
-1. Configure environment variables:
+2. Configure environment variables (create a `.env` file or export them):
 
 ```bash
-export PROJECT_ENDPOINT="https://<your-foundry-endpoint>"
-export AGENT_NAME="<your-agent-name>"
-export TELEGRAM_BOT_TOKEN="<bot-token>"
-export TELEGRAM_CHAT_ID="<chat-id>"
+export PROJECT_ENDPOINT="https://<your-foundry-endpoint>"  # optional
+export AGENT_NAME="<your-agent-name>"                      # optional
+export TELEGRAM_BOT_TOKEN="<bot-token>"                    # optional
+export TELEGRAM_CHAT_ID="<chat-id>"                        # optional
 ```
 
-1. Update `data/watchlist.txt` with tickers to screen.
+3. Update `data/watchlist.txt` with tickers to screen (one per line).
 
-1. Run the daily job:
+4. Run from the **project root** (where `pyproject.toml` lives):
 
 ```bash
+# Daily golden-cross screen (writes data/output/daily-candidates.{json,md})
 python -m stock_utils.jobs.daily_screen_job
+
+# Monthly sector sync
+python -m stock_utils.jobs.monthly_sector_job
+
+# Weekly sector screen
+python -m stock_utils.jobs.weekly_screen_job
 ```
 
 ## Notes
 
-- If Azure settings are missing, the app falls back to a local markdown summary.
-- `sector_scraper.py` is best-effort and may require selector updates if Webull changes HTML.
+- All indicators (SMA, EMA, RSI, MACD, ATR) are implemented in `indicators.py` using
+  plain `pandas` rolling/EWM operations — no `pandas-ta` or `ta-lib` required.
+- If Azure settings are missing the app falls back to a local markdown summary.
+- Telegram notification is silently skipped when credentials are not set.
+- `sector_scraper.py` reads `window.__initState__` JSON embedded by Webull pages.
