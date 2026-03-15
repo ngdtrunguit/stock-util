@@ -172,7 +172,6 @@ def _build_telegram_message(
 ) -> str:
     total_rsi_ob = sum(r["rsi_ob_count"] for r in sector_results)
     total_gc = sum(r["gc_count"] for r in sector_results)
-    total_ma = sum(r["ma_count"] for r in sector_results)
     sectors_with_rsi_ob = [r for r in sector_results if r["rsi_ob_count"] > 0]
     sectors_with_gc = [r for r in sector_results if r["gc_count"] > 0]
 
@@ -182,20 +181,19 @@ def _build_telegram_message(
         "",
         f"1⃣ *RSI Oversold Bounce + Price > MA200*: {total_rsi_ob} candidates",
         f"2⃣ *Golden Cross (last 5 days)*: {total_gc} candidates",
-        f"3⃣ *Price > MA50 & MA200*: {total_ma} candidates",
         "",
     ]
 
-    # Summary table — only sectors that have any candidates
-    active = [r for r in sector_results if r["rsi_ob_count"] > 0 or r["gc_count"] > 0 or r["ma_count"] > 0]
+    # Summary table — only sectors that have RSI OB or GC candidates
+    active = [r for r in sector_results if r["rsi_ob_count"] > 0 or r["gc_count"] > 0]
     if active:
         lines.extend([
             "*Sectors with candidates:*",
-            "| Sector | RSI OB | GC | MA |",
-            "|--------|--------|----|----|",
+            "| Sector | RSI OB | GC |",
+            "|--------|--------|----|",
         ])
         for r in active:
-            lines.append(f"| {r['sector_name']} | {r['rsi_ob_count']} | {r['gc_count']} | {r['ma_count']} |")
+            lines.append(f"| {r['sector_name']} | {r['rsi_ob_count']} | {r['gc_count']} |")
         lines.append("")
 
     # RSI oversold bounce detail — high-priority signal
