@@ -136,6 +136,38 @@ def is_price_above_ma50_and_ma200(df: pd.DataFrame) -> bool:
     return bool(float(close) > float(ma_50) and float(close) > float(ma_200))
 
 
+def is_rsi_oversold_bounce_ma200(
+    df: pd.DataFrame,
+    window: int = 5,
+    oversold: float = 30.0,
+) -> bool:
+    """Return True when price is above MA200 and RSI 14 touched oversold within *window* bars.
+
+    Conditions:
+    1. Close > MA_200  (long-term uptrend filter)
+    2. RSI_14 was at or below *oversold* (default 30) in at least one of the last
+       *window* (default 5) trading days — i.e. recently hit the oversold boundary.
+    """
+    if len(df) < 200:
+        return False
+
+    latest = df.iloc[-1]
+    close = latest.get("Close")
+    ma_200 = latest.get("MA_200")
+
+    if pd.isna(close) or pd.isna(ma_200):
+        return False
+
+    if not float(close) > float(ma_200):
+        return False
+
+    recent_rsi = df["RSI_14"].iloc[-window:]
+    if recent_rsi.isna().all():
+        return False
+
+    return bool((recent_rsi <= oversold).any())
+
+
 def is_golden_cross_weekly_candidate(df: pd.DataFrame) -> bool:
     """Return True when all three conditions hold on the D1 timeframe:
 
