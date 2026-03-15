@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 6574,
+  "sector_name": "Transportation",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "TOPS",
+      "name": "Top Ships Inc",
+      "exchange": "AMEX",
+      "change": 0.34,
+      "change_pct": 0.1043
+    },
+    {
+      "symbol": "QH",
+      "name": "Quhuo Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.0088,
+      "change_pct": 0.0946
+    },
+    {
+      "symbol": "WETO",
+      "name": "Webus International Limited",
+      "exchange": "NASDAQ",
+      "change": 0.0328,
+      "change_pct": 0.0679
+    },
+    {
+      "symbol": "HXHX",
+      "name": "HAOXIN HLDGS LTD",
+      "exchange": "NASDAQ",
+      "change": 0.0258,
+      "change_pct": 0.0596
+    },
+    {
+      "symbol": "GLBS",
+      "name": "Globus Maritime Limited",
+      "exchange": "NASDAQ",
+      "change": 0.08,
+      "change_pct": 0.0503
+    },
+    {
+      "symbol": "USEA",
+      "name": "United Maritime Corporation",
+      "exchange": "NASDAQ",
+      "change": 0.075,
+      "change_pct": 0.0373
+    },
+    {
+      "symbol": "ULH",
+      "name": "Universal Logistics Hldgs Inc",
+      "exchange": "NASDAQ",
+      "change": 0.41,
+      "change_pct": 0.0291
+    },
+    {
+      "symbol": "SKYH-WS",
+      "name": "Sky Harbour Group",
+      "exchange": "NYSE",
+      "change": 0.02,
+      "change_pct": 0.0272
+    },
+    {
+      "symbol": "ELOG",
+      "name": "Eastern International Ltd.",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0268
+    },
+    {
+      "symbol": "HTCO",
+      "name": "High-Trend International Group",
+      "exchange": "NASDAQ",
+      "change": 0.22,
+      "change_pct": 0.0259
+    },
+    {
+      "symbol": "ODFL",
+      "name": "Old Dominion Freight Line Inc",
+      "exchange": "NASDAQ",
+      "change": 4.51,
+      "change_pct": 0.0256
+    },
+    {
+      "symbol": "MRTN",
+      "name": "Marten Trans",
+      "exchange": "NASDAQ",
+      "change": 0.29,
+      "change_pct": 0.0253
+    },
+    {
+      "symbol": "LSTR",
+      "name": "Landstar Sys Inc",
+      "exchange": "NASDAQ",
+      "change": 3.52,
+      "change_pct": 0.0244
+    },
+    {
+      "symbol": "ZTO",
+      "name": "Zto Expresscayma",
+      "exchange": "NYSE",
+      "change": 0.55,
+      "change_pct": 0.0234
+    },
+    {
+      "symbol": "CJMB",
+      "name": "Callan JMB Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.04,
+      "change_pct": 0.0226
+    },
+    {
+      "symbol": "CCEC",
+      "name": "Capital Clean Energy Carriers Corp",
+      "exchange": "NASDAQ",
+      "change": 0.42,
+      "change_pct": 0.0208
+    },
+    {
+      "symbol": "FLX",
+      "name": "BingEx",
+      "exchange": "NASDAQ",
+      "change": 0.04,
+      "change_pct": 0.018
+    },
+    {
+      "symbol": "SAIA",
+      "name": "Saia Inc",
+      "exchange": "NASDAQ",
+      "change": 5.25,
+      "change_pct": 0.0166
+    },
+    {
+      "symbol": "RJET",
+      "name": "Republic Airways Holdings Inc",
+      "exchange": "NASDAQ",
+      "change": 0.25,
+      "change_pct": 0.015
+    },
+    {
+      "symbol": "DAL",
+      "name": "Delta Air Lines Inc Del",
+      "exchange": "NYSE",
+      "change": 0.84,
+      "change_pct": 0.0145
+    },
+    {
+      "symbol": "NCT",
+      "name": "Intercont Limited",
+      "exchange": "NASDAQ",
+      "change": 0.002,
+      "change_pct": 0.014
+    },
+    {
+      "symbol": "UHAL-B",
+      "name": "U-Haul Holding Company",
+      "exchange": "NYSE",
+      "change": 0.55,
+      "change_pct": 0.013
+    },
+    {
+      "symbol": "CYRX",
+      "name": "Cryoport Inc",
+      "exchange": "NASDAQ",
+      "change": 0.1,
+      "change_pct": 0.013
+    },
+    {
+      "symbol": "AIRTP",
+      "name": "Air T Inc",
+      "exchange": "NASDAQ",
+      "change": 0.25,
+      "change_pct": 0.0128
+    },
+    {
+      "symbol": "LTM",
+      "name": "Latam Airlines",
+      "exchange": "NYSE",
+      "change": 0.57,
+      "change_pct": 0.0121
+    },
+    {
+      "symbol": "FIP",
+      "name": "FTAI INFRASTRUCTURE INC",
+      "exchange": "NASDAQ",
+      "change": 0.06,
+      "change_pct": 0.0116
+    },
+    {
+      "symbol": "CAR",
+      "name": "Avis Budget",
+      "exchange": "NASDAQ",
+      "change": 1.15,
+      "change_pct": 0.0116
+    },
+    {
+      "symbol": "CNI",
+      "name": "Canadian National Railway",
+      "exchange": "NYSE",
+      "change": 1.17,
+      "change_pct": 0.0113
+    },
+    {
+      "symbol": "PAL",
+      "name": "Proficient Auto Logistics Inc",
+      "exchange": "NASDAQ",
+      "change": 0.06,
+      "change_pct": 0.0099
+    },
+    {
+      "symbol": "CISS",
+      "name": "C3is",
+      "exchange": "NASDAQ",
+      "change": 0.01,
+      "change_pct": 0.009
+    },
+    {
+      "symbol": "SKYH",
+      "name": "Sky Harbour Group",
+      "exchange": "NYSE",
+      "change": 0.08,
+      "change_pct": 0.009
+    },
+    {
+      "symbol": "UHAL",
+      "name": "U-Haul Holding Company",
+      "exchange": "NYSE",
+      "change": 0.35,
+      "change_pct": 0.0077
+    },
+    {
+      "symbol": "BTOC",
+      "name": "Armlogi Holding Corp.",
+      "exchange": "NASDAQ",
+      "change": 0.0016,
+      "change_pct": 0.0061
+    },
+    {
+      "symbol": "KEX",
+      "name": "Kirby",
+      "exchange": "NYSE",
+      "change": 0.74,
+      "change_pct": 0.006
+    },
+    {
+      "symbol": "TORO",
+      "name": "Toro Corp",
+      "exchange": "NASDAQ",
+      "change": 0.02,
+      "change_pct": 0.0054
+    },
+    {
+      "symbol": "R",
+      "name": "Ryder Sys",
+      "exchange": "NYSE",
+      "change": 0.92,
+      "change_pct": 0.0049
+    },
+    {
+      "symbol": "CRGO",
+      "name": "Freightos Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.005,
+      "change_pct": 0.004
+    },
+    {
+      "symbol": "LUV",
+      "name": "Southwest Airls Co",
+      "exchange": "NYSE",
+      "change": 0.14,
+      "change_pct": 0.0036
+    },
+    {
+      "symbol": "MATX",
+      "name": "Matson Inc",
+      "exchange": "NYSE",
+      "change": 0.5,
+      "change_pct": 0.0034
+    },
+    {
+      "symbol": "HTLD",
+      "name": "Heartland Expr",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0032
+    },
+    {
+      "symbol": "VNTG",
+      "name": "Vantage Corp",
+      "exchange": "AMEX",
+      "change": 0.0025,
+      "change_pct": 0.0031
+    },
+    {
+      "symbol": "CVLG",
+      "name": "Covenant Logistics Group Inc",
+      "exchange": "NYSE",
+      "change": 0.07,
+      "change_pct": 0.0028
+    },
+    {
+      "symbol": "SNDR",
+      "name": "Schneider Nation",
+      "exchange": "NYSE",
+      "change": 0.06,
+      "change_pct": 0.0025
+    },
+    {
+      "symbol": "RXO",
+      "name": "RXO Inc",
+      "exchange": "NYSE",
+      "change": 0.03,
+      "change_pct": 0.0025
+    },
+    {
+      "symbol": "CP",
+      "name": "Canadian Pacific Kansas City Limited",
+      "exchange": "NYSE",
+      "change": 0.19,
+      "change_pct": 0.0023
+    },
+    {
+      "symbol": "EXPD",
+      "name": "Expeditors Intl",
+      "exchange": "NYSE",
+      "change": 0.32,
+      "change_pct": 0.0023
+    },
+    {
+      "symbol": "ETS",
+      "name": "ELITE EXPRESS HOLDING INC.",
+      "exchange": "NASDAQ",
+      "change": 0.0009,
+      "change_pct": 0.0021
+    },
+    {
+      "symbol": "CSX",
+      "name": "Csx Corp",
+      "exchange": "NASDAQ",
+      "change": 0.08,
+      "change_pct": 0.002
+    },
+    {
+      "symbol": "RLGT",
+      "name": "Radiant Logistic",
+      "exchange": "AMEX",
+      "change": 0.01,
+      "change_pct": 0.0015
+    },
+    {
+      "symbol": "UAL",
+      "name": "United Airlines Holdings Inc",
+      "exchange": "NASDAQ",
+      "change": 0.07,
+      "change_pct": 0.0008
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+azure-ai-projects>=2.0.0
+azure-identity
+yfinance>=0.2.0
+pandas>=2.0.0
+pandas-ta>=0.3.14b0
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+aiogram>=3.0.0
+python-dotenv>=1.0.0

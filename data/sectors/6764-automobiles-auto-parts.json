@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 6764,
+  "sector_name": "Automobiles & Auto Parts",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "CVGI",
+      "name": "Commercial Veh Group Inc",
+      "exchange": "NASDAQ",
+      "change": 0.57,
+      "change_pct": 0.2446
+    },
+    {
+      "symbol": "DCX",
+      "name": "Digital Currency X Technology Inc",
+      "exchange": "NASDAQ",
+      "change": 0.18,
+      "change_pct": 0.1259
+    },
+    {
+      "symbol": "NIO",
+      "name": "Nio Inc.",
+      "exchange": "NYSE",
+      "change": 0.31,
+      "change_pct": 0.0559
+    },
+    {
+      "symbol": "AIIOW",
+      "name": "Robo.ai Inc",
+      "exchange": "NASDAQ",
+      "change": 0.001,
+      "change_pct": 0.0369
+    },
+    {
+      "symbol": "SBLX",
+      "name": "StableX Technologies Inc",
+      "exchange": "NASDAQ",
+      "change": 0.09,
+      "change_pct": 0.0349
+    },
+    {
+      "symbol": "FFAIW",
+      "name": "Faraday Future Intelligent Electric Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0003,
+      "change_pct": 0.025
+    },
+    {
+      "symbol": "WPRT",
+      "name": "Westport Fuel Systems Inc",
+      "exchange": "NASDAQ",
+      "change": 0.05,
+      "change_pct": 0.0249
+    },
+    {
+      "symbol": "FFAI",
+      "name": "Faraday Future Intelligent Electric Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0073,
+      "change_pct": 0.0211
+    },
+    {
+      "symbol": "XOS",
+      "name": "Xos Inc",
+      "exchange": "NASDAQ",
+      "change": 0.04,
+      "change_pct": 0.02
+    },
+    {
+      "symbol": "MAMO",
+      "name": "Massimo Group",
+      "exchange": "NASDAQ",
+      "change": 0.02,
+      "change_pct": 0.0185
+    },
+    {
+      "symbol": "CAAS",
+      "name": "China Automotive Sys Inc",
+      "exchange": "NASDAQ",
+      "change": 0.05,
+      "change_pct": 0.0118
+    },
+    {
+      "symbol": "FLYE",
+      "name": "Fly-E Group Inc",
+      "exchange": "NASDAQ",
+      "change": 0.02,
+      "change_pct": 0.0104
+    },
+    {
+      "symbol": "LCII",
+      "name": "Lci Inds",
+      "exchange": "NYSE",
+      "change": 1.17,
+      "change_pct": 0.0096
+    },
+    {
+      "symbol": "REE",
+      "name": "Ree Automotive",
+      "exchange": "NASDAQ",
+      "change": 0.0054,
+      "change_pct": 0.0096
+    },
+    {
+      "symbol": "APTV",
+      "name": "Aptiv Plc",
+      "exchange": "NYSE",
+      "change": 0.43,
+      "change_pct": 0.0061
+    },
+    {
+      "symbol": "LCID",
+      "name": "Lucid Group Inc",
+      "exchange": "NASDAQ",
+      "change": 0.06,
+      "change_pct": 0.0061
+    },
+    {
+      "symbol": "DORM",
+      "name": "Dorman Products",
+      "exchange": "NASDAQ",
+      "change": 0.57,
+      "change_pct": 0.0056
+    },
+    {
+      "symbol": "F-PRD",
+      "name": "Ford Motor",
+      "exchange": "NYSE",
+      "change": 0.1,
+      "change_pct": 0.0044
+    },
+    {
+      "symbol": "HLLY",
+      "name": "Holley Inc",
+      "exchange": "NYSE",
+      "change": 0.01,
+      "change_pct": 0.0033
+    },
+    {
+      "symbol": "XPEV",
+      "name": "Xpeng Inc",
+      "exchange": "NYSE",
+      "change": -0.01,
+      "change_pct": -0.0005
+    },
+    {
+      "symbol": "F-PRB",
+      "name": "Ford Motor Co",
+      "exchange": "NYSE",
+      "change": -0.03,
+      "change_pct": -0.0014
+    },
+    {
+      "symbol": "SMP",
+      "name": "Standard Motor Products",
+      "exchange": "NYSE",
+      "change": -0.11,
+      "change_pct": -0.003
+    },
+    {
+      "symbol": "GTX",
+      "name": "Garrett Motion",
+      "exchange": "NASDAQ",
+      "change": -0.08,
+      "change_pct": -0.0045
+    },
+    {
+      "symbol": "CMI",
+      "name": "Cummins Inc",
+      "exchange": "NYSE",
+      "change": -3.04,
+      "change_pct": -0.0056
+    },
+    {
+      "symbol": "VFS",
+      "name": "VinFast Auto",
+      "exchange": "NASDAQ",
+      "change": -0.02,
+      "change_pct": -0.0064
+    },
+    {
+      "symbol": "XPEL",
+      "name": "Xpel Inc",
+      "exchange": "NASDAQ",
+      "change": -0.27,
+      "change_pct": -0.0069
+    },
+    {
+      "symbol": "ATMU",
+      "name": "Atmus Filtration Technologies Inc.",
+      "exchange": "NYSE",
+      "change": -0.41,
+      "change_pct": -0.0072
+    },
+    {
+      "symbol": "F-PRC",
+      "name": "Ford Motor Company",
+      "exchange": "NYSE",
+      "change": -0.15,
+      "change_pct": -0.0072
+    },
+    {
+      "symbol": "EVTV",
+      "name": "Envirotech Vehicles Inc",
+      "exchange": "NASDAQ",
+      "change": -0.01,
+      "change_pct": -0.0077
+    },
+    {
+      "symbol": "ALV",
+      "name": "Autoliv Inc",
+      "exchange": "NYSE",
+      "change": -0.81,
+      "change_pct": -0.0078
+    },
+    {
+      "symbol": "RACE",
+      "name": "Ferrari N V",
+      "exchange": "NYSE",
+      "change": -2.69,
+      "change_pct": -0.008
+    },
+    {
+      "symbol": "TSLA",
+      "name": "Tesla Inc",
+      "exchange": "NASDAQ",
+      "change": -3.81,
+      "change_pct": -0.0096
+    },
+    {
+      "symbol": "MPAA",
+      "name": "Motorcar Parts",
+      "exchange": "NASDAQ",
+      "change": -0.11,
+      "change_pct": -0.0108
+    },
+    {
+      "symbol": "INEO",
+      "name": "INNEOVA HOLD",
+      "exchange": "NASDAQ",
+      "change": -0.0054,
+      "change_pct": -0.011
+    },
+    {
+      "symbol": "GPC",
+      "name": "Genuine Parts",
+      "exchange": "NYSE",
+      "change": -1.27,
+      "change_pct": -0.0119
+    },
+    {
+      "symbol": "HMC",
+      "name": "Honda Motor",
+      "exchange": "NYSE",
+      "change": -0.31,
+      "change_pct": -0.0119
+    },
+    {
+      "symbol": "CYD",
+      "name": "China Yuchai Intl Ltd",
+      "exchange": "NYSE",
+      "change": -0.52,
+      "change_pct": -0.0124
+    },
+    {
+      "symbol": "VC",
+      "name": "Visteon Corp",
+      "exchange": "NASDAQ",
+      "change": -1.15,
+      "change_pct": -0.0127
+    },
+    {
+      "symbol": "KNDI",
+      "name": "Kandi Technologies Group, Inc.",
+      "exchange": "NASDAQ",
+      "change": -0.0122,
+      "change_pct": -0.0128
+    },
+    {
+      "symbol": "LEA",
+      "name": "Lear",
+      "exchange": "NYSE",
+      "change": -1.49,
+      "change_pct": -0.0129
+    },
+    {
+      "symbol": "LKQ",
+      "name": "Lkq Corp",
+      "exchange": "NASDAQ",
+      "change": -0.41,
+      "change_pct": -0.0138
+    },
+    {
+      "symbol": "GM",
+      "name": "General Mtrs Co",
+      "exchange": "NYSE",
+      "change": -1.06,
+      "change_pct": -0.0144
+    },
+    {
+      "symbol": "THRM",
+      "name": "Gentherm",
+      "exchange": "NASDAQ",
+      "change": -0.41,
+      "change_pct": -0.0145
+    },
+    {
+      "symbol": "WKHS",
+      "name": "Workhorse Group",
+      "exchange": "NASDAQ",
+      "change": -0.05,
+      "change_pct": -0.0149
+    },
+    {
+      "symbol": "MLR",
+      "name": "Miller Inds",
+      "exchange": "NYSE",
+      "change": -0.68,
+      "change_pct": -0.0153
+    },
+    {
+      "symbol": "SLDP",
+      "name": "Solid Pwr Inc",
+      "exchange": "NASDAQ",
+      "change": -0.05,
+      "change_pct": -0.0156
+    },
+    {
+      "symbol": "GNTX",
+      "name": "Gentex Corp",
+      "exchange": "NASDAQ",
+      "change": -0.34,
+      "change_pct": -0.016
+    },
+    {
+      "symbol": "DAN",
+      "name": "Dana Inc",
+      "exchange": "NYSE",
+      "change": -0.51,
+      "change_pct": -0.016
+    },
+    {
+      "symbol": "PHIN",
+      "name": "Phinia Inc",
+      "exchange": "NYSE",
+      "change": -1.08,
+      "change_pct": -0.0168
+    },
+    {
+      "symbol": "ADNT",
+      "name": "Adient",
+      "exchange": "NYSE",
+      "change": -0.34,
+      "change_pct": -0.0169
+    }
+  ]
+}

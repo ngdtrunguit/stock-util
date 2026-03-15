@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 7148,
+  "sector_name": "Insurance",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "NP",
+      "name": "Neptune Insurance Holdings Inc.",
+      "exchange": "NYSE",
+      "change": 3.68,
+      "change_pct": 0.2023
+    },
+    {
+      "symbol": "OXBRW",
+      "name": "Oxbridge Re Hldg",
+      "exchange": "NASDAQ",
+      "change": 0.0169,
+      "change_pct": 0.1639
+    },
+    {
+      "symbol": "PRHI",
+      "name": "Presurance Holdings, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.0661,
+      "change_pct": 0.0993
+    },
+    {
+      "symbol": "HGTY",
+      "name": "HAGERTY INC",
+      "exchange": "NYSE",
+      "change": 0.44,
+      "change_pct": 0.0449
+    },
+    {
+      "symbol": "RDZN",
+      "name": "Roadzen Inc",
+      "exchange": "NASDAQ",
+      "change": 0.048,
+      "change_pct": 0.0428
+    },
+    {
+      "symbol": "LMND",
+      "name": "Lemonade Inc",
+      "exchange": "NYSE",
+      "change": 2.26,
+      "change_pct": 0.0427
+    },
+    {
+      "symbol": "GLRE",
+      "name": "Greenlight Capital Re Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.61,
+      "change_pct": 0.0407
+    },
+    {
+      "symbol": "FAF",
+      "name": "First Amern Finl Corp",
+      "exchange": "NYSE",
+      "change": 2.27,
+      "change_pct": 0.0358
+    },
+    {
+      "symbol": "EHTH",
+      "name": "Ehealth Inc",
+      "exchange": "NASDAQ",
+      "change": 0.05,
+      "change_pct": 0.0331
+    },
+    {
+      "symbol": "XZO",
+      "name": "Exzeo Group",
+      "exchange": "NYSE",
+      "change": 0.5,
+      "change_pct": 0.033
+    },
+    {
+      "symbol": "CRBG",
+      "name": "Corebridge Financial Inc",
+      "exchange": "NYSE",
+      "change": 0.66,
+      "change_pct": 0.0289
+    },
+    {
+      "symbol": "FGNX",
+      "name": "FG Nexus Inc",
+      "exchange": "NASDAQ",
+      "change": 0.18,
+      "change_pct": 0.027
+    },
+    {
+      "symbol": "MHLA",
+      "name": "Maiden",
+      "exchange": "NYSE",
+      "change": 0.31,
+      "change_pct": 0.0262
+    },
+    {
+      "symbol": "HCI",
+      "name": "Hci Group",
+      "exchange": "NYSE",
+      "change": 4.23,
+      "change_pct": 0.0259
+    },
+    {
+      "symbol": "NODK",
+      "name": "Ni Hldgs Inc",
+      "exchange": "NASDAQ",
+      "change": 0.33,
+      "change_pct": 0.0256
+    },
+    {
+      "symbol": "FGN",
+      "name": "F&G Annuities And Life 7 950 Senior Notes due 2053",
+      "exchange": "NYSE",
+      "change": 0.57,
+      "change_pct": 0.0241
+    },
+    {
+      "symbol": "FNF",
+      "name": "Fidelity National Financial In",
+      "exchange": "NYSE",
+      "change": 1.09,
+      "change_pct": 0.0235
+    },
+    {
+      "symbol": "FGNXP",
+      "name": "FG Nexus Inc",
+      "exchange": "NASDAQ",
+      "change": 0.55,
+      "change_pct": 0.0229
+    },
+    {
+      "symbol": "SLDE",
+      "name": "Slide Insurance Holdings Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.38,
+      "change_pct": 0.022
+    },
+    {
+      "symbol": "STC",
+      "name": "Stewart Info",
+      "exchange": "NYSE",
+      "change": 1.32,
+      "change_pct": 0.0209
+    },
+    {
+      "symbol": "KMPR",
+      "name": "Kemper",
+      "exchange": "NYSE",
+      "change": 0.58,
+      "change_pct": 0.0199
+    },
+    {
+      "symbol": "AJG",
+      "name": "Gallagher (ARTHUR J.) & Co.",
+      "exchange": "NYSE",
+      "change": 3.72,
+      "change_pct": 0.0182
+    },
+    {
+      "symbol": "OSCR",
+      "name": "Oscar Health Inc",
+      "exchange": "NYSE",
+      "change": 0.23,
+      "change_pct": 0.0177
+    },
+    {
+      "symbol": "AON",
+      "name": "Aon Plc",
+      "exchange": "NYSE",
+      "change": 5.5,
+      "change_pct": 0.0174
+    },
+    {
+      "symbol": "AII",
+      "name": "American Integrity Insurance Group, Inc.",
+      "exchange": "NYSE",
+      "change": 0.32,
+      "change_pct": 0.0168
+    },
+    {
+      "symbol": "SAFT",
+      "name": "Safety Ins Group Inc",
+      "exchange": "NASDAQ",
+      "change": 1.17,
+      "change_pct": 0.0162
+    },
+    {
+      "symbol": "HG",
+      "name": "Hamilton Insurance Group",
+      "exchange": "NYSE",
+      "change": 0.46,
+      "change_pct": 0.0161
+    },
+    {
+      "symbol": "ERIE",
+      "name": "Erie Indty Co",
+      "exchange": "NASDAQ",
+      "change": 3.88,
+      "change_pct": 0.016
+    },
+    {
+      "symbol": "MCY",
+      "name": "Mercury General",
+      "exchange": "NYSE",
+      "change": 1.38,
+      "change_pct": 0.0158
+    },
+    {
+      "symbol": "AIZ",
+      "name": "Assurant",
+      "exchange": "NYSE",
+      "change": 3.23,
+      "change_pct": 0.015
+    },
+    {
+      "symbol": "DGICA",
+      "name": "Donegal Group",
+      "exchange": "NASDAQ",
+      "change": 0.22,
+      "change_pct": 0.0131
+    },
+    {
+      "symbol": "ESNT",
+      "name": "Essent Group Ltd",
+      "exchange": "NYSE",
+      "change": 0.75,
+      "change_pct": 0.0131
+    },
+    {
+      "symbol": "FGSN",
+      "name": "F&G Annuities & Life Inc",
+      "exchange": "NYSE",
+      "change": 0.24,
+      "change_pct": 0.0122
+    },
+    {
+      "symbol": "FG",
+      "name": "F&G Annuities & Life Inc",
+      "exchange": "NYSE",
+      "change": 0.25,
+      "change_pct": 0.0121
+    },
+    {
+      "symbol": "BWIN",
+      "name": "The Baldwin Group",
+      "exchange": "NASDAQ",
+      "change": 0.25,
+      "change_pct": 0.012
+    },
+    {
+      "symbol": "TWFG",
+      "name": "TWFG INC",
+      "exchange": "NASDAQ",
+      "change": 0.22,
+      "change_pct": 0.0112
+    },
+    {
+      "symbol": "AMSF",
+      "name": "Amerisafe",
+      "exchange": "NASDAQ",
+      "change": 0.34,
+      "change_pct": 0.0105
+    },
+    {
+      "symbol": "ITIC",
+      "name": "Investors Title Co Nc",
+      "exchange": "NASDAQ",
+      "change": 2.27,
+      "change_pct": 0.0103
+    },
+    {
+      "symbol": "WTW",
+      "name": "Willis Towers",
+      "exchange": "NASDAQ",
+      "change": 2.91,
+      "change_pct": 0.0102
+    },
+    {
+      "symbol": "RNR",
+      "name": "Renaissance",
+      "exchange": "NYSE",
+      "change": 2.83,
+      "change_pct": 0.0097
+    },
+    {
+      "symbol": "AIFU",
+      "name": "AIFU Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.018,
+      "change_pct": 0.009
+    },
+    {
+      "symbol": "BRO",
+      "name": "Brown & Brown Inc",
+      "exchange": "NYSE",
+      "change": 0.61,
+      "change_pct": 0.009
+    },
+    {
+      "symbol": "SPNT",
+      "name": "Siriuspoint Ltd",
+      "exchange": "NYSE",
+      "change": 0.16,
+      "change_pct": 0.0079
+    },
+    {
+      "symbol": "JXN-PRA",
+      "name": "Jackson Financial Inc",
+      "exchange": "NYSE",
+      "change": 0.2,
+      "change_pct": 0.0077
+    },
+    {
+      "symbol": "MRSH",
+      "name": "Marsh & Mclennan",
+      "exchange": "NYSE",
+      "change": 1.27,
+      "change_pct": 0.0074
+    },
+    {
+      "symbol": "UVE",
+      "name": "Universal Ins Hldgs Inc",
+      "exchange": "NYSE",
+      "change": 0.25,
+      "change_pct": 0.0073
+    },
+    {
+      "symbol": "BOW",
+      "name": "BOWHEAD SPECIALTY HLDGS INC",
+      "exchange": "NYSE",
+      "change": 0.16,
+      "change_pct": 0.0071
+    },
+    {
+      "symbol": "HIPO",
+      "name": "Hippo Hldgs Inc",
+      "exchange": "NYSE",
+      "change": 0.15,
+      "change_pct": 0.006
+    },
+    {
+      "symbol": "KINS",
+      "name": "Kingstone",
+      "exchange": "NASDAQ",
+      "change": 0.09,
+      "change_pct": 0.006
+    },
+    {
+      "symbol": "WTM",
+      "name": "White Mountains",
+      "exchange": "NYSE",
+      "change": 12.65,
+      "change_pct": 0.0058
+    }
+  ]
+}

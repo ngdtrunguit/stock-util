@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 7270,
+  "sector_name": "Healthcare Services & Equipment",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "TOIIW",
+      "name": "The Oncology Institute Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0378,
+      "change_pct": 1.0769
+    },
+    {
+      "symbol": "BIAF",
+      "name": "bioAffinity Tech",
+      "exchange": "NASDAQ",
+      "change": 1.05,
+      "change_pct": 0.9813
+    },
+    {
+      "symbol": "BIAFW",
+      "name": "bioAffinity Tech",
+      "exchange": "NASDAQ",
+      "change": 0.0875,
+      "change_pct": 0.3609
+    },
+    {
+      "symbol": "ZSTK",
+      "name": "ZeroStack Corp",
+      "exchange": "NASDAQ",
+      "change": 1.38,
+      "change_pct": 0.1963
+    },
+    {
+      "symbol": "ICUCW",
+      "name": "SeaStar Medical",
+      "exchange": "NASDAQ",
+      "change": 0.0047,
+      "change_pct": 0.1873
+    },
+    {
+      "symbol": "NIVF",
+      "name": "NewGenIvf Group",
+      "exchange": "NASDAQ",
+      "change": 0.07,
+      "change_pct": 0.1399
+    },
+    {
+      "symbol": "AEMD",
+      "name": "Aethlon Medical",
+      "exchange": "NASDAQ",
+      "change": 0.22,
+      "change_pct": 0.1272
+    },
+    {
+      "symbol": "TRIB",
+      "name": "Trinity Biotech Plc",
+      "exchange": "NASDAQ",
+      "change": 0.0731,
+      "change_pct": 0.1056
+    },
+    {
+      "symbol": "AHCO",
+      "name": "Adapthealth Corp",
+      "exchange": "NASDAQ",
+      "change": 0.85,
+      "change_pct": 0.0867
+    },
+    {
+      "symbol": "BDMD",
+      "name": "Baird Medical",
+      "exchange": "NASDAQ",
+      "change": 0.19,
+      "change_pct": 0.086
+    },
+    {
+      "symbol": "TOI",
+      "name": "The Oncology Institute Inc",
+      "exchange": "NASDAQ",
+      "change": 0.22,
+      "change_pct": 0.084
+    },
+    {
+      "symbol": "TMCI",
+      "name": "Treace Medical Concepts, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.11,
+      "change_pct": 0.0815
+    },
+    {
+      "symbol": "RYOJ",
+      "name": "Ryojbaba Co. Ltd.",
+      "exchange": "NASDAQ",
+      "change": 0.17,
+      "change_pct": 0.0806
+    },
+    {
+      "symbol": "DCGO",
+      "name": "DOCGO INC",
+      "exchange": "NASDAQ",
+      "change": 0.0401,
+      "change_pct": 0.065
+    },
+    {
+      "symbol": "WGSWW",
+      "name": "GeneDx Holdings Corp",
+      "exchange": "NASDAQ",
+      "change": 0.0005,
+      "change_pct": 0.0648
+    },
+    {
+      "symbol": "CODX",
+      "name": "Co-Diagnostics Inc",
+      "exchange": "NASDAQ",
+      "change": 0.17,
+      "change_pct": 0.0646
+    },
+    {
+      "symbol": "INMD",
+      "name": "Inmode Ltd.",
+      "exchange": "NASDAQ",
+      "change": 0.78,
+      "change_pct": 0.0611
+    },
+    {
+      "symbol": "COCH",
+      "name": "Envoy Medical",
+      "exchange": "NASDAQ",
+      "change": 0.0446,
+      "change_pct": 0.0598
+    },
+    {
+      "symbol": "NRXS",
+      "name": "Neuraxis Inc",
+      "exchange": "AMEX",
+      "change": 0.38,
+      "change_pct": 0.0586
+    },
+    {
+      "symbol": "IVF",
+      "name": "INVO Fertility, Inc",
+      "exchange": "NASDAQ",
+      "change": 0.044,
+      "change_pct": 0.0539
+    },
+    {
+      "symbol": "PACB",
+      "name": "Pacific Biosc",
+      "exchange": "NASDAQ",
+      "change": 0.06,
+      "change_pct": 0.0472
+    },
+    {
+      "symbol": "LUCY",
+      "name": "Lucyd Inc",
+      "exchange": "NASDAQ",
+      "change": 0.05,
+      "change_pct": 0.0467
+    },
+    {
+      "symbol": "TKNO",
+      "name": "Alpha Teknova",
+      "exchange": "NASDAQ",
+      "change": 0.12,
+      "change_pct": 0.0449
+    },
+    {
+      "symbol": "BFLY",
+      "name": "Butterfly Network Inc",
+      "exchange": "NYSE",
+      "change": 0.16,
+      "change_pct": 0.044
+    },
+    {
+      "symbol": "STSS",
+      "name": "Sharps Tech",
+      "exchange": "NASDAQ",
+      "change": 0.08,
+      "change_pct": 0.044
+    },
+    {
+      "symbol": "ASTH",
+      "name": "Astrana Health",
+      "exchange": "NASDAQ",
+      "change": 1.01,
+      "change_pct": 0.0434
+    },
+    {
+      "symbol": "SNDA",
+      "name": "Sonida Senior Living Inc",
+      "exchange": "NYSE",
+      "change": 1.46,
+      "change_pct": 0.0434
+    },
+    {
+      "symbol": "HIMS",
+      "name": "Hims & Hers Health Inc",
+      "exchange": "NYSE",
+      "change": 0.93,
+      "change_pct": 0.039
+    },
+    {
+      "symbol": "PRCT",
+      "name": "Procept Biorobotics Corp",
+      "exchange": "NASDAQ",
+      "change": 1.01,
+      "change_pct": 0.0387
+    },
+    {
+      "symbol": "RDNT",
+      "name": "Radnet",
+      "exchange": "NASDAQ",
+      "change": 2.31,
+      "change_pct": 0.0386
+    },
+    {
+      "symbol": "CCM",
+      "name": "Concord Medical",
+      "exchange": "NYSE",
+      "change": 0.14,
+      "change_pct": 0.0376
+    },
+    {
+      "symbol": "BMGL",
+      "name": "Basel Medical Group Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.0222,
+      "change_pct": 0.0372
+    },
+    {
+      "symbol": "OMDA",
+      "name": "OMADA HEALTH INC",
+      "exchange": "NASDAQ",
+      "change": 0.51,
+      "change_pct": 0.0364
+    },
+    {
+      "symbol": "NHC",
+      "name": "National Health",
+      "exchange": "AMEX",
+      "change": 5.56,
+      "change_pct": 0.0357
+    },
+    {
+      "symbol": "PDEX",
+      "name": "Pro-Dex Inc Colo",
+      "exchange": "NASDAQ",
+      "change": 1.64,
+      "change_pct": 0.035
+    },
+    {
+      "symbol": "TNDM",
+      "name": "Tandem Diabetes",
+      "exchange": "NASDAQ",
+      "change": 0.72,
+      "change_pct": 0.0343
+    },
+    {
+      "symbol": "PACS",
+      "name": "PACS Group",
+      "exchange": "NYSE",
+      "change": 1.15,
+      "change_pct": 0.0341
+    },
+    {
+      "symbol": "RNXT",
+      "name": "Renovorx Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0271,
+      "change_pct": 0.0335
+    },
+    {
+      "symbol": "FEMY",
+      "name": "FEMASYS INC",
+      "exchange": "NASDAQ",
+      "change": 0.018,
+      "change_pct": 0.0327
+    },
+    {
+      "symbol": "LFWD",
+      "name": "Lifeward Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.21,
+      "change_pct": 0.0316
+    },
+    {
+      "symbol": "QTI",
+      "name": "QT Imaging Holdings",
+      "exchange": "NASDAQ",
+      "change": 0.18,
+      "change_pct": 0.0301
+    },
+    {
+      "symbol": "OM",
+      "name": "Outset Medical, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.095,
+      "change_pct": 0.0301
+    },
+    {
+      "symbol": "CV",
+      "name": "CapsoVision, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.16,
+      "change_pct": 0.0299
+    },
+    {
+      "symbol": "OWLT",
+      "name": "Owlet Inc",
+      "exchange": "NYSE",
+      "change": 0.16,
+      "change_pct": 0.0296
+    },
+    {
+      "symbol": "ADGM",
+      "name": "Adagio Medical",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0294
+    },
+    {
+      "symbol": "ILMN",
+      "name": "Illumina Inc",
+      "exchange": "NASDAQ",
+      "change": 3.38,
+      "change_pct": 0.0292
+    },
+    {
+      "symbol": "NXL",
+      "name": "Nexalin Tech",
+      "exchange": "NASDAQ",
+      "change": 0.0119,
+      "change_pct": 0.029
+    },
+    {
+      "symbol": "DRTS",
+      "name": "Alpha Tau Medical Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.2,
+      "change_pct": 0.0287
+    },
+    {
+      "symbol": "XTNT",
+      "name": "Xtant Medical",
+      "exchange": "AMEX",
+      "change": 0.0173,
+      "change_pct": 0.0287
+    },
+    {
+      "symbol": "BBNX",
+      "name": "Beta Bionics, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.28,
+      "change_pct": 0.0277
+    }
+  ]
+}

@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 7349,
+  "sector_name": "Technology Equipment",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "WLDSW",
+      "name": "Wearable Devices Ltd",
+      "exchange": "NASDAQ",
+      "change": 1.06,
+      "change_pct": 0.4907
+    },
+    {
+      "symbol": "UEIC",
+      "name": "Universal Electrs Inc",
+      "exchange": "NASDAQ",
+      "change": 0.66,
+      "change_pct": 0.1803
+    },
+    {
+      "symbol": "MSAI",
+      "name": "Multisensor AI",
+      "exchange": "NASDAQ",
+      "change": 0.0477,
+      "change_pct": 0.1578
+    },
+    {
+      "symbol": "LIDRW",
+      "name": "Aeye Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0064,
+      "change_pct": 0.1331
+    },
+    {
+      "symbol": "SONM",
+      "name": "DNA X",
+      "exchange": "NASDAQ",
+      "change": 0.34,
+      "change_pct": 0.0831
+    },
+    {
+      "symbol": "TAOP",
+      "name": "Taoping Inc",
+      "exchange": "NASDAQ",
+      "change": 0.11,
+      "change_pct": 0.0821
+    },
+    {
+      "symbol": "BLIV",
+      "name": "BeLive",
+      "exchange": "NASDAQ",
+      "change": 0.21,
+      "change_pct": 0.0781
+    },
+    {
+      "symbol": "LWLG",
+      "name": "Lightwave Logic Inc",
+      "exchange": "NASDAQ",
+      "change": 0.53,
+      "change_pct": 0.0749
+    },
+    {
+      "symbol": "SNDK",
+      "name": "SanDisk Corp",
+      "exchange": "NASDAQ",
+      "change": 42.8,
+      "change_pct": 0.0692
+    },
+    {
+      "symbol": "GCTS-WS",
+      "name": "GCT Semiconducto",
+      "exchange": "NYSE",
+      "change": 0.01,
+      "change_pct": 0.0625
+    },
+    {
+      "symbol": "INVZW",
+      "name": "Innoviz Technologies Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.0002,
+      "change_pct": 0.0586
+    },
+    {
+      "symbol": "SAIH",
+      "name": "Saiheat Limited",
+      "exchange": "NASDAQ",
+      "change": 0.45,
+      "change_pct": 0.0577
+    },
+    {
+      "symbol": "CRDO",
+      "name": "CREDO TECHNOLOGY GROUP HOLDING",
+      "exchange": "NASDAQ",
+      "change": 6.12,
+      "change_pct": 0.0549
+    },
+    {
+      "symbol": "EBON",
+      "name": "Ebang International Holdings Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.126,
+      "change_pct": 0.0533
+    },
+    {
+      "symbol": "TSEM",
+      "name": "Tower Semiconductor Ltd",
+      "exchange": "NASDAQ",
+      "change": 6.17,
+      "change_pct": 0.0521
+    },
+    {
+      "symbol": "MU",
+      "name": "Micron Technology Inc",
+      "exchange": "NASDAQ",
+      "change": 20.78,
+      "change_pct": 0.0513
+    },
+    {
+      "symbol": "RMBS",
+      "name": "Rambus Inc Del",
+      "exchange": "NASDAQ",
+      "change": 4.23,
+      "change_pct": 0.0471
+    },
+    {
+      "symbol": "AXTI",
+      "name": "Axt Inc",
+      "exchange": "NASDAQ",
+      "change": 2.13,
+      "change_pct": 0.0456
+    },
+    {
+      "symbol": "WDC",
+      "name": "Western Digital",
+      "exchange": "NASDAQ",
+      "change": 11.11,
+      "change_pct": 0.0425
+    },
+    {
+      "symbol": "AMKR",
+      "name": "Amkor Tech",
+      "exchange": "NASDAQ",
+      "change": 1.72,
+      "change_pct": 0.0417
+    },
+    {
+      "symbol": "GSIT",
+      "name": "Gsi Technology",
+      "exchange": "NASDAQ",
+      "change": 0.32,
+      "change_pct": 0.0391
+    },
+    {
+      "symbol": "DIOD",
+      "name": "Diodes Inc",
+      "exchange": "NASDAQ",
+      "change": 2.23,
+      "change_pct": 0.0362
+    },
+    {
+      "symbol": "LINK",
+      "name": "Interlink Electrs Inc",
+      "exchange": "NASDAQ",
+      "change": 0.095,
+      "change_pct": 0.031
+    },
+    {
+      "symbol": "LGL",
+      "name": "LGL Group",
+      "exchange": "AMEX",
+      "change": 0.22,
+      "change_pct": 0.0309
+    },
+    {
+      "symbol": "HKIT",
+      "name": "HiTek Global Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0303
+    },
+    {
+      "symbol": "ONTO",
+      "name": "Onto Innovation Inc",
+      "exchange": "NYSE",
+      "change": 4.94,
+      "change_pct": 0.0268
+    },
+    {
+      "symbol": "SIMO",
+      "name": "Silicon Motion Technology Corp",
+      "exchange": "NASDAQ",
+      "change": 3.15,
+      "change_pct": 0.0262
+    },
+    {
+      "symbol": "STX",
+      "name": "Seagate Technology Hldngs Plc",
+      "exchange": "NASDAQ",
+      "change": 9.73,
+      "change_pct": 0.026
+    },
+    {
+      "symbol": "LEDS",
+      "name": "Semileds Corp",
+      "exchange": "NASDAQ",
+      "change": 0.037,
+      "change_pct": 0.0259
+    },
+    {
+      "symbol": "ACMR",
+      "name": "Acm Research",
+      "exchange": "NASDAQ",
+      "change": 1.11,
+      "change_pct": 0.0245
+    },
+    {
+      "symbol": "LTRX",
+      "name": "Lantronix",
+      "exchange": "NASDAQ",
+      "change": 0.15,
+      "change_pct": 0.0243
+    },
+    {
+      "symbol": "ASX",
+      "name": "ASE Technology",
+      "exchange": "NYSE",
+      "change": 0.51,
+      "change_pct": 0.0243
+    },
+    {
+      "symbol": "POWI",
+      "name": "Power Integrtns",
+      "exchange": "NASDAQ",
+      "change": 1.1,
+      "change_pct": 0.0237
+    },
+    {
+      "symbol": "MXL",
+      "name": "Maxlinear",
+      "exchange": "NASDAQ",
+      "change": 0.39,
+      "change_pct": 0.0236
+    },
+    {
+      "symbol": "CDW",
+      "name": "CDW Corp",
+      "exchange": "NASDAQ",
+      "change": 2.68,
+      "change_pct": 0.0236
+    },
+    {
+      "symbol": "MSI",
+      "name": "Motorola Solutio",
+      "exchange": "NYSE",
+      "change": 10.49,
+      "change_pct": 0.0227
+    },
+    {
+      "symbol": "MX",
+      "name": "Magnachip Semiconductor Corp N",
+      "exchange": "NYSE",
+      "change": 0.06,
+      "change_pct": 0.0217
+    },
+    {
+      "symbol": "BELFA",
+      "name": "Bel Fuse Inc",
+      "exchange": "NASDAQ",
+      "change": 3.64,
+      "change_pct": 0.0206
+    },
+    {
+      "symbol": "WTO",
+      "name": "Utime Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.06,
+      "change_pct": 0.0203
+    },
+    {
+      "symbol": "NVMI",
+      "name": "Nova Ltd",
+      "exchange": "NASDAQ",
+      "change": 8.49,
+      "change_pct": 0.0202
+    },
+    {
+      "symbol": "INSG",
+      "name": "Inseego Corp",
+      "exchange": "NASDAQ",
+      "change": 0.24,
+      "change_pct": 0.0201
+    },
+    {
+      "symbol": "TLS",
+      "name": "Telos Corp",
+      "exchange": "NASDAQ",
+      "change": 0.08,
+      "change_pct": 0.019
+    },
+    {
+      "symbol": "Q",
+      "name": "Qnity Electronics Inc",
+      "exchange": "NYSE",
+      "change": 2.01,
+      "change_pct": 0.0188
+    },
+    {
+      "symbol": "APH",
+      "name": "Amphenol Corp",
+      "exchange": "NYSE",
+      "change": 2.45,
+      "change_pct": 0.0186
+    },
+    {
+      "symbol": "NTGR",
+      "name": "Netgear Inc",
+      "exchange": "NASDAQ",
+      "change": 0.39,
+      "change_pct": 0.0184
+    },
+    {
+      "symbol": "MPWR",
+      "name": "Monolithic Power",
+      "exchange": "NASDAQ",
+      "change": 18.71,
+      "change_pct": 0.0181
+    },
+    {
+      "symbol": "NTAP",
+      "name": "Netapp Inc",
+      "exchange": "NASDAQ",
+      "change": 1.73,
+      "change_pct": 0.0178
+    },
+    {
+      "symbol": "TACT",
+      "name": "Transact Tech",
+      "exchange": "NASDAQ",
+      "change": 0.06,
+      "change_pct": 0.0175
+    },
+    {
+      "symbol": "SMTC",
+      "name": "Semtech",
+      "exchange": "NASDAQ",
+      "change": 1.44,
+      "change_pct": 0.0173
+    },
+    {
+      "symbol": "FORM",
+      "name": "Formfactor Inc",
+      "exchange": "NASDAQ",
+      "change": 1.52,
+      "change_pct": 0.0172
+    }
+  ]
+}

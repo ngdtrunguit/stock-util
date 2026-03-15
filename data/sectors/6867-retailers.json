@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 6867,
+  "sector_name": "Retailers",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "LESL",
+      "name": "Leslie'S, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.15,
+      "change_pct": 0.1456
+    },
+    {
+      "symbol": "AIHS",
+      "name": "Senmiao Technology Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.19,
+      "change_pct": 0.1407
+    },
+    {
+      "symbol": "TLYS",
+      "name": "Tillys Inc",
+      "exchange": "NYSE",
+      "change": 0.29,
+      "change_pct": 0.1208
+    },
+    {
+      "symbol": "WOOF",
+      "name": "Petco Health & Wellness Company, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.39,
+      "change_pct": 0.1207
+    },
+    {
+      "symbol": "PEW",
+      "name": "GrabAGun Digital Holdings Inc",
+      "exchange": "NYSE",
+      "change": 0.26,
+      "change_pct": 0.0903
+    },
+    {
+      "symbol": "WALD",
+      "name": "Waldencast plc",
+      "exchange": "NASDAQ",
+      "change": 0.12,
+      "change_pct": 0.0822
+    },
+    {
+      "symbol": "BNED",
+      "name": "Barnes & Noble Ed Inc",
+      "exchange": "NYSE",
+      "change": 0.44,
+      "change_pct": 0.0547
+    },
+    {
+      "symbol": "BYAH",
+      "name": "PARK HA BIOLOGICAL TECHNOLOGY",
+      "exchange": "NASDAQ",
+      "change": 0.05,
+      "change_pct": 0.0435
+    },
+    {
+      "symbol": "OLLI",
+      "name": "Ollies Bargain",
+      "exchange": "NASDAQ",
+      "change": 4.38,
+      "change_pct": 0.0418
+    },
+    {
+      "symbol": "BBWI",
+      "name": "Bath & Body Works Inc",
+      "exchange": "NYSE",
+      "change": 0.72,
+      "change_pct": 0.0383
+    },
+    {
+      "symbol": "CHWY",
+      "name": "Chewy Inc",
+      "exchange": "NYSE",
+      "change": 0.87,
+      "change_pct": 0.0354
+    },
+    {
+      "symbol": "FOXX",
+      "name": "Foxx Development Holdings Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.11,
+      "change_pct": 0.0284
+    },
+    {
+      "symbol": "W",
+      "name": "Wayfair Inc",
+      "exchange": "NYSE",
+      "change": 2.01,
+      "change_pct": 0.0273
+    },
+    {
+      "symbol": "CVNA",
+      "name": "Carvana",
+      "exchange": "NYSE",
+      "change": 7.51,
+      "change_pct": 0.0257
+    },
+    {
+      "symbol": "PMNT",
+      "name": "PERFECT MOMENT LTD",
+      "exchange": "AMEX",
+      "change": 0.0058,
+      "change_pct": 0.0252
+    },
+    {
+      "symbol": "NGVC",
+      "name": "Natural Grocers By Vitamin Cot",
+      "exchange": "NYSE",
+      "change": 0.62,
+      "change_pct": 0.0248
+    },
+    {
+      "symbol": "WRBY",
+      "name": "Warby Parker Inc",
+      "exchange": "NYSE",
+      "change": 0.55,
+      "change_pct": 0.0234
+    },
+    {
+      "symbol": "FND",
+      "name": "Floor Decor Hold",
+      "exchange": "NYSE",
+      "change": 1.28,
+      "change_pct": 0.023
+    },
+    {
+      "symbol": "DXLG",
+      "name": "Destination Xl",
+      "exchange": "NASDAQ",
+      "change": 0.01,
+      "change_pct": 0.0208
+    },
+    {
+      "symbol": "JFBR",
+      "name": "Jeffs Brands",
+      "exchange": "NASDAQ",
+      "change": 0.08,
+      "change_pct": 0.0208
+    },
+    {
+      "symbol": "UPBD",
+      "name": "UPBOUND GRP INC",
+      "exchange": "NASDAQ",
+      "change": 0.37,
+      "change_pct": 0.0206
+    },
+    {
+      "symbol": "KMX",
+      "name": "Carmax",
+      "exchange": "NYSE",
+      "change": 0.84,
+      "change_pct": 0.0205
+    },
+    {
+      "symbol": "VNCE",
+      "name": "Vince Hldg Corp",
+      "exchange": "NASDAQ",
+      "change": 0.05,
+      "change_pct": 0.0204
+    },
+    {
+      "symbol": "HEPS",
+      "name": "D-Market Electronic Services & Trading",
+      "exchange": "NASDAQ",
+      "change": 0.05,
+      "change_pct": 0.0176
+    },
+    {
+      "symbol": "CPRI",
+      "name": "Capri Holdings Limited",
+      "exchange": "NYSE",
+      "change": 0.29,
+      "change_pct": 0.0159
+    },
+    {
+      "symbol": "DDS",
+      "name": "Dillards Inc",
+      "exchange": "NYSE",
+      "change": 8.89,
+      "change_pct": 0.0155
+    },
+    {
+      "symbol": "ASO",
+      "name": "Academy Sports & Outdoors, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.84,
+      "change_pct": 0.0151
+    },
+    {
+      "symbol": "TGT",
+      "name": "Target",
+      "exchange": "NYSE",
+      "change": 1.59,
+      "change_pct": 0.0137
+    },
+    {
+      "symbol": "JD",
+      "name": "Jd.Com Inc",
+      "exchange": "NASDAQ",
+      "change": 0.38,
+      "change_pct": 0.0136
+    },
+    {
+      "symbol": "EYE",
+      "name": "National Vision",
+      "exchange": "NASDAQ",
+      "change": 0.35,
+      "change_pct": 0.0135
+    },
+    {
+      "symbol": "PSMT",
+      "name": "Pricesmart Inc",
+      "exchange": "NASDAQ",
+      "change": 1.97,
+      "change_pct": 0.0134
+    },
+    {
+      "symbol": "BURL",
+      "name": "Burlington Stores Inc",
+      "exchange": "NYSE",
+      "change": 3.69,
+      "change_pct": 0.0126
+    },
+    {
+      "symbol": "SVV",
+      "name": "Savers Value Village, Inc.",
+      "exchange": "NYSE",
+      "change": 0.08,
+      "change_pct": 0.0103
+    },
+    {
+      "symbol": "SBH",
+      "name": "Sally Beauty Hldgs",
+      "exchange": "NYSE",
+      "change": 0.14,
+      "change_pct": 0.0097
+    },
+    {
+      "symbol": "RERE",
+      "name": "ATRENEW INC",
+      "exchange": "NYSE",
+      "change": 0.05,
+      "change_pct": 0.0089
+    },
+    {
+      "symbol": "CRI",
+      "name": "Carters",
+      "exchange": "NYSE",
+      "change": 0.28,
+      "change_pct": 0.0081
+    },
+    {
+      "symbol": "SPWH",
+      "name": "Sportsmans Warehouse",
+      "exchange": "NASDAQ",
+      "change": 0.01,
+      "change_pct": 0.0076
+    },
+    {
+      "symbol": "ARLO",
+      "name": "Arlo Technologies",
+      "exchange": "NYSE",
+      "change": 0.09,
+      "change_pct": 0.0067
+    },
+    {
+      "symbol": "CWH",
+      "name": "Camping World",
+      "exchange": "NYSE",
+      "change": 0.04,
+      "change_pct": 0.0062
+    },
+    {
+      "symbol": "ARHS",
+      "name": "Arhaus, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.04,
+      "change_pct": 0.0057
+    },
+    {
+      "symbol": "WNW",
+      "name": "Meiwu Technology Company Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.01,
+      "change_pct": 0.0056
+    },
+    {
+      "symbol": "AKA",
+      "name": "A K A Brands Hldg Corp",
+      "exchange": "NYSE",
+      "change": 0.05,
+      "change_pct": 0.0055
+    },
+    {
+      "symbol": "COST",
+      "name": "Costco Whsl Corp",
+      "exchange": "NASDAQ",
+      "change": 5.11,
+      "change_pct": 0.0051
+    },
+    {
+      "symbol": "BWMX",
+      "name": "Betterware Mex",
+      "exchange": "NYSE",
+      "change": 0.08,
+      "change_pct": 0.0048
+    },
+    {
+      "symbol": "GAP",
+      "name": "Gap Inc",
+      "exchange": "NYSE",
+      "change": 0.11,
+      "change_pct": 0.0048
+    },
+    {
+      "symbol": "M",
+      "name": "Macys Inc",
+      "exchange": "NYSE",
+      "change": 0.07,
+      "change_pct": 0.0042
+    },
+    {
+      "symbol": "WSM",
+      "name": "Williams Sonoma",
+      "exchange": "NYSE",
+      "change": 0.69,
+      "change_pct": 0.0038
+    },
+    {
+      "symbol": "HNST",
+      "name": "Honest Company, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.01,
+      "change_pct": 0.0037
+    },
+    {
+      "symbol": "OPLN",
+      "name": "OPENLANE Inc.",
+      "exchange": "NYSE",
+      "change": 0.1,
+      "change_pct": 0.0036
+    },
+    {
+      "symbol": "RVLV",
+      "name": "Revolve Group",
+      "exchange": "NYSE",
+      "change": 0.08,
+      "change_pct": 0.0035
+    }
+  ]
+}

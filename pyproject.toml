@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stock-util"
+version = "0.1.0"
+description = "Public-data stock screening pipeline with Yahoo Finance, Azure AI, and Telegram"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Trung Nguyen" }
+]
+dependencies = [
+  "azure-ai-projects>=2.0.0",
+  "azure-identity",
+  "yfinance>=0.2.0",
+  "pandas>=2.0.0",
+  "pandas-ta>=0.3.14b0",
+  "requests>=2.31.0",
+  "beautifulsoup4>=4.12.0",
+  "aiogram>=3.0.0",
+  "python-dotenv>=1.0.0"
+]
+
+[project.scripts]
+stock-daily-screen = "stock_utils.jobs.daily_screen_job:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

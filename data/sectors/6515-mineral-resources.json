@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 6515,
+  "sector_name": "Mineral Resources",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "LZM-WS",
+      "name": "Lifezone Metals",
+      "exchange": "NYSE",
+      "change": 0.0301,
+      "change_pct": 0.0641
+    },
+    {
+      "symbol": "RMCOW",
+      "name": "Royalty Management Holding",
+      "exchange": "NASDAQ",
+      "change": 0.0149,
+      "change_pct": 0.0573
+    },
+    {
+      "symbol": "USLM",
+      "name": "United Sts Lime & Minerals Inc",
+      "exchange": "NASDAQ",
+      "change": 2.65,
+      "change_pct": 0.0227
+    },
+    {
+      "symbol": "AZZ",
+      "name": "Azz Inc",
+      "exchange": "NYSE",
+      "change": 2.16,
+      "change_pct": 0.0178
+    },
+    {
+      "symbol": "AESI",
+      "name": "Atlas Energy Solutions Inc.",
+      "exchange": "NYSE",
+      "change": 0.1,
+      "change_pct": 0.0074
+    },
+    {
+      "symbol": "VMC",
+      "name": "Vulcan Matrls",
+      "exchange": "NYSE",
+      "change": 1.61,
+      "change_pct": 0.0061
+    },
+    {
+      "symbol": "VGZ",
+      "name": "Vista Gold Cp",
+      "exchange": "AMEX",
+      "change": 0.01,
+      "change_pct": 0.0049
+    },
+    {
+      "symbol": "PPIH",
+      "name": "Perma Pipe",
+      "exchange": "NASDAQ",
+      "change": 0.09,
+      "change_pct": 0.0032
+    },
+    {
+      "symbol": "CX",
+      "name": "Cemex",
+      "exchange": "NYSE",
+      "change": 0.03,
+      "change_pct": 0.0029
+    },
+    {
+      "symbol": "KNF",
+      "name": "Knife River Ord Shs When Issued",
+      "exchange": "NYSE",
+      "change": 0.22,
+      "change_pct": 0.0028
+    },
+    {
+      "symbol": "SND",
+      "name": "Smart Sand Inc",
+      "exchange": "NASDAQ",
+      "change": 0.005,
+      "change_pct": 0.0013
+    },
+    {
+      "symbol": "CRH",
+      "name": "Crh Plc",
+      "exchange": "NYSE",
+      "change": 0.09,
+      "change_pct": 0.0009
+    },
+    {
+      "symbol": "CSTM",
+      "name": "Constellium Se",
+      "exchange": "NYSE",
+      "change": 0.02,
+      "change_pct": 0.0008
+    },
+    {
+      "symbol": "ODVWZ",
+      "name": "Osisko Development Corp",
+      "exchange": "NASDAQ",
+      "change": 0.0001,
+      "change_pct": 0.0004
+    },
+    {
+      "symbol": "EXP",
+      "name": "Eagle Matls Inc",
+      "exchange": "NYSE",
+      "change": 0.04,
+      "change_pct": 0.0002
+    },
+    {
+      "symbol": "SATLW",
+      "name": "Satellogic Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0,
+      "change_pct": 0.0
+    },
+    {
+      "symbol": "FRD",
+      "name": "Friedman Inds",
+      "exchange": "NASDAQ",
+      "change": -0.01,
+      "change_pct": -0.0006
+    },
+    {
+      "symbol": "JHX",
+      "name": "James Hardie",
+      "exchange": "NYSE",
+      "change": -0.02,
+      "change_pct": -0.001
+    },
+    {
+      "symbol": "CAPS",
+      "name": "Capstone Holding Corp.",
+      "exchange": "NASDAQ",
+      "change": -0.0009,
+      "change_pct": -0.0014
+    },
+    {
+      "symbol": "HCC",
+      "name": "Warrior Met Coal",
+      "exchange": "NYSE",
+      "change": -0.22,
+      "change_pct": -0.0026
+    },
+    {
+      "symbol": "METCI",
+      "name": "Ramaco Resources, Inc.",
+      "exchange": "NASDAQ",
+      "change": -0.08,
+      "change_pct": -0.003
+    },
+    {
+      "symbol": "KBSX",
+      "name": "FST",
+      "exchange": "NASDAQ",
+      "change": -0.005,
+      "change_pct": -0.0038
+    },
+    {
+      "symbol": "RS",
+      "name": "Reliance Inc",
+      "exchange": "NYSE",
+      "change": -1.84,
+      "change_pct": -0.0061
+    },
+    {
+      "symbol": "MLM",
+      "name": "Martin Mari Mat",
+      "exchange": "NYSE",
+      "change": -3.62,
+      "change_pct": -0.0062
+    },
+    {
+      "symbol": "WS",
+      "name": "Worthington Steel",
+      "exchange": "NYSE",
+      "change": -0.21,
+      "change_pct": -0.0065
+    },
+    {
+      "symbol": "TG",
+      "name": "Tredegar",
+      "exchange": "NYSE",
+      "change": -0.06,
+      "change_pct": -0.0076
+    },
+    {
+      "symbol": "METCZ",
+      "name": "Ramaco Res Inc",
+      "exchange": "NASDAQ",
+      "change": -0.2,
+      "change_pct": -0.0079
+    },
+    {
+      "symbol": "AMR",
+      "name": "Alpha Metallurgical Resources Inc",
+      "exchange": "NYSE",
+      "change": -1.62,
+      "change_pct": -0.0086
+    },
+    {
+      "symbol": "ACNT",
+      "name": "Ascent Industries Co.",
+      "exchange": "NASDAQ",
+      "change": -0.12,
+      "change_pct": -0.0093
+    },
+    {
+      "symbol": "SMID",
+      "name": "Smith Midland Corp",
+      "exchange": "NASDAQ",
+      "change": -0.31,
+      "change_pct": -0.0093
+    },
+    {
+      "symbol": "AAUC",
+      "name": "Allied Gold Corp",
+      "exchange": "NYSE",
+      "change": -0.34,
+      "change_pct": -0.0108
+    },
+    {
+      "symbol": "CMC",
+      "name": "Commercial Metals Co",
+      "exchange": "NYSE",
+      "change": -0.72,
+      "change_pct": -0.0117
+    },
+    {
+      "symbol": "MSB",
+      "name": "Mesabi Trust",
+      "exchange": "NYSE",
+      "change": -0.4,
+      "change_pct": -0.0125
+    },
+    {
+      "symbol": "NB",
+      "name": "Niocorp Developm",
+      "exchange": "NASDAQ",
+      "change": -0.06,
+      "change_pct": -0.0125
+    },
+    {
+      "symbol": "ELVR",
+      "name": "Elevra Lithium",
+      "exchange": "NASDAQ",
+      "change": -0.68,
+      "change_pct": -0.0131
+    },
+    {
+      "symbol": "NUE",
+      "name": "Nucor",
+      "exchange": "NYSE",
+      "change": -2.19,
+      "change_pct": -0.0132
+    },
+    {
+      "symbol": "AMRZ",
+      "name": "Amrize Ltd",
+      "exchange": "NYSE",
+      "change": -0.75,
+      "change_pct": -0.0133
+    },
+    {
+      "symbol": "HUDI",
+      "name": "Huadi International Grp Co Ltd",
+      "exchange": "NASDAQ",
+      "change": -0.02,
+      "change_pct": -0.0139
+    },
+    {
+      "symbol": "NIOBW",
+      "name": "NioCorp Developments",
+      "exchange": "NASDAQ",
+      "change": -0.025,
+      "change_pct": -0.0147
+    },
+    {
+      "symbol": "USAR",
+      "name": "USA Rare Earth Inc",
+      "exchange": "NASDAQ",
+      "change": -0.29,
+      "change_pct": -0.0147
+    },
+    {
+      "symbol": "NAK",
+      "name": "Northern Dyn",
+      "exchange": "AMEX",
+      "change": -0.02,
+      "change_pct": -0.015
+    },
+    {
+      "symbol": "HIHO",
+      "name": "Highway Hldgs Ltd",
+      "exchange": "NASDAQ",
+      "change": -0.0128,
+      "change_pct": -0.0155
+    },
+    {
+      "symbol": "TX",
+      "name": "Ternium",
+      "exchange": "NYSE",
+      "change": -0.64,
+      "change_pct": -0.0167
+    },
+    {
+      "symbol": "PKX",
+      "name": "POSCO HOLDINGS",
+      "exchange": "NYSE",
+      "change": -0.99,
+      "change_pct": -0.0171
+    },
+    {
+      "symbol": "MTRN",
+      "name": "Materion Corp",
+      "exchange": "NYSE",
+      "change": -2.41,
+      "change_pct": -0.0174
+    },
+    {
+      "symbol": "SLI",
+      "name": "Standard Lithium",
+      "exchange": "AMEX",
+      "change": -0.08,
+      "change_pct": -0.0184
+    },
+    {
+      "symbol": "EMAT",
+      "name": "Evolution Metals",
+      "exchange": "NASDAQ",
+      "change": -0.15,
+      "change_pct": -0.0189
+    },
+    {
+      "symbol": "RMCO",
+      "name": "Royalty Management Holding",
+      "exchange": "NASDAQ",
+      "change": -0.08,
+      "change_pct": -0.02
+    },
+    {
+      "symbol": "GSM",
+      "name": "Ferroglobe",
+      "exchange": "NASDAQ",
+      "change": -0.1,
+      "change_pct": -0.0214
+    },
+    {
+      "symbol": "FMSTW",
+      "name": "Foremost Lithium Resource & Technology Ltd",
+      "exchange": "NASDAQ",
+      "change": -0.02,
+      "change_pct": -0.0222
+    }
+  ]
+}

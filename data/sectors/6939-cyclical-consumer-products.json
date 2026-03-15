@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 6939,
+  "sector_name": "Cyclical Consumer Products",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "LVWR",
+      "name": "LIVEWIRE GROUP INC",
+      "exchange": "NYSE",
+      "change": 0.25,
+      "change_pct": 0.1667
+    },
+    {
+      "symbol": "EFOI",
+      "name": "Energy Focus Inc",
+      "exchange": "NASDAQ",
+      "change": 0.25,
+      "change_pct": 0.1404
+    },
+    {
+      "symbol": "FEBO",
+      "name": "Fenbo Holdings Limited",
+      "exchange": "NASDAQ",
+      "change": 0.15,
+      "change_pct": 0.1364
+    },
+    {
+      "symbol": "SPWRW",
+      "name": "SUNPOWER",
+      "exchange": "NASDAQ",
+      "change": 0.0295,
+      "change_pct": 0.1283
+    },
+    {
+      "symbol": "SDHC",
+      "name": "SMITH DOUGLAS HOMES CORP",
+      "exchange": "NYSE",
+      "change": 1.23,
+      "change_pct": 0.108
+    },
+    {
+      "symbol": "COOK",
+      "name": "Traeger Inc",
+      "exchange": "NYSE",
+      "change": 0.0625,
+      "change_pct": 0.1059
+    },
+    {
+      "symbol": "LCUT",
+      "name": "Lifetime Brands Inc",
+      "exchange": "NASDAQ",
+      "change": 0.33,
+      "change_pct": 0.0948
+    },
+    {
+      "symbol": "LVWR-WS",
+      "name": "LIVEWIRE GROUP INC",
+      "exchange": "NYSE",
+      "change": 0.0034,
+      "change_pct": 0.0773
+    },
+    {
+      "symbol": "OTH",
+      "name": "Off the Hook YS Inc.",
+      "exchange": "AMEX",
+      "change": 0.11,
+      "change_pct": 0.0483
+    },
+    {
+      "symbol": "HERE",
+      "name": "Here Group Limited",
+      "exchange": "NASDAQ",
+      "change": 0.175,
+      "change_pct": 0.0469
+    },
+    {
+      "symbol": "CULP",
+      "name": "Culp Inc",
+      "exchange": "NASDAQ",
+      "change": 0.13,
+      "change_pct": 0.0459
+    },
+    {
+      "symbol": "DFH",
+      "name": "Dream Finders Homes, Inc.",
+      "exchange": "NYSE",
+      "change": 0.67,
+      "change_pct": 0.0453
+    },
+    {
+      "symbol": "ESCA",
+      "name": "Escalade",
+      "exchange": "NASDAQ",
+      "change": 0.61,
+      "change_pct": 0.0368
+    },
+    {
+      "symbol": "BIRK",
+      "name": "Birkenstock Holding PLC",
+      "exchange": "NYSE",
+      "change": 1.3,
+      "change_pct": 0.036
+    },
+    {
+      "symbol": "QXO",
+      "name": "QXO Inc",
+      "exchange": "NYSE",
+      "change": 0.68,
+      "change_pct": 0.0349
+    },
+    {
+      "symbol": "JELD",
+      "name": "Jeld Wen Holding",
+      "exchange": "NYSE",
+      "change": 0.05,
+      "change_pct": 0.0347
+    },
+    {
+      "symbol": "OC",
+      "name": "Owens Corning",
+      "exchange": "NYSE",
+      "change": 3.41,
+      "change_pct": 0.0331
+    },
+    {
+      "symbol": "VRA",
+      "name": "Vera Bradley",
+      "exchange": "NASDAQ",
+      "change": 0.1,
+      "change_pct": 0.0296
+    },
+    {
+      "symbol": "ZKIN",
+      "name": "ZK International Group",
+      "exchange": "NASDAQ",
+      "change": 0.05,
+      "change_pct": 0.0294
+    },
+    {
+      "symbol": "LZB",
+      "name": "La-Z-Boy Inc",
+      "exchange": "NYSE",
+      "change": 0.9,
+      "change_pct": 0.0273
+    },
+    {
+      "symbol": "LEN",
+      "name": "Lennar",
+      "exchange": "NYSE",
+      "change": 2.42,
+      "change_pct": 0.0262
+    },
+    {
+      "symbol": "LEN-B",
+      "name": "Lennar Corp B",
+      "exchange": "NYSE",
+      "change": 2.18,
+      "change_pct": 0.0249
+    },
+    {
+      "symbol": "JL",
+      "name": "J-Long Group Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.12,
+      "change_pct": 0.0245
+    },
+    {
+      "symbol": "HOFT",
+      "name": "Hooker Furnishings Corporation",
+      "exchange": "NASDAQ",
+      "change": 0.3,
+      "change_pct": 0.0235
+    },
+    {
+      "symbol": "MSN",
+      "name": "Emerson Radio",
+      "exchange": "AMEX",
+      "change": 0.0085,
+      "change_pct": 0.0229
+    },
+    {
+      "symbol": "TGLS",
+      "name": "Tecnoglass Inc",
+      "exchange": "NYSE",
+      "change": 0.94,
+      "change_pct": 0.021
+    },
+    {
+      "symbol": "LAKE",
+      "name": "Lakeland Inds",
+      "exchange": "NASDAQ",
+      "change": 0.18,
+      "change_pct": 0.0208
+    },
+    {
+      "symbol": "QXO-PRB",
+      "name": "Qxo Inc",
+      "exchange": "NYSE",
+      "change": 1.09,
+      "change_pct": 0.0194
+    },
+    {
+      "symbol": "CALY",
+      "name": "Callaway Golf Company",
+      "exchange": "NYSE",
+      "change": 0.23,
+      "change_pct": 0.0175
+    },
+    {
+      "symbol": "BLDR",
+      "name": "Builders Firstsource Inc",
+      "exchange": "NYSE",
+      "change": 1.49,
+      "change_pct": 0.0172
+    },
+    {
+      "symbol": "KTB",
+      "name": "Kontoor Brands Inc",
+      "exchange": "NYSE",
+      "change": 1.12,
+      "change_pct": 0.0169
+    },
+    {
+      "symbol": "GAUZ",
+      "name": "Gauzy Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.008,
+      "change_pct": 0.016
+    },
+    {
+      "symbol": "SPWR",
+      "name": "Sunpower Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.02,
+      "change_pct": 0.0156
+    },
+    {
+      "symbol": "VFC",
+      "name": "V.F. Corp",
+      "exchange": "NYSE",
+      "change": 0.24,
+      "change_pct": 0.0153
+    },
+    {
+      "symbol": "GRBK",
+      "name": "Green Brick Partners Inc",
+      "exchange": "NYSE",
+      "change": 0.96,
+      "change_pct": 0.015
+    },
+    {
+      "symbol": "BGI",
+      "name": "Birks Group",
+      "exchange": "AMEX",
+      "change": 0.0099,
+      "change_pct": 0.0146
+    },
+    {
+      "symbol": "MAS",
+      "name": "Masco",
+      "exchange": "NYSE",
+      "change": 0.86,
+      "change_pct": 0.0142
+    },
+    {
+      "symbol": "AWI",
+      "name": "Armstrong World Inds Inc",
+      "exchange": "NYSE",
+      "change": 2.32,
+      "change_pct": 0.0141
+    },
+    {
+      "symbol": "WGO",
+      "name": "Winnebago Inds",
+      "exchange": "NYSE",
+      "change": 0.42,
+      "change_pct": 0.0126
+    },
+    {
+      "symbol": "POOL",
+      "name": "Pool",
+      "exchange": "NASDAQ",
+      "change": 2.52,
+      "change_pct": 0.0123
+    },
+    {
+      "symbol": "AYI",
+      "name": "ACUITY INC,",
+      "exchange": "NYSE",
+      "change": 3.04,
+      "change_pct": 0.0118
+    },
+    {
+      "symbol": "GFF",
+      "name": "Griffon Corp",
+      "exchange": "NYSE",
+      "change": 0.76,
+      "change_pct": 0.0108
+    },
+    {
+      "symbol": "PASW",
+      "name": "Ping An Biomedical",
+      "exchange": "NASDAQ",
+      "change": 0.0015,
+      "change_pct": 0.0107
+    },
+    {
+      "symbol": "FERG",
+      "name": "Ferguson Enterprises",
+      "exchange": "NYSE",
+      "change": 2.32,
+      "change_pct": 0.0106
+    },
+    {
+      "symbol": "DHI",
+      "name": "D R Horton Inc",
+      "exchange": "NYSE",
+      "change": 1.45,
+      "change_pct": 0.0104
+    },
+    {
+      "symbol": "PATK",
+      "name": "Patrick Inds Inc",
+      "exchange": "NASDAQ",
+      "change": 1.17,
+      "change_pct": 0.0103
+    },
+    {
+      "symbol": "MBC",
+      "name": "MasterBrand Inc",
+      "exchange": "NYSE",
+      "change": 0.08,
+      "change_pct": 0.0099
+    },
+    {
+      "symbol": "BIRD",
+      "name": "Allbirds, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0098
+    },
+    {
+      "symbol": "AMWD",
+      "name": "Amer Woodmk",
+      "exchange": "NASDAQ",
+      "change": 0.38,
+      "change_pct": 0.0097
+    },
+    {
+      "symbol": "HOV",
+      "name": "Hovnanian Enterprises Inc",
+      "exchange": "NYSE",
+      "change": 1.0,
+      "change_pct": 0.0095
+    }
+  ]
+}

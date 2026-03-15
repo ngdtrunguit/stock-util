@@ -1,0 +1,41 @@
+name: Daily Stock Screen
+
+on:
+  # schedule:
+  #   - cron: "0 13 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Run daily screen job
+        env:
+          PROJECT_ENDPOINT: ${{ secrets.PROJECT_ENDPOINT }}
+          AGENT_NAME: ${{ secrets.AGENT_NAME }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python -m stock_utils.jobs.daily_screen_job
+
+      - name: Upload daily output artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-screen-output
+          path: data/output/
+          if-no-files-found: warn

@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 7200,
+  "sector_name": "Banking & Investment Services",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "BCGWW",
+      "name": "Binah Capital",
+      "exchange": "NASDAQ",
+      "change": 0.0187,
+      "change_pct": 0.1336
+    },
+    {
+      "symbol": "PAPL",
+      "name": "Pineapple Financial Inc.",
+      "exchange": "AMEX",
+      "change": 0.06,
+      "change_pct": 0.0952
+    },
+    {
+      "symbol": "GLXY",
+      "name": "Galaxy Digital",
+      "exchange": "NASDAQ",
+      "change": 1.72,
+      "change_pct": 0.0834
+    },
+    {
+      "symbol": "ASST",
+      "name": "Strive",
+      "exchange": "NASDAQ",
+      "change": 0.7,
+      "change_pct": 0.0793
+    },
+    {
+      "symbol": "ARES",
+      "name": "Ares Management Corporation",
+      "exchange": "NYSE",
+      "change": 5.26,
+      "change_pct": 0.0545
+    },
+    {
+      "symbol": "BOTJ",
+      "name": "Bank Of The James Finl Gp Inc",
+      "exchange": "NASDAQ",
+      "change": 1.0,
+      "change_pct": 0.0502
+    },
+    {
+      "symbol": "SIEB",
+      "name": "Siebert Finl Corp",
+      "exchange": "NASDAQ",
+      "change": 0.1,
+      "change_pct": 0.0495
+    },
+    {
+      "symbol": "BX",
+      "name": "Blackstone Inc",
+      "exchange": "NYSE",
+      "change": 4.66,
+      "change_pct": 0.0456
+    },
+    {
+      "symbol": "ARES-PRB",
+      "name": "Ares Management Corp",
+      "exchange": "NYSE",
+      "change": 1.44,
+      "change_pct": 0.0442
+    },
+    {
+      "symbol": "STEP",
+      "name": "Stepstone Group Inc.",
+      "exchange": "NASDAQ",
+      "change": 1.76,
+      "change_pct": 0.0406
+    },
+    {
+      "symbol": "ESQ",
+      "name": "Esquire Finl Hldgs Inc",
+      "exchange": "NASDAQ",
+      "change": 3.99,
+      "change_pct": 0.0376
+    },
+    {
+      "symbol": "TPG",
+      "name": "TPG INC",
+      "exchange": "NASDAQ",
+      "change": 1.44,
+      "change_pct": 0.0369
+    },
+    {
+      "symbol": "MLCI",
+      "name": "Mount Logan Cap Inc",
+      "exchange": "NASDAQ",
+      "change": 0.19,
+      "change_pct": 0.0362
+    },
+    {
+      "symbol": "BGC",
+      "name": "BGC Group, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.33,
+      "change_pct": 0.0357
+    },
+    {
+      "symbol": "SSBI",
+      "name": "Summit State Bnk",
+      "exchange": "NASDAQ",
+      "change": 0.42,
+      "change_pct": 0.0328
+    },
+    {
+      "symbol": "OTF",
+      "name": "Blue Owl Tech",
+      "exchange": "NYSE",
+      "change": 0.35,
+      "change_pct": 0.0308
+    },
+    {
+      "symbol": "HLNE",
+      "name": "Hamilton Lane Inc",
+      "exchange": "NASDAQ",
+      "change": 2.62,
+      "change_pct": 0.0278
+    },
+    {
+      "symbol": "CMTV",
+      "name": "Commun Bncp Vt",
+      "exchange": "NASDAQ",
+      "change": 1.05,
+      "change_pct": 0.0277
+    },
+    {
+      "symbol": "LITS",
+      "name": "Lite Strategy Inc",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0261
+    },
+    {
+      "symbol": "KKR",
+      "name": "Kkr & Co Inc",
+      "exchange": "NYSE",
+      "change": 2.05,
+      "change_pct": 0.0244
+    },
+    {
+      "symbol": "GSIW",
+      "name": "Garden Stage Ltd.",
+      "exchange": "NASDAQ",
+      "change": 0.47,
+      "change_pct": 0.0241
+    },
+    {
+      "symbol": "BWBBP",
+      "name": "Bridgewater Banc",
+      "exchange": "NASDAQ",
+      "change": 0.48,
+      "change_pct": 0.0238
+    },
+    {
+      "symbol": "UPST",
+      "name": "Upstart Holdings, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.6,
+      "change_pct": 0.0233
+    },
+    {
+      "symbol": "COHN",
+      "name": "Cohen Company",
+      "exchange": "AMEX",
+      "change": 0.39,
+      "change_pct": 0.0233
+    },
+    {
+      "symbol": "SWKH",
+      "name": "Swk Hldgs Corp",
+      "exchange": "NASDAQ",
+      "change": 0.36,
+      "change_pct": 0.0214
+    },
+    {
+      "symbol": "OZ",
+      "name": "Belpointe Prep Llc",
+      "exchange": "AMEX",
+      "change": 1.07,
+      "change_pct": 0.0205
+    },
+    {
+      "symbol": "HWBK",
+      "name": "Hawthorn Banc",
+      "exchange": "NASDAQ",
+      "change": 0.65,
+      "change_pct": 0.02
+    },
+    {
+      "symbol": "SCHW",
+      "name": "Schwab (CHARLES) Corp. (The)",
+      "exchange": "NYSE",
+      "change": 1.82,
+      "change_pct": 0.0199
+    },
+    {
+      "symbol": "TOP",
+      "name": "TOP FINANCIAL GROUP",
+      "exchange": "NASDAQ",
+      "change": 0.02,
+      "change_pct": 0.0199
+    },
+    {
+      "symbol": "AMTD",
+      "name": "Amtd Idea",
+      "exchange": "NYSE",
+      "change": 0.02,
+      "change_pct": 0.0192
+    },
+    {
+      "symbol": "HWCPZ",
+      "name": "Hancock Whitney",
+      "exchange": "NASDAQ",
+      "change": 0.42,
+      "change_pct": 0.0186
+    },
+    {
+      "symbol": "SFBS",
+      "name": "Servisfirst Bancshares Inc",
+      "exchange": "NYSE",
+      "change": 1.28,
+      "change_pct": 0.0178
+    },
+    {
+      "symbol": "KKR-PRD",
+      "name": "KKR & Co. Inc.",
+      "exchange": "NYSE",
+      "change": 0.67,
+      "change_pct": 0.0178
+    },
+    {
+      "symbol": "NDAQ",
+      "name": "Nasdaq Inc",
+      "exchange": "NASDAQ",
+      "change": 1.47,
+      "change_pct": 0.0175
+    },
+    {
+      "symbol": "BUR",
+      "name": "Burford Capital",
+      "exchange": "NYSE",
+      "change": 0.13,
+      "change_pct": 0.0167
+    },
+    {
+      "symbol": "OWL",
+      "name": "Blue Owl Capital Inc",
+      "exchange": "NYSE",
+      "change": 0.14,
+      "change_pct": 0.0163
+    },
+    {
+      "symbol": "BNBX",
+      "name": "BNB Plus Corp",
+      "exchange": "NASDAQ",
+      "change": 0.0119,
+      "change_pct": 0.0159
+    },
+    {
+      "symbol": "ASB-PRE",
+      "name": "Associated Banc-Corp",
+      "exchange": "NYSE",
+      "change": 0.33,
+      "change_pct": 0.0157
+    },
+    {
+      "symbol": "ARCC",
+      "name": "Ares Capital",
+      "exchange": "NASDAQ",
+      "change": 0.27,
+      "change_pct": 0.0154
+    },
+    {
+      "symbol": "BEN",
+      "name": "Franklin Resources Inc",
+      "exchange": "NYSE",
+      "change": 0.36,
+      "change_pct": 0.0151
+    },
+    {
+      "symbol": "CASH",
+      "name": "Pathward Financial",
+      "exchange": "NASDAQ",
+      "change": 1.36,
+      "change_pct": 0.0151
+    },
+    {
+      "symbol": "AVBC",
+      "name": "Avidia Bancorp",
+      "exchange": "NYSE",
+      "change": 0.28,
+      "change_pct": 0.0149
+    },
+    {
+      "symbol": "GBDC",
+      "name": "Golub Cap Bdc Inc",
+      "exchange": "NASDAQ",
+      "change": 0.17,
+      "change_pct": 0.0144
+    },
+    {
+      "symbol": "WHG",
+      "name": "Westwood Hldgs",
+      "exchange": "NYSE",
+      "change": 0.22,
+      "change_pct": 0.0142
+    },
+    {
+      "symbol": "COF",
+      "name": "Capital One Financial",
+      "exchange": "NYSE",
+      "change": 2.34,
+      "change_pct": 0.0132
+    },
+    {
+      "symbol": "TRST",
+      "name": "Trustco Bk Corp N Y",
+      "exchange": "NASDAQ",
+      "change": 0.53,
+      "change_pct": 0.0122
+    },
+    {
+      "symbol": "VOYA",
+      "name": "Voya Financial Inc",
+      "exchange": "NYSE",
+      "change": 0.74,
+      "change_pct": 0.0113
+    },
+    {
+      "symbol": "FCFS",
+      "name": "Firstcash Holdings Inc",
+      "exchange": "NASDAQ",
+      "change": 2.12,
+      "change_pct": 0.0111
+    },
+    {
+      "symbol": "CFFI",
+      "name": "C&F Financial Corp.",
+      "exchange": "NASDAQ",
+      "change": 0.78,
+      "change_pct": 0.011
+    },
+    {
+      "symbol": "ONBPP",
+      "name": "Old National Bancorp",
+      "exchange": "NASDAQ",
+      "change": 0.27,
+      "change_pct": 0.0109
+    }
+  ]
+}

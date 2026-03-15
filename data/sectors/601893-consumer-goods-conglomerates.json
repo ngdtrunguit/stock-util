@@ -1,0 +1,78 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 601893,
+  "sector_name": "Consumer Goods Conglomerates",
+  "stock_count": 10,
+  "stocks": [
+    {
+      "symbol": "MMM",
+      "name": "3M Corp",
+      "exchange": "NYSE",
+      "change": 1.86,
+      "change_pct": 0.0125
+    },
+    {
+      "symbol": "BIP-PRA",
+      "name": "Brookfield Infrast Partners Lp",
+      "exchange": "NYSE",
+      "change": 0.11,
+      "change_pct": 0.0061
+    },
+    {
+      "symbol": "ITW",
+      "name": "Illinois Tool Wk",
+      "exchange": "NYSE",
+      "change": 1.37,
+      "change_pct": 0.0052
+    },
+    {
+      "symbol": "HON",
+      "name": "Honeywell Intl Inc",
+      "exchange": "NASDAQ",
+      "change": 1.1,
+      "change_pct": 0.0047
+    },
+    {
+      "symbol": "BIP-PRB",
+      "name": "Brookfield Infrast Partners Lp",
+      "exchange": "NYSE",
+      "change": 0.08,
+      "change_pct": 0.0045
+    },
+    {
+      "symbol": "BRK-A",
+      "name": "Berkshire",
+      "exchange": "NYSE",
+      "change": -1786.06,
+      "change_pct": -0.0024
+    },
+    {
+      "symbol": "BIP",
+      "name": "Brookfield Infrast Partners Lp",
+      "exchange": "NYSE",
+      "change": -0.12,
+      "change_pct": -0.0032
+    },
+    {
+      "symbol": "BRK-B",
+      "name": "Berkshire",
+      "exchange": "NYSE",
+      "change": -1.86,
+      "change_pct": -0.0038
+    },
+    {
+      "symbol": "BBUC",
+      "name": "BROOKFIELD BUSINESS CORP",
+      "exchange": "NYSE",
+      "change": -0.95,
+      "change_pct": -0.0307
+    },
+    {
+      "symbol": "CSAN",
+      "name": "Cosan S A",
+      "exchange": "NYSE",
+      "change": -0.21,
+      "change_pct": -0.0488
+    }
+  ]
+}

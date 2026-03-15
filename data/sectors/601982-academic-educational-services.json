@@ -1,0 +1,295 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 601982,
+  "sector_name": "Academic & Educational Services",
+  "stock_count": 41,
+  "stocks": [
+    {
+      "symbol": "APEI",
+      "name": "American Public",
+      "exchange": "NASDAQ",
+      "change": 10.08,
+      "change_pct": 0.2119
+    },
+    {
+      "symbol": "GNS",
+      "name": "Genius Group",
+      "exchange": "AMEX",
+      "change": 0.04,
+      "change_pct": 0.1143
+    },
+    {
+      "symbol": "FEDU",
+      "name": "Four Seasons Education",
+      "exchange": "NYSE",
+      "change": 0.61,
+      "change_pct": 0.0633
+    },
+    {
+      "symbol": "LGCY",
+      "name": "Legacy Education Inc",
+      "exchange": "AMEX",
+      "change": 0.52,
+      "change_pct": 0.0397
+    },
+    {
+      "symbol": "AMBO",
+      "name": "Ambow Education Holding Ltd.",
+      "exchange": "AMEX",
+      "change": 0.059,
+      "change_pct": 0.0362
+    },
+    {
+      "symbol": "FCHL",
+      "name": "FITNESS CHAMPS HLDGS LTD",
+      "exchange": "NASDAQ",
+      "change": 0.0072,
+      "change_pct": 0.0338
+    },
+    {
+      "symbol": "NTCL",
+      "name": "Netclass Technology Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.0085,
+      "change_pct": 0.0303
+    },
+    {
+      "symbol": "TAL",
+      "name": "Tal Education Group",
+      "exchange": "NYSE",
+      "change": 0.3,
+      "change_pct": 0.0277
+    },
+    {
+      "symbol": "PRDO",
+      "name": "Perdoceo Education Corporation",
+      "exchange": "NASDAQ",
+      "change": 0.82,
+      "change_pct": 0.0235
+    },
+    {
+      "symbol": "UTI",
+      "name": "Universal Technical Institute",
+      "exchange": "NYSE",
+      "change": 0.71,
+      "change_pct": 0.0201
+    },
+    {
+      "symbol": "STRA",
+      "name": "Strategic Education Inc",
+      "exchange": "NASDAQ",
+      "change": 1.58,
+      "change_pct": 0.02
+    },
+    {
+      "symbol": "AFYA",
+      "name": "Afya Limited",
+      "exchange": "NASDAQ",
+      "change": 0.26,
+      "change_pct": 0.0193
+    },
+    {
+      "symbol": "JDZG",
+      "name": "Jiade Limited",
+      "exchange": "NASDAQ",
+      "change": 0.0018,
+      "change_pct": 0.0171
+    },
+    {
+      "symbol": "LAUR",
+      "name": "Laureate Education Inc",
+      "exchange": "NASDAQ",
+      "change": 0.56,
+      "change_pct": 0.0166
+    },
+    {
+      "symbol": "AACG",
+      "name": "Ata Creativity Global",
+      "exchange": "NASDAQ",
+      "change": 0.015,
+      "change_pct": 0.0154
+    },
+    {
+      "symbol": "CVSA",
+      "name": "Covista Inc",
+      "exchange": "NYSE",
+      "change": 1.27,
+      "change_pct": 0.0122
+    },
+    {
+      "symbol": "GHC",
+      "name": "Graham Holdings",
+      "exchange": "NYSE",
+      "change": 10.74,
+      "change_pct": 0.0103
+    },
+    {
+      "symbol": "GOTU",
+      "name": "Gaotu Techedu Inc",
+      "exchange": "NYSE",
+      "change": 0.02,
+      "change_pct": 0.0098
+    },
+    {
+      "symbol": "LINC",
+      "name": "Lincoln Edl Svcs Corp",
+      "exchange": "NASDAQ",
+      "change": 0.33,
+      "change_pct": 0.0089
+    },
+    {
+      "symbol": "EDU",
+      "name": "New Oriental Ed & Technology G",
+      "exchange": "NYSE",
+      "change": 0.39,
+      "change_pct": 0.0073
+    },
+    {
+      "symbol": "LRN",
+      "name": "Stride Inc",
+      "exchange": "NYSE",
+      "change": 0.51,
+      "change_pct": 0.0061
+    },
+    {
+      "symbol": "EDTK",
+      "name": "Skillful Craftsman Ed Tech Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.0,
+      "change_pct": 0.0
+    },
+    {
+      "symbol": "LOPE",
+      "name": "Grand Canyon Ed Inc",
+      "exchange": "NASDAQ",
+      "change": -0.18,
+      "change_pct": -0.0011
+    },
+    {
+      "symbol": "PXED",
+      "name": "Phoenix Education Partners Inc.",
+      "exchange": "NYSE",
+      "change": -0.04,
+      "change_pct": -0.0015
+    },
+    {
+      "symbol": "STG",
+      "name": "Sunlands Tech",
+      "exchange": "NYSE",
+      "change": -0.01,
+      "change_pct": -0.0022
+    },
+    {
+      "symbol": "ZCMD",
+      "name": "Zhongchao Inc",
+      "exchange": "NASDAQ",
+      "change": -0.02,
+      "change_pct": -0.0109
+    },
+    {
+      "symbol": "FC",
+      "name": "Franklin Covey Co",
+      "exchange": "NYSE",
+      "change": -0.13,
+      "change_pct": -0.0111
+    },
+    {
+      "symbol": "JZ",
+      "name": "Jianzhi Education Technology Group Co Ltd",
+      "exchange": "NASDAQ",
+      "change": -0.0102,
+      "change_pct": -0.0123
+    },
+    {
+      "symbol": "LXEH",
+      "name": "Lixiang Education Holding Co . Ltd",
+      "exchange": "NASDAQ",
+      "change": -0.0031,
+      "change_pct": -0.0137
+    },
+    {
+      "symbol": "EEIQ",
+      "name": "EpicQuest Edu",
+      "exchange": "NASDAQ",
+      "change": -0.05,
+      "change_pct": -0.0181
+    },
+    {
+      "symbol": "LFS",
+      "name": "Leifras Co. Ltd.",
+      "exchange": "NASDAQ",
+      "change": -0.075,
+      "change_pct": -0.0316
+    },
+    {
+      "symbol": "WAFU",
+      "name": "Wah Fu Education Group Limited",
+      "exchange": "NASDAQ",
+      "change": -0.07,
+      "change_pct": -0.04
+    },
+    {
+      "symbol": "MYND",
+      "name": "Mynd.ai, Inc.",
+      "exchange": "AMEX",
+      "change": -0.0203,
+      "change_pct": -0.0414
+    },
+    {
+      "symbol": "YQ",
+      "name": "17 Education & Technology Group Inc",
+      "exchange": "NASDAQ",
+      "change": -0.14,
+      "change_pct": -0.0483
+    },
+    {
+      "symbol": "SKIL",
+      "name": "Skillsoft Corp",
+      "exchange": "NYSE",
+      "change": -0.22,
+      "change_pct": -0.056
+    },
+    {
+      "symbol": "VSA",
+      "name": "VisionSys AI Inc",
+      "exchange": "NASDAQ",
+      "change": -0.0741,
+      "change_pct": -0.0815
+    },
+    {
+      "symbol": "YXT",
+      "name": "YXT.COM GROUP HOLDING LIMITED",
+      "exchange": "NASDAQ",
+      "change": -0.0525,
+      "change_pct": -0.089
+    },
+    {
+      "symbol": "NOMA",
+      "name": "NOMADAR CORP.",
+      "exchange": "NASDAQ",
+      "change": -0.48,
+      "change_pct": -0.0913
+    },
+    {
+      "symbol": "GSUN",
+      "name": "Golden Sun Health Technology Group Ltd",
+      "exchange": "NASDAQ",
+      "change": -0.0618,
+      "change_pct": -0.1343
+    },
+    {
+      "symbol": "COE",
+      "name": "51Talk",
+      "exchange": "AMEX",
+      "change": -4.71,
+      "change_pct": -0.1974
+    },
+    {
+      "symbol": "ZNB",
+      "name": "Zeta Network Group",
+      "exchange": "NASDAQ",
+      "change": -2.91,
+      "change_pct": -0.3335
+    }
+  ]
+}

@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 7039,
+  "sector_name": "Food & Beverages",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "SOWG",
+      "name": "Sow Good Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0871,
+      "change_pct": 0.2323
+    },
+    {
+      "symbol": "CHSN",
+      "name": "CHANSON INTL HLDG",
+      "exchange": "NASDAQ",
+      "change": 0.371,
+      "change_pct": 0.1521
+    },
+    {
+      "symbol": "BUDA",
+      "name": "Buda Juice, Inc.",
+      "exchange": "AMEX",
+      "change": 1.0,
+      "change_pct": 0.1195
+    },
+    {
+      "symbol": "REED",
+      "name": "Reeds",
+      "exchange": "AMEX",
+      "change": 0.41,
+      "change_pct": 0.1111
+    },
+    {
+      "symbol": "WEST",
+      "name": "WESTROCK COFFEE CO",
+      "exchange": "NASDAQ",
+      "change": 0.4,
+      "change_pct": 0.1036
+    },
+    {
+      "symbol": "MGN",
+      "name": "MEGAN HLDGS LTD",
+      "exchange": "NASDAQ",
+      "change": 0.3,
+      "change_pct": 0.1014
+    },
+    {
+      "symbol": "THCH",
+      "name": "TH International Limited",
+      "exchange": "NASDAQ",
+      "change": 0.172,
+      "change_pct": 0.0852
+    },
+    {
+      "symbol": "WYHG",
+      "name": "Wing Yip Food Holdings Group Ltd.",
+      "exchange": "NASDAQ",
+      "change": 0.035,
+      "change_pct": 0.0795
+    },
+    {
+      "symbol": "SRXH",
+      "name": "SRX Health Solutions Inc",
+      "exchange": "AMEX",
+      "change": 0.01,
+      "change_pct": 0.0751
+    },
+    {
+      "symbol": "HAIN",
+      "name": "Hain Celestial",
+      "exchange": "NASDAQ",
+      "change": 0.0436,
+      "change_pct": 0.0702
+    },
+    {
+      "symbol": "XXII",
+      "name": "22Nd Century",
+      "exchange": "NASDAQ",
+      "change": 0.184,
+      "change_pct": 0.0498
+    },
+    {
+      "symbol": "FIZZ",
+      "name": "National Beverage Corp",
+      "exchange": "NASDAQ",
+      "change": 1.48,
+      "change_pct": 0.0432
+    },
+    {
+      "symbol": "OTLY",
+      "name": "Oatly Group Ab",
+      "exchange": "NASDAQ",
+      "change": 0.41,
+      "change_pct": 0.0413
+    },
+    {
+      "symbol": "BYND",
+      "name": "Beyond Meat",
+      "exchange": "NASDAQ",
+      "change": 0.0289,
+      "change_pct": 0.0395
+    },
+    {
+      "symbol": "EDBL",
+      "name": "Edible Garden AG Inc",
+      "exchange": "NASDAQ",
+      "change": 0.09,
+      "change_pct": 0.0386
+    },
+    {
+      "symbol": "MTEX",
+      "name": "Mannatech",
+      "exchange": "NASDAQ",
+      "change": 0.25,
+      "change_pct": 0.0386
+    },
+    {
+      "symbol": "UTZ",
+      "name": "Utz Brands Inc",
+      "exchange": "NYSE",
+      "change": 0.26,
+      "change_pct": 0.0356
+    },
+    {
+      "symbol": "COKE",
+      "name": "Coca-Cola Consolidated Inc",
+      "exchange": "NASDAQ",
+      "change": 7.21,
+      "change_pct": 0.0344
+    },
+    {
+      "symbol": "IPST",
+      "name": "IP Strategy Holdings Inc",
+      "exchange": "NASDAQ",
+      "change": 0.015,
+      "change_pct": 0.0304
+    },
+    {
+      "symbol": "NOMD",
+      "name": "Nomad Foods Ltd",
+      "exchange": "NYSE",
+      "change": 0.29,
+      "change_pct": 0.0304
+    },
+    {
+      "symbol": "STKH",
+      "name": "STEAKHOLDER FOODS LTD",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0265
+    },
+    {
+      "symbol": "TR",
+      "name": "Tootsie Roll Ind",
+      "exchange": "NYSE",
+      "change": 1.07,
+      "change_pct": 0.0259
+    },
+    {
+      "symbol": "AGRO",
+      "name": "Adecoagro S A",
+      "exchange": "NYSE",
+      "change": 0.22,
+      "change_pct": 0.0208
+    },
+    {
+      "symbol": "CELH",
+      "name": "Celsius Hldgs Inc",
+      "exchange": "NASDAQ",
+      "change": 0.89,
+      "change_pct": 0.0204
+    },
+    {
+      "symbol": "TPB",
+      "name": "Turning Pt Brands Inc",
+      "exchange": "NYSE",
+      "change": 1.66,
+      "change_pct": 0.0187
+    },
+    {
+      "symbol": "FLO",
+      "name": "Flowers Foods Inc",
+      "exchange": "NYSE",
+      "change": 0.16,
+      "change_pct": 0.0185
+    },
+    {
+      "symbol": "BF-B",
+      "name": "Brown Forman Corp",
+      "exchange": "NYSE",
+      "change": 0.42,
+      "change_pct": 0.0182
+    },
+    {
+      "symbol": "KDP",
+      "name": "Keurig Dr Pepper Inc",
+      "exchange": "NASDAQ",
+      "change": 0.48,
+      "change_pct": 0.0178
+    },
+    {
+      "symbol": "MKC",
+      "name": "Mccormick & Co",
+      "exchange": "NYSE",
+      "change": 0.97,
+      "change_pct": 0.0169
+    },
+    {
+      "symbol": "PM",
+      "name": "Philip Morris",
+      "exchange": "NYSE",
+      "change": 2.66,
+      "change_pct": 0.0155
+    },
+    {
+      "symbol": "CAG",
+      "name": "Conagra Brands Inc",
+      "exchange": "NYSE",
+      "change": 0.24,
+      "change_pct": 0.0148
+    },
+    {
+      "symbol": "BRCC",
+      "name": "BRC INC",
+      "exchange": "NYSE",
+      "change": 0.0133,
+      "change_pct": 0.0148
+    },
+    {
+      "symbol": "TULP",
+      "name": "Bloomia Holdings",
+      "exchange": "NASDAQ",
+      "change": 0.053,
+      "change_pct": 0.0135
+    },
+    {
+      "symbol": "CHSCP",
+      "name": "CHS 8 Cumulative Redeemable Pref Shs",
+      "exchange": "NASDAQ",
+      "change": 0.38,
+      "change_pct": 0.0133
+    },
+    {
+      "symbol": "STZ",
+      "name": "Constelltn Bnds",
+      "exchange": "NYSE",
+      "change": 1.82,
+      "change_pct": 0.0123
+    },
+    {
+      "symbol": "JJSF",
+      "name": "J J Snack Foods",
+      "exchange": "NASDAQ",
+      "change": 0.96,
+      "change_pct": 0.0118
+    },
+    {
+      "symbol": "BF-A",
+      "name": "Brown Forman",
+      "exchange": "NYSE",
+      "change": 0.27,
+      "change_pct": 0.0115
+    },
+    {
+      "symbol": "KHC",
+      "name": "Kraft Heinz Co",
+      "exchange": "NASDAQ",
+      "change": 0.25,
+      "change_pct": 0.0112
+    },
+    {
+      "symbol": "HLF",
+      "name": "Herbalife",
+      "exchange": "NYSE",
+      "change": 0.17,
+      "change_pct": 0.0112
+    },
+    {
+      "symbol": "MICC",
+      "name": "Magnum Company",
+      "exchange": "NYSE",
+      "change": 0.17,
+      "change_pct": 0.0111
+    },
+    {
+      "symbol": "BRFH",
+      "name": "Barfresh",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0104
+    },
+    {
+      "symbol": "SAM",
+      "name": "Boston Beer",
+      "exchange": "NYSE",
+      "change": 2.3,
+      "change_pct": 0.01
+    },
+    {
+      "symbol": "MDLZ",
+      "name": "Mondelez Intl",
+      "exchange": "NASDAQ",
+      "change": 0.54,
+      "change_pct": 0.0099
+    },
+    {
+      "symbol": "CENTA",
+      "name": "Central Garden & Pet Co",
+      "exchange": "NASDAQ",
+      "change": 0.31,
+      "change_pct": 0.0097
+    },
+    {
+      "symbol": "MED",
+      "name": "Medifast",
+      "exchange": "NYSE",
+      "change": 0.09,
+      "change_pct": 0.0094
+    },
+    {
+      "symbol": "INGR",
+      "name": "Ingredion Inc",
+      "exchange": "NYSE",
+      "change": 1.01,
+      "change_pct": 0.0091
+    },
+    {
+      "symbol": "MAMA",
+      "name": "Mama's Creations Inc",
+      "exchange": "NASDAQ",
+      "change": 0.14,
+      "change_pct": 0.0088
+    },
+    {
+      "symbol": "DEO",
+      "name": "Diageo",
+      "exchange": "NYSE",
+      "change": 0.62,
+      "change_pct": 0.0081
+    },
+    {
+      "symbol": "USNA",
+      "name": "Usana Health Sciences Inc",
+      "exchange": "NYSE",
+      "change": 0.13,
+      "change_pct": 0.0076
+    },
+    {
+      "symbol": "WVVIP",
+      "name": "Willamette Valy",
+      "exchange": "NASDAQ",
+      "change": 0.023,
+      "change_pct": 0.0075
+    }
+  ]
+}

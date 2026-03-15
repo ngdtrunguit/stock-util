@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 7252,
+  "sector_name": "Collective Investments",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "TSI-RT",
+      "name": "Tcw Strategic Income Fd Inc",
+      "exchange": "NYSE",
+      "change": 0.013,
+      "change_pct": 0.3514
+    },
+    {
+      "symbol": "APO-PRA",
+      "name": "Apollo Global",
+      "exchange": "NYSE",
+      "change": 2.33,
+      "change_pct": 0.043
+    },
+    {
+      "symbol": "APO",
+      "name": "Apollo Global Mgmt Inc",
+      "exchange": "NYSE",
+      "change": 4.14,
+      "change_pct": 0.0413
+    },
+    {
+      "symbol": "GECCH",
+      "name": "Great Elm Cap Corp",
+      "exchange": "NASDAQ",
+      "change": 0.53,
+      "change_pct": 0.0214
+    },
+    {
+      "symbol": "BPRE",
+      "name": "Bluerock Pvt Real Estate Fd",
+      "exchange": "NYSE",
+      "change": 0.23,
+      "change_pct": 0.0137
+    },
+    {
+      "symbol": "CCAP",
+      "name": "Crescent Capital Bdc Inc",
+      "exchange": "NASDAQ",
+      "change": 0.14,
+      "change_pct": 0.011
+    },
+    {
+      "symbol": "PFLT",
+      "name": "Pennantpark Floating Rate Cap",
+      "exchange": "NYSE",
+      "change": 0.08,
+      "change_pct": 0.01
+    },
+    {
+      "symbol": "OXLCG",
+      "name": "Oxford Lane Cap Corp",
+      "exchange": "NASDAQ",
+      "change": 0.24,
+      "change_pct": 0.0096
+    },
+    {
+      "symbol": "GGT-PRG",
+      "name": "Gabelli Multimedia Trust Inc",
+      "exchange": "NYSE",
+      "change": 0.18,
+      "change_pct": 0.0082
+    },
+    {
+      "symbol": "GECCI",
+      "name": "Great Elm Cap Corp",
+      "exchange": "NASDAQ",
+      "change": 0.19,
+      "change_pct": 0.0077
+    },
+    {
+      "symbol": "PFXNZ",
+      "name": "Phenixfin",
+      "exchange": "NASDAQ",
+      "change": 0.16,
+      "change_pct": 0.0067
+    },
+    {
+      "symbol": "OXLCZ",
+      "name": "OXFORD LANE CAP CORP",
+      "exchange": "NASDAQ",
+      "change": 0.16,
+      "change_pct": 0.0067
+    },
+    {
+      "symbol": "ECCW",
+      "name": "Eagle Point Credit Company Inc",
+      "exchange": "NYSE",
+      "change": 0.16,
+      "change_pct": 0.0064
+    },
+    {
+      "symbol": "SCM",
+      "name": "Stellus Cap Invt Corp",
+      "exchange": "NYSE",
+      "change": 0.05,
+      "change_pct": 0.0057
+    },
+    {
+      "symbol": "GDV-PRH",
+      "name": "Gabelli Dividend & Income Trust",
+      "exchange": "NYSE",
+      "change": 0.13,
+      "change_pct": 0.0057
+    },
+    {
+      "symbol": "SPMA",
+      "name": "Sound Point Meridian Cap Inc",
+      "exchange": "NYSE",
+      "change": 0.14,
+      "change_pct": 0.0056
+    },
+    {
+      "symbol": "KBDC",
+      "name": "Kayne Anderson BDC Inc",
+      "exchange": "NYSE",
+      "change": 0.07,
+      "change_pct": 0.0052
+    },
+    {
+      "symbol": "OXLCI",
+      "name": "Oxford Lane Capital Corp",
+      "exchange": "NASDAQ",
+      "change": 0.13,
+      "change_pct": 0.0051
+    },
+    {
+      "symbol": "GNT-PRA",
+      "name": "GAMCO Natural Resources",
+      "exchange": "NYSE",
+      "change": 0.1,
+      "change_pct": 0.0047
+    },
+    {
+      "symbol": "GAING",
+      "name": "Gladstone Invt Corp",
+      "exchange": "NASDAQ",
+      "change": 0.11,
+      "change_pct": 0.0044
+    },
+    {
+      "symbol": "GDV-PRK",
+      "name": "Gabelli Divid & Income Tr",
+      "exchange": "NYSE",
+      "change": 0.07,
+      "change_pct": 0.0039
+    },
+    {
+      "symbol": "OCCI",
+      "name": "Ofs Credit Company Inc",
+      "exchange": "NASDAQ",
+      "change": 0.01,
+      "change_pct": 0.0035
+    },
+    {
+      "symbol": "ECCV",
+      "name": "EAGLE POINT CREDIT COMPANY INC",
+      "exchange": "NYSE",
+      "change": 0.07,
+      "change_pct": 0.0032
+    },
+    {
+      "symbol": "GAINZ",
+      "name": "Gladstone Invest",
+      "exchange": "NASDAQ",
+      "change": 0.07,
+      "change_pct": 0.0029
+    },
+    {
+      "symbol": "OXLCN",
+      "name": "Oxford Lane Cap",
+      "exchange": "NASDAQ",
+      "change": 0.07,
+      "change_pct": 0.0029
+    },
+    {
+      "symbol": "OXLCL",
+      "name": "Oxford Lane",
+      "exchange": "NASDAQ",
+      "change": 0.06,
+      "change_pct": 0.0026
+    },
+    {
+      "symbol": "ECF-PRA",
+      "name": "Ellsworth Growth",
+      "exchange": "AMEX",
+      "change": 0.06,
+      "change_pct": 0.0025
+    },
+    {
+      "symbol": "GAM-PRB",
+      "name": "General American",
+      "exchange": "NYSE",
+      "change": 0.06,
+      "change_pct": 0.0024
+    },
+    {
+      "symbol": "GAB-PRH",
+      "name": "Gabelli Equity Tr Inc",
+      "exchange": "NYSE",
+      "change": 0.05,
+      "change_pct": 0.0024
+    },
+    {
+      "symbol": "HFRO-PRB",
+      "name": "Highland Opportunities and Income Fund 5 375 Cumulative Prf Shs Series B",
+      "exchange": "NYSE",
+      "change": 0.04,
+      "change_pct": 0.0024
+    },
+    {
+      "symbol": "OXLCP",
+      "name": "Oxford Lane Capital Corp",
+      "exchange": "NASDAQ",
+      "change": 0.05,
+      "change_pct": 0.002
+    },
+    {
+      "symbol": "ATHS",
+      "name": "Athene Holding",
+      "exchange": "NYSE",
+      "change": 0.04,
+      "change_pct": 0.0018
+    },
+    {
+      "symbol": "EICA",
+      "name": "Eagle Point Income Company Inc",
+      "exchange": "NYSE",
+      "change": 0.04,
+      "change_pct": 0.0017
+    },
+    {
+      "symbol": "GAINN",
+      "name": "Gladstone Invt Corp",
+      "exchange": "NASDAQ",
+      "change": 0.04,
+      "change_pct": 0.0016
+    },
+    {
+      "symbol": "GECCO",
+      "name": "Great Elm Cap",
+      "exchange": "NASDAQ",
+      "change": 0.04,
+      "change_pct": 0.0015
+    },
+    {
+      "symbol": "SLRC",
+      "name": "Slr Investment Corp",
+      "exchange": "NASDAQ",
+      "change": 0.02,
+      "change_pct": 0.0014
+    },
+    {
+      "symbol": "GUT-PRC",
+      "name": "Gabelli Utility",
+      "exchange": "NYSE",
+      "change": 0.03,
+      "change_pct": 0.0013
+    },
+    {
+      "symbol": "ECCU",
+      "name": "Eagle Point Credit Company Inc.",
+      "exchange": "NYSE",
+      "change": 0.02,
+      "change_pct": 0.0008
+    },
+    {
+      "symbol": "GAB-PRK",
+      "name": "Gabelli Equity Trust Inc",
+      "exchange": "NYSE",
+      "change": 0.01,
+      "change_pct": 0.0005
+    },
+    {
+      "symbol": "EICC",
+      "name": "Eagle Point Income Company Inc",
+      "exchange": "NYSE",
+      "change": 0.01,
+      "change_pct": 0.0004
+    },
+    {
+      "symbol": "GAINI",
+      "name": "Gladstone Investment Corp",
+      "exchange": "NASDAQ",
+      "change": 0.01,
+      "change_pct": 0.0004
+    },
+    {
+      "symbol": "OXSQG",
+      "name": "Oxford Square",
+      "exchange": "NASDAQ",
+      "change": 0.0,
+      "change_pct": 0.0
+    },
+    {
+      "symbol": "FCRX",
+      "name": "Crescent Cap Bdc",
+      "exchange": "NYSE",
+      "change": 0.0,
+      "change_pct": 0.0
+    },
+    {
+      "symbol": "PNNT",
+      "name": "Pennantpark Invt Corp",
+      "exchange": "NYSE",
+      "change": 0.0,
+      "change_pct": 0.0
+    },
+    {
+      "symbol": "WHF",
+      "name": "Whitehorse",
+      "exchange": "NASDAQ",
+      "change": 0.0,
+      "change_pct": 0.0
+    },
+    {
+      "symbol": "HFRO-PRA",
+      "name": "Highland Opportunities and Income Fund 5 375 Series A Cumulative Pref Shs",
+      "exchange": "NYSE",
+      "change": -0.02,
+      "change_pct": -0.0012
+    },
+    {
+      "symbol": "PDPA",
+      "name": "Pearl Diver Credit Co Inc",
+      "exchange": "NYSE",
+      "change": -0.03,
+      "change_pct": -0.0012
+    },
+    {
+      "symbol": "ECCC",
+      "name": "Eagle Point Credit Company Inc",
+      "exchange": "NYSE",
+      "change": -0.04,
+      "change_pct": -0.0015
+    },
+    {
+      "symbol": "ATH-PRA",
+      "name": "Athene Holding Ltd",
+      "exchange": "NYSE",
+      "change": -0.04,
+      "change_pct": -0.0016
+    },
+    {
+      "symbol": "DXR",
+      "name": "DAXOR CORP",
+      "exchange": "NASDAQ",
+      "change": -0.02,
+      "change_pct": -0.0017
+    }
+  ]
+}

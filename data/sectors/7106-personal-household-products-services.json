@@ -1,0 +1,337 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 7106,
+  "sector_name": "Personal & Household Products & Services",
+  "stock_count": 47,
+  "stocks": [
+    {
+      "symbol": "SKIN",
+      "name": "The Beauty Health Company",
+      "exchange": "NASDAQ",
+      "change": 0.21,
+      "change_pct": 0.1981
+    },
+    {
+      "symbol": "RGS",
+      "name": "Regis Corp",
+      "exchange": "NASDAQ",
+      "change": 1.36,
+      "change_pct": 0.0648
+    },
+    {
+      "symbol": "EPC",
+      "name": "Edgewell Pers Care Co",
+      "exchange": "NYSE",
+      "change": 1.13,
+      "change_pct": 0.0607
+    },
+    {
+      "symbol": "EL",
+      "name": "Estee Lauder Companies",
+      "exchange": "NYSE",
+      "change": 3.59,
+      "change_pct": 0.0426
+    },
+    {
+      "symbol": "DSY",
+      "name": "Big Tree Cloud Holdings Limited",
+      "exchange": "NASDAQ",
+      "change": 0.13,
+      "change_pct": 0.0421
+    },
+    {
+      "symbol": "XWEL",
+      "name": "XWELL Inc",
+      "exchange": "NASDAQ",
+      "change": 0.06,
+      "change_pct": 0.0395
+    },
+    {
+      "symbol": "YSXT",
+      "name": "YSX Tech. Co, Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.04,
+      "change_pct": 0.0313
+    },
+    {
+      "symbol": "CABR",
+      "name": "Caring Brands",
+      "exchange": "NASDAQ",
+      "change": 0.0232,
+      "change_pct": 0.0281
+    },
+    {
+      "symbol": "CLX",
+      "name": "Clorox Co Del",
+      "exchange": "NYSE",
+      "change": 1.95,
+      "change_pct": 0.0179
+    },
+    {
+      "symbol": "ODD",
+      "name": "Oddity Tech Ltd.",
+      "exchange": "NASDAQ",
+      "change": 0.22,
+      "change_pct": 0.0164
+    },
+    {
+      "symbol": "SCI",
+      "name": "Service Crp Intr",
+      "exchange": "NYSE",
+      "change": 1.27,
+      "change_pct": 0.0162
+    },
+    {
+      "symbol": "ELF",
+      "name": "elf Beauty",
+      "exchange": "NYSE",
+      "change": 0.83,
+      "change_pct": 0.0114
+    },
+    {
+      "symbol": "KMB",
+      "name": "Kimberly-Clark Corp",
+      "exchange": "NASDAQ",
+      "change": 1.02,
+      "change_pct": 0.0104
+    },
+    {
+      "symbol": "CL",
+      "name": "Colgate Palmolive Co",
+      "exchange": "NYSE",
+      "change": 0.89,
+      "change_pct": 0.0101
+    },
+    {
+      "symbol": "HRB",
+      "name": "Block (H.&R.), Inc.",
+      "exchange": "NYSE",
+      "change": 0.29,
+      "change_pct": 0.0096
+    },
+    {
+      "symbol": "NUS",
+      "name": "Nu Skin Enter",
+      "exchange": "NYSE",
+      "change": 0.06,
+      "change_pct": 0.0084
+    },
+    {
+      "symbol": "VSTS",
+      "name": "Vestis Corporation",
+      "exchange": "NYSE",
+      "change": 0.06,
+      "change_pct": 0.008
+    },
+    {
+      "symbol": "IPAR",
+      "name": "Interparfums Inc",
+      "exchange": "NASDAQ",
+      "change": 0.67,
+      "change_pct": 0.0074
+    },
+    {
+      "symbol": "KVUE",
+      "name": "Kenvue Inc.",
+      "exchange": "NYSE",
+      "change": 0.1,
+      "change_pct": 0.0058
+    },
+    {
+      "symbol": "CSV",
+      "name": "Carriage Svcs Inc",
+      "exchange": "NYSE",
+      "change": 0.08,
+      "change_pct": 0.0019
+    },
+    {
+      "symbol": "EWCZ",
+      "name": "European Wax Center, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.01,
+      "change_pct": 0.0017
+    },
+    {
+      "symbol": "SDAWW",
+      "name": "SunCar Technology Group Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.0001,
+      "change_pct": 0.0014
+    },
+    {
+      "symbol": "PG",
+      "name": "Procter & Gamble",
+      "exchange": "NYSE",
+      "change": 0.15,
+      "change_pct": 0.001
+    },
+    {
+      "symbol": "REYN",
+      "name": "Reynolds Consumer Products Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.01,
+      "change_pct": 0.0005
+    },
+    {
+      "symbol": "FTDR",
+      "name": "Frontdoor, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.02,
+      "change_pct": 0.0003
+    },
+    {
+      "symbol": "COTY",
+      "name": "Coty Inc",
+      "exchange": "NYSE",
+      "change": 0.0,
+      "change_pct": 0.0
+    },
+    {
+      "symbol": "MCW",
+      "name": "Mister Car Wash Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0,
+      "change_pct": 0.0
+    },
+    {
+      "symbol": "BGSI",
+      "name": "Boyd Group Svcs",
+      "exchange": "NYSE",
+      "change": -0.29,
+      "change_pct": -0.0019
+    },
+    {
+      "symbol": "LICN",
+      "name": "Lichen International",
+      "exchange": "NASDAQ",
+      "change": -0.01,
+      "change_pct": -0.0033
+    },
+    {
+      "symbol": "WDFC",
+      "name": "Wd 40 Co",
+      "exchange": "NASDAQ",
+      "change": -0.79,
+      "change_pct": -0.0035
+    },
+    {
+      "symbol": "UL",
+      "name": "Unilever",
+      "exchange": "NYSE",
+      "change": -0.35,
+      "change_pct": -0.0054
+    },
+    {
+      "symbol": "MRM",
+      "name": "Medirom Healthcare Technologies Inc",
+      "exchange": "NASDAQ",
+      "change": -0.01,
+      "change_pct": -0.0079
+    },
+    {
+      "symbol": "ZONE",
+      "name": "CleanCore Solutions",
+      "exchange": "AMEX",
+      "change": -0.0038,
+      "change_pct": -0.011
+    },
+    {
+      "symbol": "VVV",
+      "name": "Valvoline",
+      "exchange": "NYSE",
+      "change": -0.44,
+      "change_pct": -0.0129
+    },
+    {
+      "symbol": "DRVN",
+      "name": "Driven Brands Holdings Inc.",
+      "exchange": "NASDAQ",
+      "change": -0.14,
+      "change_pct": -0.0134
+    },
+    {
+      "symbol": "CHD",
+      "name": "Church & Dwight Co Inc",
+      "exchange": "NYSE",
+      "change": -1.41,
+      "change_pct": -0.0142
+    },
+    {
+      "symbol": "MATW",
+      "name": "Matthews Intl Corp",
+      "exchange": "NASDAQ",
+      "change": -0.48,
+      "change_pct": -0.0192
+    },
+    {
+      "symbol": "BFAM",
+      "name": "Bright Horizons Fam Sol In Del",
+      "exchange": "NYSE",
+      "change": -1.77,
+      "change_pct": -0.0227
+    },
+    {
+      "symbol": "ODC",
+      "name": "Oil-Dri Corporation of America",
+      "exchange": "NYSE",
+      "change": -1.87,
+      "change_pct": -0.0286
+    },
+    {
+      "symbol": "OLPX",
+      "name": "Olaplex Holdings, Inc.",
+      "exchange": "NASDAQ",
+      "change": -0.04,
+      "change_pct": -0.0323
+    },
+    {
+      "symbol": "YSG",
+      "name": "Yatsen Hldg Ltd",
+      "exchange": "NYSE",
+      "change": -0.13,
+      "change_pct": -0.0323
+    },
+    {
+      "symbol": "EJH",
+      "name": "E-Home Household Svc Hldgs Ltd",
+      "exchange": "NASDAQ",
+      "change": -0.0039,
+      "change_pct": -0.037
+    },
+    {
+      "symbol": "AXIL",
+      "name": "Axil Brands",
+      "exchange": "AMEX",
+      "change": -0.37,
+      "change_pct": -0.0615
+    },
+    {
+      "symbol": "TANH",
+      "name": "Tantech Holdings",
+      "exchange": "NASDAQ",
+      "change": -0.0539,
+      "change_pct": -0.0623
+    },
+    {
+      "symbol": "SLSN",
+      "name": "Solesence",
+      "exchange": "NASDAQ",
+      "change": -0.065,
+      "change_pct": -0.0644
+    },
+    {
+      "symbol": "WW",
+      "name": "WW International Inc",
+      "exchange": "NASDAQ",
+      "change": -1.68,
+      "change_pct": -0.0738
+    },
+    {
+      "symbol": "KLC",
+      "name": "KINDERCARE LEARNING COMPANIES",
+      "exchange": "NYSE",
+      "change": -1.45,
+      "change_pct": -0.4265
+    }
+  ]
+}

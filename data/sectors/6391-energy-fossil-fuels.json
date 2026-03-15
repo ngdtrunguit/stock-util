@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 6391,
+  "sector_name": "Energy - Fossil Fuels",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "STAK",
+      "name": "STAK inc.",
+      "exchange": "NASDAQ",
+      "change": 0.217,
+      "change_pct": 0.2765
+    },
+    {
+      "symbol": "PED",
+      "name": "Pedevco",
+      "exchange": "AMEX",
+      "change": 2.68,
+      "change_pct": 0.1729
+    },
+    {
+      "symbol": "EONR",
+      "name": "EON Resources Inc.",
+      "exchange": "AMEX",
+      "change": 0.18,
+      "change_pct": 0.1333
+    },
+    {
+      "symbol": "ANNA",
+      "name": "AleAnna Inc",
+      "exchange": "NASDAQ",
+      "change": 0.32,
+      "change_pct": 0.0879
+    },
+    {
+      "symbol": "AMPY",
+      "name": "Amplify Energy Corp",
+      "exchange": "NYSE",
+      "change": 0.48,
+      "change_pct": 0.0792
+    },
+    {
+      "symbol": "FTW",
+      "name": "Presidio Production",
+      "exchange": "NYSE",
+      "change": 0.75,
+      "change_pct": 0.0688
+    },
+    {
+      "symbol": "MUR",
+      "name": "Murphy Oil",
+      "exchange": "NYSE",
+      "change": 2.09,
+      "change_pct": 0.0602
+    },
+    {
+      "symbol": "HPK",
+      "name": "Highpeak Energy\uff0cInc",
+      "exchange": "NASDAQ",
+      "change": 0.32,
+      "change_pct": 0.0562
+    },
+    {
+      "symbol": "NOA",
+      "name": "North American C",
+      "exchange": "NYSE",
+      "change": 0.66,
+      "change_pct": 0.0545
+    },
+    {
+      "symbol": "HP",
+      "name": "Helmerich",
+      "exchange": "NYSE",
+      "change": 1.8,
+      "change_pct": 0.0532
+    },
+    {
+      "symbol": "SM",
+      "name": "Sm Energy",
+      "exchange": "NYSE",
+      "change": 1.31,
+      "change_pct": 0.0514
+    },
+    {
+      "symbol": "PTEN",
+      "name": "Patterson-Uti Energy Inc",
+      "exchange": "NASDAQ",
+      "change": 0.44,
+      "change_pct": 0.0447
+    },
+    {
+      "symbol": "OPAL",
+      "name": "OPAL Fuels Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.09,
+      "change_pct": 0.0439
+    },
+    {
+      "symbol": "VIST",
+      "name": "Vista Energy Sponsored ADR Series A",
+      "exchange": "NYSE",
+      "change": 2.37,
+      "change_pct": 0.038
+    },
+    {
+      "symbol": "INR",
+      "name": "Infinity Natural Resources",
+      "exchange": "NYSE",
+      "change": 0.6,
+      "change_pct": 0.0342
+    },
+    {
+      "symbol": "DTI",
+      "name": "Drilling Tools International Corporation",
+      "exchange": "NASDAQ",
+      "change": 0.11,
+      "change_pct": 0.0323
+    },
+    {
+      "symbol": "DWSN",
+      "name": "Dawson Geophysic",
+      "exchange": "NASDAQ",
+      "change": 0.13,
+      "change_pct": 0.0303
+    },
+    {
+      "symbol": "FANG",
+      "name": "Diamondback Ener",
+      "exchange": "NASDAQ",
+      "change": 5.36,
+      "change_pct": 0.0303
+    },
+    {
+      "symbol": "VAL-WS",
+      "name": "Valaris Limited",
+      "exchange": "NYSE",
+      "change": 0.39,
+      "change_pct": 0.0298
+    },
+    {
+      "symbol": "LB",
+      "name": "Landbridge Company Llc",
+      "exchange": "NYSE",
+      "change": 2.07,
+      "change_pct": 0.0285
+    },
+    {
+      "symbol": "VG",
+      "name": "Venture Global, Inc.",
+      "exchange": "NYSE",
+      "change": 0.33,
+      "change_pct": 0.0258
+    },
+    {
+      "symbol": "EQNR",
+      "name": "Equinor Asa",
+      "exchange": "NYSE",
+      "change": 0.88,
+      "change_pct": 0.0256
+    },
+    {
+      "symbol": "APA",
+      "name": "APA Corp (US)",
+      "exchange": "NASDAQ",
+      "change": 0.86,
+      "change_pct": 0.0256
+    },
+    {
+      "symbol": "CNX",
+      "name": "Cnx Res Corp",
+      "exchange": "NYSE",
+      "change": 1.03,
+      "change_pct": 0.0251
+    },
+    {
+      "symbol": "BKV",
+      "name": "BKV Corp.",
+      "exchange": "NYSE",
+      "change": 0.7,
+      "change_pct": 0.025
+    },
+    {
+      "symbol": "FLOC",
+      "name": "FLOWCO HLDGS INC",
+      "exchange": "NYSE",
+      "change": 0.54,
+      "change_pct": 0.0243
+    },
+    {
+      "symbol": "SUN",
+      "name": "Sunoco Lp/Sunoco Fin Corp",
+      "exchange": "NYSE",
+      "change": 1.46,
+      "change_pct": 0.0232
+    },
+    {
+      "symbol": "KOS",
+      "name": "Kosmos Energy Ltd",
+      "exchange": "NYSE",
+      "change": 0.05,
+      "change_pct": 0.0219
+    },
+    {
+      "symbol": "E",
+      "name": "Eni",
+      "exchange": "NYSE",
+      "change": 1.1,
+      "change_pct": 0.0219
+    },
+    {
+      "symbol": "TALO",
+      "name": "Talos Energy",
+      "exchange": "NYSE",
+      "change": 0.29,
+      "change_pct": 0.0214
+    },
+    {
+      "symbol": "CRGY",
+      "name": "Crescent Energy Company",
+      "exchange": "NYSE",
+      "change": 0.25,
+      "change_pct": 0.0213
+    },
+    {
+      "symbol": "NUAI",
+      "name": "New Era Energy & Digital, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.1,
+      "change_pct": 0.0203
+    },
+    {
+      "symbol": "SUNC",
+      "name": "SunocoCorp LLC",
+      "exchange": "NYSE",
+      "change": 1.18,
+      "change_pct": 0.02
+    },
+    {
+      "symbol": "MNR",
+      "name": "Mach Natural Resources",
+      "exchange": "NYSE",
+      "change": 0.26,
+      "change_pct": 0.0194
+    },
+    {
+      "symbol": "MGY",
+      "name": "Magnolia Oil & Gas Corp",
+      "exchange": "NYSE",
+      "change": 0.56,
+      "change_pct": 0.0194
+    },
+    {
+      "symbol": "SDRL",
+      "name": "Seadrill",
+      "exchange": "NYSE",
+      "change": 0.8,
+      "change_pct": 0.019
+    },
+    {
+      "symbol": "NGL",
+      "name": "Ngl Energy Partners Lp",
+      "exchange": "NYSE",
+      "change": 0.2,
+      "change_pct": 0.0182
+    },
+    {
+      "symbol": "MTDR",
+      "name": "Matador Res Co",
+      "exchange": "NYSE",
+      "change": 0.97,
+      "change_pct": 0.0173
+    },
+    {
+      "symbol": "RRC",
+      "name": "Range Resources",
+      "exchange": "NYSE",
+      "change": 0.73,
+      "change_pct": 0.0171
+    },
+    {
+      "symbol": "XOM",
+      "name": "Exxon Mobil",
+      "exchange": "NYSE",
+      "change": 2.59,
+      "change_pct": 0.0169
+    },
+    {
+      "symbol": "WFRD",
+      "name": "Weatherford",
+      "exchange": "NASDAQ",
+      "change": 1.41,
+      "change_pct": 0.0166
+    },
+    {
+      "symbol": "TTE",
+      "name": "Totalenergies Se",
+      "exchange": "NYSE",
+      "change": 1.33,
+      "change_pct": 0.0163
+    },
+    {
+      "symbol": "AR",
+      "name": "Antero Resources Corp",
+      "exchange": "NYSE",
+      "change": 0.64,
+      "change_pct": 0.0159
+    },
+    {
+      "symbol": "FLNG",
+      "name": "Flex Lng",
+      "exchange": "NYSE",
+      "change": 0.44,
+      "change_pct": 0.0156
+    },
+    {
+      "symbol": "SBR",
+      "name": "Sabine Royalty",
+      "exchange": "NYSE",
+      "change": 1.15,
+      "change_pct": 0.0156
+    },
+    {
+      "symbol": "KRP",
+      "name": "Kimbell Royalty",
+      "exchange": "NYSE",
+      "change": 0.22,
+      "change_pct": 0.0152
+    },
+    {
+      "symbol": "PR",
+      "name": "Permian Resources Corp",
+      "exchange": "NYSE",
+      "change": 0.28,
+      "change_pct": 0.0147
+    },
+    {
+      "symbol": "DTM",
+      "name": "Dt Midstream Inc",
+      "exchange": "NYSE",
+      "change": 1.94,
+      "change_pct": 0.0143
+    },
+    {
+      "symbol": "USAC",
+      "name": "Usa Compression Partners Lp",
+      "exchange": "NYSE",
+      "change": 0.38,
+      "change_pct": 0.0139
+    },
+    {
+      "symbol": "NPKI",
+      "name": "NPK International Inc",
+      "exchange": "NYSE",
+      "change": 0.18,
+      "change_pct": 0.0137
+    }
+  ]
+}

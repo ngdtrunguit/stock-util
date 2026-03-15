@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 6460,
+  "sector_name": "Chemicals",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "NPT",
+      "name": "Texxon Holding Limited",
+      "exchange": "NASDAQ",
+      "change": 2.02,
+      "change_pct": 0.1249
+    },
+    {
+      "symbol": "SSL",
+      "name": "Sasol",
+      "exchange": "NYSE",
+      "change": 0.71,
+      "change_pct": 0.067
+    },
+    {
+      "symbol": "KRO",
+      "name": "Kronos Worldwide Inc",
+      "exchange": "NYSE",
+      "change": 0.25,
+      "change_pct": 0.0509
+    },
+    {
+      "symbol": "ESI",
+      "name": "Element Solutions Inc",
+      "exchange": "NYSE",
+      "change": 0.9,
+      "change_pct": 0.0299
+    },
+    {
+      "symbol": "TROX",
+      "name": "Tronox Holdings Plc",
+      "exchange": "NYSE",
+      "change": 0.19,
+      "change_pct": 0.028
+    },
+    {
+      "symbol": "SMG",
+      "name": "Scotts Miracle Gr",
+      "exchange": "NYSE",
+      "change": 1.31,
+      "change_pct": 0.022
+    },
+    {
+      "symbol": "ASPN",
+      "name": "Aspen Aerogels Inc",
+      "exchange": "NYSE",
+      "change": 0.06,
+      "change_pct": 0.0167
+    },
+    {
+      "symbol": "SOLS",
+      "name": "SOLSTICE ADVANCED MATLS INC",
+      "exchange": "NASDAQ",
+      "change": 1.14,
+      "change_pct": 0.0158
+    },
+    {
+      "symbol": "PPG",
+      "name": "Ppg Inds Inc",
+      "exchange": "NYSE",
+      "change": 1.16,
+      "change_pct": 0.0115
+    },
+    {
+      "symbol": "KOP",
+      "name": "Koppers Hldgs",
+      "exchange": "NYSE",
+      "change": 0.41,
+      "change_pct": 0.011
+    },
+    {
+      "symbol": "CBT",
+      "name": "Cabot",
+      "exchange": "NYSE",
+      "change": 0.6,
+      "change_pct": 0.0087
+    },
+    {
+      "symbol": "NGVT",
+      "name": "Ingevity Corp",
+      "exchange": "NYSE",
+      "change": 0.54,
+      "change_pct": 0.0084
+    },
+    {
+      "symbol": "MTX",
+      "name": "Minerals Tech",
+      "exchange": "NYSE",
+      "change": 0.53,
+      "change_pct": 0.0078
+    },
+    {
+      "symbol": "LIN",
+      "name": "Linde Plc",
+      "exchange": "NASDAQ",
+      "change": 3.51,
+      "change_pct": 0.0072
+    },
+    {
+      "symbol": "SHW",
+      "name": "Sherwin-Williams",
+      "exchange": "NYSE",
+      "change": 2.08,
+      "change_pct": 0.0065
+    },
+    {
+      "symbol": "ECVT",
+      "name": "Ecovyst Inc",
+      "exchange": "NYSE",
+      "change": 0.04,
+      "change_pct": 0.0035
+    },
+    {
+      "symbol": "HWKN",
+      "name": "Hawkins",
+      "exchange": "NASDAQ",
+      "change": 0.17,
+      "change_pct": 0.0012
+    },
+    {
+      "symbol": "RPM",
+      "name": "Rpm Inc",
+      "exchange": "NYSE",
+      "change": 0.1,
+      "change_pct": 0.001
+    },
+    {
+      "symbol": "NXTS",
+      "name": "Nexentis Technologies Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0002,
+      "change_pct": 0.0002
+    },
+    {
+      "symbol": "CAPT",
+      "name": "Captivision Inc",
+      "exchange": "NASDAQ",
+      "change": -0.0008,
+      "change_pct": -0.0019
+    },
+    {
+      "symbol": "WFF",
+      "name": "WF Holding Ltd.",
+      "exchange": "NASDAQ",
+      "change": -0.001,
+      "change_pct": -0.0022
+    },
+    {
+      "symbol": "SCL",
+      "name": "Stepan",
+      "exchange": "NYSE",
+      "change": -0.11,
+      "change_pct": -0.0023
+    },
+    {
+      "symbol": "IOSP",
+      "name": "Innospec Inc",
+      "exchange": "NASDAQ",
+      "change": -0.2,
+      "change_pct": -0.0029
+    },
+    {
+      "symbol": "RYAM",
+      "name": "Rayonier Advanced Matls Inc",
+      "exchange": "NYSE",
+      "change": -0.05,
+      "change_pct": -0.0044
+    },
+    {
+      "symbol": "NEU",
+      "name": "Newmarket",
+      "exchange": "NYSE",
+      "change": -3.42,
+      "change_pct": -0.0058
+    },
+    {
+      "symbol": "ECL",
+      "name": "Ecolab Inc",
+      "exchange": "NYSE",
+      "change": -1.71,
+      "change_pct": -0.0062
+    },
+    {
+      "symbol": "CTVA",
+      "name": "Corteva Inc",
+      "exchange": "NYSE",
+      "change": -0.54,
+      "change_pct": -0.0068
+    },
+    {
+      "symbol": "EMN",
+      "name": "Eastman Chem Co",
+      "exchange": "NYSE",
+      "change": -0.5,
+      "change_pct": -0.0072
+    },
+    {
+      "symbol": "AVNT",
+      "name": "Avient Corp",
+      "exchange": "NYSE",
+      "change": -0.25,
+      "change_pct": -0.0072
+    },
+    {
+      "symbol": "CC",
+      "name": "Chemours Co",
+      "exchange": "NYSE",
+      "change": -0.13,
+      "change_pct": -0.0073
+    },
+    {
+      "symbol": "BCPC",
+      "name": "Balchem Corp",
+      "exchange": "NASDAQ",
+      "change": -1.34,
+      "change_pct": -0.0079
+    },
+    {
+      "symbol": "APD",
+      "name": "Air Prods & Chems Inc",
+      "exchange": "NYSE",
+      "change": -2.5,
+      "change_pct": -0.0086
+    },
+    {
+      "symbol": "FSI",
+      "name": "Flexible Solutn",
+      "exchange": "AMEX",
+      "change": -0.05,
+      "change_pct": -0.0088
+    },
+    {
+      "symbol": "AXTA",
+      "name": "Axalta Coating Sys Ltd",
+      "exchange": "NYSE",
+      "change": -0.27,
+      "change_pct": -0.0097
+    },
+    {
+      "symbol": "WLKP",
+      "name": "Westlake Chem Partners Lp",
+      "exchange": "NYSE",
+      "change": -0.28,
+      "change_pct": -0.0123
+    },
+    {
+      "symbol": "PRM",
+      "name": "Perimeter Solutions Sa",
+      "exchange": "NYSE",
+      "change": -0.29,
+      "change_pct": -0.0126
+    },
+    {
+      "symbol": "NTR",
+      "name": "Nutrien",
+      "exchange": "NYSE",
+      "change": -1.09,
+      "change_pct": -0.013
+    },
+    {
+      "symbol": "OEC",
+      "name": "Orion Engineered Carbons S.A.",
+      "exchange": "NYSE",
+      "change": -0.07,
+      "change_pct": -0.0145
+    },
+    {
+      "symbol": "ICL",
+      "name": "Icl Group Ltd.",
+      "exchange": "NYSE",
+      "change": -0.08,
+      "change_pct": -0.0147
+    },
+    {
+      "symbol": "AGIG",
+      "name": "Abundia Global",
+      "exchange": "AMEX",
+      "change": -0.03,
+      "change_pct": -0.016
+    },
+    {
+      "symbol": "SQM",
+      "name": "Sociedad Quimica y Minera",
+      "exchange": "NYSE",
+      "change": -1.22,
+      "change_pct": -0.0161
+    },
+    {
+      "symbol": "VHI",
+      "name": "Valhi",
+      "exchange": "NYSE",
+      "change": -0.25,
+      "change_pct": -0.0181
+    },
+    {
+      "symbol": "ASIX",
+      "name": "Advansix",
+      "exchange": "NYSE",
+      "change": -0.39,
+      "change_pct": -0.0186
+    },
+    {
+      "symbol": "FUL",
+      "name": "Fuller H B Co",
+      "exchange": "NYSE",
+      "change": -1.04,
+      "change_pct": -0.0188
+    },
+    {
+      "symbol": "WLK",
+      "name": "WESTLAKE CORPORATION",
+      "exchange": "NYSE",
+      "change": -2.18,
+      "change_pct": -0.0191
+    },
+    {
+      "symbol": "CNEY",
+      "name": "Cn Energy Group Inc",
+      "exchange": "NASDAQ",
+      "change": -0.02,
+      "change_pct": -0.0196
+    },
+    {
+      "symbol": "ASH",
+      "name": "Ashland",
+      "exchange": "NYSE",
+      "change": -1.01,
+      "change_pct": -0.0198
+    },
+    {
+      "symbol": "FMC",
+      "name": "Fmc Corp",
+      "exchange": "NYSE",
+      "change": -0.29,
+      "change_pct": -0.0202
+    },
+    {
+      "symbol": "KWR",
+      "name": "Quaker Chemical",
+      "exchange": "NYSE",
+      "change": -2.47,
+      "change_pct": -0.0204
+    },
+    {
+      "symbol": "GURE",
+      "name": "Gulf Resource",
+      "exchange": "NASDAQ",
+      "change": -0.1,
+      "change_pct": -0.021
+    }
+  ]
+}

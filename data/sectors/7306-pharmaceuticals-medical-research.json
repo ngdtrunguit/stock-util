@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 7306,
+  "sector_name": "Pharmaceuticals & Medical Research",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "PLYX",
+      "name": "Polaryx Therapeutics, Inc.",
+      "exchange": "NASDAQ",
+      "change": 1.71,
+      "change_pct": 0.3677
+    },
+    {
+      "symbol": "NRXPW",
+      "name": "Nrx Pharmaceuticals Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0052,
+      "change_pct": 0.26
+    },
+    {
+      "symbol": "ORKA",
+      "name": "Oruka Therapeutics Inc",
+      "exchange": "NASDAQ",
+      "change": 8.01,
+      "change_pct": 0.2504
+    },
+    {
+      "symbol": "LGVN",
+      "name": "Longeveron Inc",
+      "exchange": "NASDAQ",
+      "change": 0.1645,
+      "change_pct": 0.2033
+    },
+    {
+      "symbol": "EQ",
+      "name": "Equillium",
+      "exchange": "NASDAQ",
+      "change": 0.4,
+      "change_pct": 0.1932
+    },
+    {
+      "symbol": "ENGNW",
+      "name": "Forbion European Acquisition Corp",
+      "exchange": "NASDAQ",
+      "change": 0.397,
+      "change_pct": 0.1846
+    },
+    {
+      "symbol": "ADAG",
+      "name": "Adagene Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.57,
+      "change_pct": 0.1601
+    },
+    {
+      "symbol": "APUS",
+      "name": "APIMEDS PHARMACEUTICALS US INC",
+      "exchange": "AMEX",
+      "change": 0.21,
+      "change_pct": 0.1489
+    },
+    {
+      "symbol": "JUNS",
+      "name": "JUPITER NEUROSCIENCES, INC.",
+      "exchange": "NASDAQ",
+      "change": 0.0543,
+      "change_pct": 0.1474
+    },
+    {
+      "symbol": "CALC",
+      "name": "CALCIMEDICA INC",
+      "exchange": "NASDAQ",
+      "change": 0.104,
+      "change_pct": 0.1433
+    },
+    {
+      "symbol": "ELTX",
+      "name": "Elicio Therapeutics, Inc.",
+      "exchange": "NASDAQ",
+      "change": 1.3,
+      "change_pct": 0.1193
+    },
+    {
+      "symbol": "KRRO",
+      "name": "Korro Bio, Inc.",
+      "exchange": "NASDAQ",
+      "change": 1.3,
+      "change_pct": 0.113
+    },
+    {
+      "symbol": "CTXR",
+      "name": "Citius Pharmaceuticals Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0947,
+      "change_pct": 0.1092
+    },
+    {
+      "symbol": "CELG-RT",
+      "name": "Bristol-Myers Squibb Company Celegne Contingent Value Rights",
+      "exchange": "NYSE",
+      "change": 0.0114,
+      "change_pct": 0.0949
+    },
+    {
+      "symbol": "XBIO",
+      "name": "Xenetic Biosciences Inc",
+      "exchange": "NASDAQ",
+      "change": 0.243,
+      "change_pct": 0.0946
+    },
+    {
+      "symbol": "AGPU",
+      "name": "Axe Compute Inc",
+      "exchange": "NASDAQ",
+      "change": 0.165,
+      "change_pct": 0.0924
+    },
+    {
+      "symbol": "MDCX",
+      "name": "Medicus Pharma Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.0456,
+      "change_pct": 0.0912
+    },
+    {
+      "symbol": "CNTX",
+      "name": "Context Therapeutics Inc",
+      "exchange": "NASDAQ",
+      "change": 0.27,
+      "change_pct": 0.0874
+    },
+    {
+      "symbol": "SANA",
+      "name": "Sana Biotechnology, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.27,
+      "change_pct": 0.0874
+    },
+    {
+      "symbol": "NSRX",
+      "name": "Nasus Pharma Ltd.",
+      "exchange": "AMEX",
+      "change": 0.38,
+      "change_pct": 0.0823
+    },
+    {
+      "symbol": "BLLN",
+      "name": "BillionToOne, Inc.",
+      "exchange": "NASDAQ",
+      "change": 5.08,
+      "change_pct": 0.0793
+    },
+    {
+      "symbol": "OKUR",
+      "name": "OnKure Therapeutics",
+      "exchange": "NASDAQ",
+      "change": 0.26,
+      "change_pct": 0.0739
+    },
+    {
+      "symbol": "IBRX",
+      "name": "Immunitybio Inc",
+      "exchange": "NASDAQ",
+      "change": 0.57,
+      "change_pct": 0.0729
+    },
+    {
+      "symbol": "AIM",
+      "name": "Aim Immunotech",
+      "exchange": "AMEX",
+      "change": 0.0486,
+      "change_pct": 0.0715
+    },
+    {
+      "symbol": "PGEN",
+      "name": "Precigen Inc",
+      "exchange": "NASDAQ",
+      "change": 0.23,
+      "change_pct": 0.0701
+    },
+    {
+      "symbol": "PCSA",
+      "name": "Processa Pharmaceuticals Inc",
+      "exchange": "NASDAQ",
+      "change": 0.19,
+      "change_pct": 0.0688
+    },
+    {
+      "symbol": "PPBT",
+      "name": "Purple Biotech Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.26,
+      "change_pct": 0.0677
+    },
+    {
+      "symbol": "SLS",
+      "name": "Sellas Life Sciences Group Inc",
+      "exchange": "NASDAQ",
+      "change": 0.34,
+      "change_pct": 0.0676
+    },
+    {
+      "symbol": "PIII",
+      "name": "P3 HEALTH PARTNERS INC",
+      "exchange": "NASDAQ",
+      "change": 0.2,
+      "change_pct": 0.0676
+    },
+    {
+      "symbol": "TVRD",
+      "name": "Tvardi Therapeutics Inc",
+      "exchange": "NASDAQ",
+      "change": 0.245,
+      "change_pct": 0.0667
+    },
+    {
+      "symbol": "PTN",
+      "name": "Palatin Tech",
+      "exchange": "AMEX",
+      "change": 1.46,
+      "change_pct": 0.0662
+    },
+    {
+      "symbol": "XCUR",
+      "name": "Exicure Inc",
+      "exchange": "NASDAQ",
+      "change": 0.26,
+      "change_pct": 0.066
+    },
+    {
+      "symbol": "CSBR",
+      "name": "Champions Oncolo",
+      "exchange": "NASDAQ",
+      "change": 0.36,
+      "change_pct": 0.0627
+    },
+    {
+      "symbol": "DNA",
+      "name": "Ginkgo Bioworks Holdings Inc",
+      "exchange": "NYSE",
+      "change": 0.4,
+      "change_pct": 0.0625
+    },
+    {
+      "symbol": "NDRA",
+      "name": "Endra Life Sciences Inc",
+      "exchange": "NASDAQ",
+      "change": 0.2,
+      "change_pct": 0.0612
+    },
+    {
+      "symbol": "OCGN",
+      "name": "Ocugen Inc",
+      "exchange": "NASDAQ",
+      "change": 0.14,
+      "change_pct": 0.0598
+    },
+    {
+      "symbol": "PRQR",
+      "name": "Proqr Therapeuti",
+      "exchange": "NASDAQ",
+      "change": 0.1,
+      "change_pct": 0.0581
+    },
+    {
+      "symbol": "ADPT",
+      "name": "Adaptive Biotechnologies",
+      "exchange": "NASDAQ",
+      "change": 0.72,
+      "change_pct": 0.0578
+    },
+    {
+      "symbol": "IXHL",
+      "name": "Incannex Healthcare Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.17,
+      "change_pct": 0.0552
+    },
+    {
+      "symbol": "PTHS",
+      "name": "Pelthos Therapeutics",
+      "exchange": "AMEX",
+      "change": 1.25,
+      "change_pct": 0.0538
+    },
+    {
+      "symbol": "TERN",
+      "name": "Terns Pharmaceuticals, Inc.",
+      "exchange": "NASDAQ",
+      "change": 2.28,
+      "change_pct": 0.0515
+    },
+    {
+      "symbol": "PPCB",
+      "name": "Propanc Bio",
+      "exchange": "NASDAQ",
+      "change": 0.0062,
+      "change_pct": 0.0512
+    },
+    {
+      "symbol": "AIMDW",
+      "name": "AINOS INC",
+      "exchange": "NASDAQ",
+      "change": 0.0045,
+      "change_pct": 0.05
+    },
+    {
+      "symbol": "HYPD",
+      "name": "Hyperion DeFi Inc",
+      "exchange": "NASDAQ",
+      "change": 0.17,
+      "change_pct": 0.05
+    },
+    {
+      "symbol": "PLUR",
+      "name": "Pluri Inc",
+      "exchange": "NASDAQ",
+      "change": 0.161,
+      "change_pct": 0.0498
+    },
+    {
+      "symbol": "NBTX",
+      "name": "Nanobiotix S.A.",
+      "exchange": "NASDAQ",
+      "change": 1.55,
+      "change_pct": 0.0492
+    },
+    {
+      "symbol": "ERNA",
+      "name": "Ernexa",
+      "exchange": "NASDAQ",
+      "change": 0.0151,
+      "change_pct": 0.0489
+    },
+    {
+      "symbol": "MBAI",
+      "name": "Check Cap",
+      "exchange": "NASDAQ",
+      "change": 0.08,
+      "change_pct": 0.0485
+    },
+    {
+      "symbol": "BRNS",
+      "name": "Barinthus Biotherapeutics plc",
+      "exchange": "NASDAQ",
+      "change": 0.029,
+      "change_pct": 0.0483
+    },
+    {
+      "symbol": "ADIL",
+      "name": "Adial Pharmaceuticals Inc",
+      "exchange": "NASDAQ",
+      "change": 0.09,
+      "change_pct": 0.0481
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 6432,
+  "sector_name": "Renewable Energy",
+  "stock_count": 36,
+  "stocks": [
+    {
+      "symbol": "AMTX",
+      "name": "Aemetis",
+      "exchange": "NASDAQ",
+      "change": 0.37,
+      "change_pct": 0.1927
+    },
+    {
+      "symbol": "SEDG",
+      "name": "Solaredge Technologies Inc",
+      "exchange": "NASDAQ",
+      "change": 2.25,
+      "change_pct": 0.0639
+    },
+    {
+      "symbol": "PN",
+      "name": "Skycorp Solar Group Limited",
+      "exchange": "NASDAQ",
+      "change": 0.0188,
+      "change_pct": 0.0368
+    },
+    {
+      "symbol": "ENPH",
+      "name": "Enphase Energy",
+      "exchange": "NASDAQ",
+      "change": 1.47,
+      "change_pct": 0.0345
+    },
+    {
+      "symbol": "NXT",
+      "name": "Nextracker Inc.",
+      "exchange": "NASDAQ",
+      "change": 3.74,
+      "change_pct": 0.0323
+    },
+    {
+      "symbol": "CREG",
+      "name": "Smart Powerr",
+      "exchange": "NASDAQ",
+      "change": 0.04,
+      "change_pct": 0.0323
+    },
+    {
+      "symbol": "SUUN",
+      "name": "PowerBank",
+      "exchange": "NASDAQ",
+      "change": 0.0155,
+      "change_pct": 0.0229
+    },
+    {
+      "symbol": "CSIQ",
+      "name": "Canadian Solar",
+      "exchange": "NASDAQ",
+      "change": 0.38,
+      "change_pct": 0.0211
+    },
+    {
+      "symbol": "REX",
+      "name": "Rex American Res",
+      "exchange": "NYSE",
+      "change": 0.78,
+      "change_pct": 0.0197
+    },
+    {
+      "symbol": "ARRY",
+      "name": "Array Technologies, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.13,
+      "change_pct": 0.0191
+    },
+    {
+      "symbol": "TOYO",
+      "name": "TOYO CO LTD",
+      "exchange": "NASDAQ",
+      "change": 0.12,
+      "change_pct": 0.0153
+    },
+    {
+      "symbol": "RUN",
+      "name": "Sunrun Inc",
+      "exchange": "NASDAQ",
+      "change": 0.17,
+      "change_pct": 0.0142
+    },
+    {
+      "symbol": "ZEO",
+      "name": "Zeo Energy",
+      "exchange": "NASDAQ",
+      "change": 0.011,
+      "change_pct": 0.0117
+    },
+    {
+      "symbol": "IMPPP",
+      "name": "Imperial Petrole",
+      "exchange": "NASDAQ",
+      "change": 0.25,
+      "change_pct": 0.0095
+    },
+    {
+      "symbol": "FSLR",
+      "name": "First Solar",
+      "exchange": "NASDAQ",
+      "change": -1.49,
+      "change_pct": -0.0075
+    },
+    {
+      "symbol": "JKS",
+      "name": "Jinkosolar Hold",
+      "exchange": "NYSE",
+      "change": -0.2,
+      "change_pct": -0.0078
+    },
+    {
+      "symbol": "IMPP",
+      "name": "Imperial Petrole",
+      "exchange": "NASDAQ",
+      "change": -0.04,
+      "change_pct": -0.0086
+    },
+    {
+      "symbol": "BLDP",
+      "name": "Ballard Power",
+      "exchange": "NASDAQ",
+      "change": -0.03,
+      "change_pct": -0.0124
+    },
+    {
+      "symbol": "STEM",
+      "name": "Stem Inc",
+      "exchange": "NYSE",
+      "change": -0.14,
+      "change_pct": -0.0132
+    },
+    {
+      "symbol": "DQ",
+      "name": "Daqo New Energy Corp",
+      "exchange": "NYSE",
+      "change": -0.36,
+      "change_pct": -0.0153
+    },
+    {
+      "symbol": "MAXN",
+      "name": "Maxeon Solar",
+      "exchange": "NASDAQ",
+      "change": -0.04,
+      "change_pct": -0.0173
+    },
+    {
+      "symbol": "ALTO",
+      "name": "Alto Ingredients Inc",
+      "exchange": "NASDAQ",
+      "change": -0.09,
+      "change_pct": -0.0189
+    },
+    {
+      "symbol": "HTOO",
+      "name": "Fusion Fuel Green Plc",
+      "exchange": "NASDAQ",
+      "change": -0.06,
+      "change_pct": -0.019
+    },
+    {
+      "symbol": "BEEM",
+      "name": "Beam Global",
+      "exchange": "NASDAQ",
+      "change": -0.03,
+      "change_pct": -0.0201
+    },
+    {
+      "symbol": "GEVO",
+      "name": "Gevo Inc",
+      "exchange": "NASDAQ",
+      "change": -0.05,
+      "change_pct": -0.0206
+    },
+    {
+      "symbol": "FF",
+      "name": "Futurefuel Corp",
+      "exchange": "NYSE",
+      "change": -0.09,
+      "change_pct": -0.0208
+    },
+    {
+      "symbol": "GPRE",
+      "name": "Green Plains",
+      "exchange": "NASDAQ",
+      "change": -0.38,
+      "change_pct": -0.0235
+    },
+    {
+      "symbol": "BWEN",
+      "name": "Broadwind Inc",
+      "exchange": "NASDAQ",
+      "change": -0.055,
+      "change_pct": -0.0245
+    },
+    {
+      "symbol": "PLUG",
+      "name": "Plug Power",
+      "exchange": "NASDAQ",
+      "change": -0.06,
+      "change_pct": -0.0271
+    },
+    {
+      "symbol": "SAFX",
+      "name": "XCF GLOBAL INC",
+      "exchange": "NASDAQ",
+      "change": -0.0135,
+      "change_pct": -0.0329
+    },
+    {
+      "symbol": "FCEL",
+      "name": "Fuelcell Energy",
+      "exchange": "NASDAQ",
+      "change": -0.36,
+      "change_pct": -0.0515
+    },
+    {
+      "symbol": "AMRC",
+      "name": "Ameresco Inc",
+      "exchange": "NYSE",
+      "change": -1.57,
+      "change_pct": -0.0597
+    },
+    {
+      "symbol": "OPTT",
+      "name": "Ocean Power Tech",
+      "exchange": "AMEX",
+      "change": -0.0318,
+      "change_pct": -0.0774
+    },
+    {
+      "symbol": "ASTI",
+      "name": "Ascent Solar Tec",
+      "exchange": "NASDAQ",
+      "change": -0.53,
+      "change_pct": -0.0967
+    },
+    {
+      "symbol": "TURB",
+      "name": "Turbo Energy SA",
+      "exchange": "NASDAQ",
+      "change": -0.52,
+      "change_pct": -0.1265
+    },
+    {
+      "symbol": "BNRG",
+      "name": "Brenmiller Energy Ltd",
+      "exchange": "NASDAQ",
+      "change": -0.258,
+      "change_pct": -0.2626
+    }
+  ]
+}

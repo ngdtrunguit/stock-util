@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 7323,
+  "sector_name": "Software & IT Services",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "AIFF",
+      "name": "Firefly Neuroscience Inc.",
+      "exchange": "NASDAQ",
+      "change": 1.01,
+      "change_pct": 0.5805
+    },
+    {
+      "symbol": "SVCO",
+      "name": "Silvaco Group",
+      "exchange": "NASDAQ",
+      "change": 1.73,
+      "change_pct": 0.5242
+    },
+    {
+      "symbol": "ISPC",
+      "name": "Ispecimen Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.0604,
+      "change_pct": 0.2696
+    },
+    {
+      "symbol": "UPXI",
+      "name": "Upexi Inc",
+      "exchange": "NASDAQ",
+      "change": 0.18,
+      "change_pct": 0.193
+    },
+    {
+      "symbol": "ZSPC",
+      "name": "zSpace Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0348,
+      "change_pct": 0.1812
+    },
+    {
+      "symbol": "MASK",
+      "name": "3 E Network Technology Group Limited",
+      "exchange": "NASDAQ",
+      "change": 0.0204,
+      "change_pct": 0.1774
+    },
+    {
+      "symbol": "SHAZ",
+      "name": "SharonAI",
+      "exchange": "NASDAQ",
+      "change": 3.09,
+      "change_pct": 0.1564
+    },
+    {
+      "symbol": "CXAI",
+      "name": "CXApp",
+      "exchange": "NASDAQ",
+      "change": 0.0334,
+      "change_pct": 0.1518
+    },
+    {
+      "symbol": "SJ",
+      "name": "Scienjoy Holding Corp",
+      "exchange": "NASDAQ",
+      "change": 0.18,
+      "change_pct": 0.15
+    },
+    {
+      "symbol": "AHG",
+      "name": "AKSO HEALTH GROUP",
+      "exchange": "NASDAQ",
+      "change": 0.32,
+      "change_pct": 0.1468
+    },
+    {
+      "symbol": "GDEVW",
+      "name": "GDEV Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.001,
+      "change_pct": 0.1111
+    },
+    {
+      "symbol": "VS",
+      "name": "Versus Systems Inc",
+      "exchange": "NASDAQ",
+      "change": 0.1,
+      "change_pct": 0.1031
+    },
+    {
+      "symbol": "CYN",
+      "name": "Cyngn Inc",
+      "exchange": "NASDAQ",
+      "change": 0.22,
+      "change_pct": 0.1019
+    },
+    {
+      "symbol": "CTW",
+      "name": "Ctw Cayman",
+      "exchange": "NASDAQ",
+      "change": 0.195,
+      "change_pct": 0.101
+    },
+    {
+      "symbol": "RXT",
+      "name": "Rackspace Technology, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.175,
+      "change_pct": 0.1006
+    },
+    {
+      "symbol": "MYPSW",
+      "name": "Playstudios Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0005,
+      "change_pct": 0.1002
+    },
+    {
+      "symbol": "TTEC",
+      "name": "Ttec Hldgs Inc",
+      "exchange": "NASDAQ",
+      "change": 0.27,
+      "change_pct": 0.0989
+    },
+    {
+      "symbol": "KLAR",
+      "name": "Klarna Group plc",
+      "exchange": "NYSE",
+      "change": 1.29,
+      "change_pct": 0.0882
+    },
+    {
+      "symbol": "TONX",
+      "name": "TON Strategy",
+      "exchange": "NASDAQ",
+      "change": 0.27,
+      "change_pct": 0.0877
+    },
+    {
+      "symbol": "WCT",
+      "name": "Wellchange Holdings",
+      "exchange": "NASDAQ",
+      "change": 0.31,
+      "change_pct": 0.0861
+    },
+    {
+      "symbol": "MSGM",
+      "name": "Motorsport Games Inc",
+      "exchange": "NASDAQ",
+      "change": 0.32,
+      "change_pct": 0.0851
+    },
+    {
+      "symbol": "OPRX",
+      "name": "Optimizerx Corp",
+      "exchange": "NASDAQ",
+      "change": 0.47,
+      "change_pct": 0.0793
+    },
+    {
+      "symbol": "CCLD",
+      "name": "Carecloud Inc",
+      "exchange": "NASDAQ",
+      "change": 0.23,
+      "change_pct": 0.079
+    },
+    {
+      "symbol": "TBH",
+      "name": "Brag House Holdings Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.019,
+      "change_pct": 0.0772
+    },
+    {
+      "symbol": "TGHL",
+      "name": "The GrowHub Limited",
+      "exchange": "NASDAQ",
+      "change": 0.0248,
+      "change_pct": 0.075
+    },
+    {
+      "symbol": "DUOT",
+      "name": "Duos Technologies Group Inc",
+      "exchange": "NASDAQ",
+      "change": 0.5,
+      "change_pct": 0.0678
+    },
+    {
+      "symbol": "XNET",
+      "name": "Xunlei Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.44,
+      "change_pct": 0.0671
+    },
+    {
+      "symbol": "INVE",
+      "name": "Identiv",
+      "exchange": "NASDAQ",
+      "change": 0.22,
+      "change_pct": 0.0665
+    },
+    {
+      "symbol": "BBBY",
+      "name": "Bed Bath & Beyond Inc",
+      "exchange": "NYSE",
+      "change": 0.3,
+      "change_pct": 0.0652
+    },
+    {
+      "symbol": "GMHS",
+      "name": "Gamehaus Holdings Inc",
+      "exchange": "NASDAQ",
+      "change": 0.065,
+      "change_pct": 0.0625
+    },
+    {
+      "symbol": "PRCH",
+      "name": "Porch Group Inc",
+      "exchange": "NASDAQ",
+      "change": 0.41,
+      "change_pct": 0.0572
+    },
+    {
+      "symbol": "S",
+      "name": "Sentinelone Inc",
+      "exchange": "NYSE",
+      "change": 0.74,
+      "change_pct": 0.0537
+    },
+    {
+      "symbol": "GMM",
+      "name": "Global Mofy AI Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.06,
+      "change_pct": 0.0521
+    },
+    {
+      "symbol": "PAVS",
+      "name": "Paranovus Entertainment Technology Ord Shs Class A",
+      "exchange": "NASDAQ",
+      "change": 0.07,
+      "change_pct": 0.0452
+    },
+    {
+      "symbol": "SEAT",
+      "name": "Vivid Seats Inc",
+      "exchange": "NASDAQ",
+      "change": 0.25,
+      "change_pct": 0.0442
+    },
+    {
+      "symbol": "VHC",
+      "name": "Virnetx Holding",
+      "exchange": "NASDAQ",
+      "change": 0.68,
+      "change_pct": 0.0435
+    },
+    {
+      "symbol": "HUYA",
+      "name": "Huya Inc",
+      "exchange": "NYSE",
+      "change": 0.14,
+      "change_pct": 0.0433
+    },
+    {
+      "symbol": "GDEV",
+      "name": "GDEV Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.6,
+      "change_pct": 0.0422
+    },
+    {
+      "symbol": "LHSW",
+      "name": "Lianhe Sowell International Group Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.0073,
+      "change_pct": 0.0418
+    },
+    {
+      "symbol": "HUBCW",
+      "name": "HUB CYBER SECURITY LTD",
+      "exchange": "NASDAQ",
+      "change": 0.0004,
+      "change_pct": 0.0417
+    },
+    {
+      "symbol": "MRDN",
+      "name": "Meridian Holdings Inc",
+      "exchange": "NASDAQ",
+      "change": 0.38,
+      "change_pct": 0.0413
+    },
+    {
+      "symbol": "INTA",
+      "name": "Intapp, Inc.",
+      "exchange": "NASDAQ",
+      "change": 1.0,
+      "change_pct": 0.0406
+    },
+    {
+      "symbol": "AZ",
+      "name": "A2Z Cust2Mate Solutions Corp",
+      "exchange": "NASDAQ",
+      "change": 0.2,
+      "change_pct": 0.0391
+    },
+    {
+      "symbol": "PDYNW",
+      "name": "PALLADYNE AI CORP",
+      "exchange": "NASDAQ",
+      "change": 0.0032,
+      "change_pct": 0.039
+    },
+    {
+      "symbol": "IT",
+      "name": "Gartner Inc",
+      "exchange": "NYSE",
+      "change": 6.15,
+      "change_pct": 0.0383
+    },
+    {
+      "symbol": "CCC",
+      "name": "Ccc Intelligent Solutions Hld",
+      "exchange": "NASDAQ",
+      "change": 0.22,
+      "change_pct": 0.0379
+    },
+    {
+      "symbol": "IPW",
+      "name": "Ipower Inc",
+      "exchange": "NASDAQ",
+      "change": 0.07,
+      "change_pct": 0.0378
+    },
+    {
+      "symbol": "BL",
+      "name": "Blackline Inc",
+      "exchange": "NASDAQ",
+      "change": 1.34,
+      "change_pct": 0.0377
+    },
+    {
+      "symbol": "ATGL",
+      "name": "Alpha Technology Group Limited",
+      "exchange": "NASDAQ",
+      "change": 0.6,
+      "change_pct": 0.0375
+    },
+    {
+      "symbol": "TME",
+      "name": "Tencent Music Entertainment Group",
+      "exchange": "NYSE",
+      "change": 0.51,
+      "change_pct": 0.0373
+    }
+  ]
+}

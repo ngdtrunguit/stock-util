@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 6790,
+  "sector_name": "Cyclical Consumer Services",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "EDHL",
+      "name": "EVERBRIGHT DIGITAL HLDG LTD",
+      "exchange": "NASDAQ",
+      "change": 0.78,
+      "change_pct": 0.2254
+    },
+    {
+      "symbol": "LOCO",
+      "name": "El Pollo Loco Ho",
+      "exchange": "NASDAQ",
+      "change": 1.84,
+      "change_pct": 0.1691
+    },
+    {
+      "symbol": "CDROW",
+      "name": "Codere Online Luxembourg Sa",
+      "exchange": "NASDAQ",
+      "change": 0.07,
+      "change_pct": 0.1207
+    },
+    {
+      "symbol": "HCHL",
+      "name": "HAPPY CITY HLDGS LTD",
+      "exchange": "NASDAQ",
+      "change": 0.11,
+      "change_pct": 0.1028
+    },
+    {
+      "symbol": "REBN",
+      "name": "Reborn Coffee",
+      "exchange": "NASDAQ",
+      "change": 0.15,
+      "change_pct": 0.0815
+    },
+    {
+      "symbol": "LEE",
+      "name": "Lee Enterprises Inc",
+      "exchange": "NASDAQ",
+      "change": 0.5,
+      "change_pct": 0.0561
+    },
+    {
+      "symbol": "WING",
+      "name": "Wingstop Inc",
+      "exchange": "NASDAQ",
+      "change": 10.33,
+      "change_pct": 0.0535
+    },
+    {
+      "symbol": "NAMI",
+      "name": "JINXIN TECHNOLOGY HLDG CO",
+      "exchange": "NASDAQ",
+      "change": 0.0232,
+      "change_pct": 0.053
+    },
+    {
+      "symbol": "HHS",
+      "name": "Harte Hanks",
+      "exchange": "NASDAQ",
+      "change": 0.12,
+      "change_pct": 0.0451
+    },
+    {
+      "symbol": "SLMT",
+      "name": "Brera Holdings",
+      "exchange": "NASDAQ",
+      "change": 0.0386,
+      "change_pct": 0.0429
+    },
+    {
+      "symbol": "EAT",
+      "name": "Brinker Intl Inc",
+      "exchange": "NYSE",
+      "change": 5.34,
+      "change_pct": 0.0385
+    },
+    {
+      "symbol": "PTLO",
+      "name": "Portillo'S Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.17,
+      "change_pct": 0.0329
+    },
+    {
+      "symbol": "NMAX",
+      "name": "NEWSMAX INC",
+      "exchange": "NYSE",
+      "change": 0.2,
+      "change_pct": 0.0293
+    },
+    {
+      "symbol": "CHDN",
+      "name": "Church Downs",
+      "exchange": "NASDAQ",
+      "change": 2.28,
+      "change_pct": 0.0271
+    },
+    {
+      "symbol": "SGA",
+      "name": "Saga Coms",
+      "exchange": "NASDAQ",
+      "change": 0.3,
+      "change_pct": 0.0271
+    },
+    {
+      "symbol": "FUN",
+      "name": "Six Flags Entertainment Corporation",
+      "exchange": "NYSE",
+      "change": 0.42,
+      "change_pct": 0.027
+    },
+    {
+      "symbol": "FLUT",
+      "name": "Fluttr Entrtnmnt",
+      "exchange": "NYSE",
+      "change": 2.84,
+      "change_pct": 0.0269
+    },
+    {
+      "symbol": "CHA",
+      "name": "CHAGEE HLDGS LTD",
+      "exchange": "NASDAQ",
+      "change": 0.25,
+      "change_pct": 0.0229
+    },
+    {
+      "symbol": "RCL",
+      "name": "Royal Caribbean Group",
+      "exchange": "NYSE",
+      "change": 6.05,
+      "change_pct": 0.0227
+    },
+    {
+      "symbol": "HWH",
+      "name": "HWH International",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0221
+    },
+    {
+      "symbol": "LTH",
+      "name": "Life Time Group Holdings Inc",
+      "exchange": "NYSE",
+      "change": 0.56,
+      "change_pct": 0.0218
+    },
+    {
+      "symbol": "MCHX",
+      "name": "Marchex Inc",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0214
+    },
+    {
+      "symbol": "LZMH",
+      "name": "LZ Technology Holdings Limited",
+      "exchange": "NASDAQ",
+      "change": 0.026,
+      "change_pct": 0.0205
+    },
+    {
+      "symbol": "CAVA",
+      "name": "Cava Group, Inc.",
+      "exchange": "NYSE",
+      "change": 1.65,
+      "change_pct": 0.0205
+    },
+    {
+      "symbol": "DRI",
+      "name": "Darden Restaurants Inc",
+      "exchange": "NYSE",
+      "change": 3.94,
+      "change_pct": 0.0199
+    },
+    {
+      "symbol": "DPZ",
+      "name": "Dominos Pizza Inc",
+      "exchange": "NASDAQ",
+      "change": 7.64,
+      "change_pct": 0.0194
+    },
+    {
+      "symbol": "SGRP",
+      "name": "Spar Group Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0144,
+      "change_pct": 0.0191
+    },
+    {
+      "symbol": "DNUT",
+      "name": "Krispy Kreme, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.06,
+      "change_pct": 0.0187
+    },
+    {
+      "symbol": "PZZA",
+      "name": "Papa Johns Intl Inc",
+      "exchange": "NASDAQ",
+      "change": 0.67,
+      "change_pct": 0.0185
+    },
+    {
+      "symbol": "SBGI",
+      "name": "Sinclair",
+      "exchange": "NASDAQ",
+      "change": 0.24,
+      "change_pct": 0.0173
+    },
+    {
+      "symbol": "ATAT",
+      "name": "Atour Lifestyle Holdings Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.6,
+      "change_pct": 0.0173
+    },
+    {
+      "symbol": "CAKE",
+      "name": "Cheesecake Factory Inc",
+      "exchange": "NASDAQ",
+      "change": 0.97,
+      "change_pct": 0.0171
+    },
+    {
+      "symbol": "WMG",
+      "name": "Warner Music Group Corp.",
+      "exchange": "NASDAQ",
+      "change": 0.45,
+      "change_pct": 0.0167
+    },
+    {
+      "symbol": "CBRL",
+      "name": "Cracker Barrel Old Ctry Store",
+      "exchange": "NASDAQ",
+      "change": 0.46,
+      "change_pct": 0.0167
+    },
+    {
+      "symbol": "SWAG",
+      "name": "Stran & Company Inc",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0167
+    },
+    {
+      "symbol": "NDLS",
+      "name": "Noodles & Co",
+      "exchange": "NASDAQ",
+      "change": 0.1,
+      "change_pct": 0.0166
+    },
+    {
+      "symbol": "WYNN",
+      "name": "Wynn Resorts",
+      "exchange": "NASDAQ",
+      "change": 1.64,
+      "change_pct": 0.0166
+    },
+    {
+      "symbol": "MLCO",
+      "name": "Melco Resorts And Entmnt Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.09,
+      "change_pct": 0.0164
+    },
+    {
+      "symbol": "NYT",
+      "name": "New York Times",
+      "exchange": "NYSE",
+      "change": 1.25,
+      "change_pct": 0.016
+    },
+    {
+      "symbol": "GTN-A",
+      "name": "Gray Television",
+      "exchange": "NYSE",
+      "change": 0.17,
+      "change_pct": 0.0159
+    },
+    {
+      "symbol": "STFS",
+      "name": "Star Fashion Culture Holdings Limited",
+      "exchange": "NASDAQ",
+      "change": 0.062,
+      "change_pct": 0.0155
+    },
+    {
+      "symbol": "CDRO",
+      "name": "Codere Online Luxembourg Sa",
+      "exchange": "NASDAQ",
+      "change": 0.12,
+      "change_pct": 0.015
+    },
+    {
+      "symbol": "CNNE",
+      "name": "Cannae Holdings",
+      "exchange": "NYSE",
+      "change": 0.17,
+      "change_pct": 0.015
+    },
+    {
+      "symbol": "CPHC",
+      "name": "Canterbury P Ord",
+      "exchange": "NASDAQ",
+      "change": 0.22,
+      "change_pct": 0.0142
+    },
+    {
+      "symbol": "KRUS",
+      "name": "Kura Sushi Usa, Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.79,
+      "change_pct": 0.0139
+    },
+    {
+      "symbol": "MDIA",
+      "name": "Mediaco Hldg Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0089,
+      "change_pct": 0.0139
+    },
+    {
+      "symbol": "BLMN",
+      "name": "Bloomin' Brands",
+      "exchange": "NASDAQ",
+      "change": 0.07,
+      "change_pct": 0.0129
+    },
+    {
+      "symbol": "LBRDK",
+      "name": "Liberty Broadband Corp",
+      "exchange": "NASDAQ",
+      "change": 0.62,
+      "change_pct": 0.0124
+    },
+    {
+      "symbol": "YUM",
+      "name": "Yum Brands",
+      "exchange": "NYSE",
+      "change": 1.94,
+      "change_pct": 0.0122
+    },
+    {
+      "symbol": "DKNG",
+      "name": "Draftkings Inc",
+      "exchange": "NASDAQ",
+      "change": 0.31,
+      "change_pct": 0.0121
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 7133,
+  "sector_name": "Food & Drug Retailing",
+  "stock_count": 33,
+  "stocks": [
+    {
+      "symbol": "HFFG",
+      "name": "Hf Foods Group Inc",
+      "exchange": "NASDAQ",
+      "change": 0.23,
+      "change_pct": 0.1211
+    },
+    {
+      "symbol": "RDGT",
+      "name": "RIDGETECH Inc",
+      "exchange": "NASDAQ",
+      "change": 0.209,
+      "change_pct": 0.1043
+    },
+    {
+      "symbol": "GO",
+      "name": "Grocery Outlet Holding",
+      "exchange": "NASDAQ",
+      "change": 0.32,
+      "change_pct": 0.0526
+    },
+    {
+      "symbol": "WMK",
+      "name": "Weis Markets",
+      "exchange": "NYSE",
+      "change": 2.99,
+      "change_pct": 0.0475
+    },
+    {
+      "symbol": "TBBB",
+      "name": "BBB Foods",
+      "exchange": "NYSE",
+      "change": 1.32,
+      "change_pct": 0.0416
+    },
+    {
+      "symbol": "SFM",
+      "name": "Sprouts Farmers",
+      "exchange": "NASDAQ",
+      "change": 3.22,
+      "change_pct": 0.0408
+    },
+    {
+      "symbol": "UNFI",
+      "name": "United Natural Foods",
+      "exchange": "NYSE",
+      "change": 1.32,
+      "change_pct": 0.0327
+    },
+    {
+      "symbol": "YHC",
+      "name": "LQR House Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.0172,
+      "change_pct": 0.0266
+    },
+    {
+      "symbol": "IMKTA",
+      "name": "Ingles Mkts Inc",
+      "exchange": "NASDAQ",
+      "change": 2.14,
+      "change_pct": 0.0248
+    },
+    {
+      "symbol": "VLGEA",
+      "name": "Village Super Mkt Inc",
+      "exchange": "NASDAQ",
+      "change": 1.0,
+      "change_pct": 0.0242
+    },
+    {
+      "symbol": "ACI",
+      "name": "Albertsons Companies Inc",
+      "exchange": "NYSE",
+      "change": 0.4,
+      "change_pct": 0.0237
+    },
+    {
+      "symbol": "USFD",
+      "name": "Us Foods Hldg Corp",
+      "exchange": "NYSE",
+      "change": 2.02,
+      "change_pct": 0.0218
+    },
+    {
+      "symbol": "AGCC",
+      "name": "Agencia Commercial Spirits Limited",
+      "exchange": "NASDAQ",
+      "change": 0.31,
+      "change_pct": 0.0198
+    },
+    {
+      "symbol": "HITI",
+      "name": "High Tide",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0123
+    },
+    {
+      "symbol": "PETS",
+      "name": "Petmed Express Inc",
+      "exchange": "NASDAQ",
+      "change": 0.03,
+      "change_pct": 0.0123
+    },
+    {
+      "symbol": "PFGC",
+      "name": "Performance Food Group Co",
+      "exchange": "NYSE",
+      "change": 0.96,
+      "change_pct": 0.011
+    },
+    {
+      "symbol": "CHEF",
+      "name": "Chefs' Warehouse",
+      "exchange": "NASDAQ",
+      "change": 0.63,
+      "change_pct": 0.0098
+    },
+    {
+      "symbol": "WMT",
+      "name": "Walmart",
+      "exchange": "NASDAQ",
+      "change": 1.19,
+      "change_pct": 0.0095
+    },
+    {
+      "symbol": "KR",
+      "name": "Kroger",
+      "exchange": "NYSE",
+      "change": 0.64,
+      "change_pct": 0.0085
+    },
+    {
+      "symbol": "SYY",
+      "name": "Sysco",
+      "exchange": "NYSE",
+      "change": 0.58,
+      "change_pct": 0.0068
+    },
+    {
+      "symbol": "MWYN",
+      "name": "Marwynn Holdings Inc.",
+      "exchange": "NASDAQ",
+      "change": -0.0014,
+      "change_pct": -0.0018
+    },
+    {
+      "symbol": "FMX",
+      "name": "Fomento Mexicano",
+      "exchange": "NYSE",
+      "change": -1.15,
+      "change_pct": -0.0107
+    },
+    {
+      "symbol": "WILC",
+      "name": "G Willi Food Intl Ltd",
+      "exchange": "NASDAQ",
+      "change": -0.3,
+      "change_pct": -0.0114
+    },
+    {
+      "symbol": "VITL",
+      "name": "Vital Farms, Inc.",
+      "exchange": "NASDAQ",
+      "change": -0.26,
+      "change_pct": -0.0149
+    },
+    {
+      "symbol": "CASY",
+      "name": "Caseys Gen Stores",
+      "exchange": "NASDAQ",
+      "change": -12.94,
+      "change_pct": -0.0192
+    },
+    {
+      "symbol": "GRDN",
+      "name": "Guardian Pharmacy Services, Inc.",
+      "exchange": "NYSE",
+      "change": -0.68,
+      "change_pct": -0.0204
+    },
+    {
+      "symbol": "IMCC",
+      "name": "Im Cannabis Corp",
+      "exchange": "NASDAQ",
+      "change": -0.02,
+      "change_pct": -0.0217
+    },
+    {
+      "symbol": "HCWC",
+      "name": "Healthy Choice Wellness Corp",
+      "exchange": "AMEX",
+      "change": -0.009,
+      "change_pct": -0.0304
+    },
+    {
+      "symbol": "TKLF",
+      "name": "Tokyo Lifestyle Co., Ltd",
+      "exchange": "NASDAQ",
+      "change": -0.09,
+      "change_pct": -0.0305
+    },
+    {
+      "symbol": "GNLN",
+      "name": "Greenlane Holdings",
+      "exchange": "NASDAQ",
+      "change": -0.0521,
+      "change_pct": -0.0595
+    },
+    {
+      "symbol": "EPSM",
+      "name": "Epsium Enterprise Ltd.",
+      "exchange": "NASDAQ",
+      "change": -0.17,
+      "change_pct": -0.0909
+    },
+    {
+      "symbol": "MSS",
+      "name": "Maison Solutions Inc.",
+      "exchange": "NASDAQ",
+      "change": -0.033,
+      "change_pct": -0.1364
+    },
+    {
+      "symbol": "DTCK",
+      "name": "Davis Commoditie",
+      "exchange": "NASDAQ",
+      "change": -0.29,
+      "change_pct": -0.1487
+    }
+  ]
+}

@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-03-15T07:49:38.063863+00:00",
+  "sector_id": 7430,
+  "sector_name": "Utilities",
+  "stock_count": 50,
+  "stocks": [
+    {
+      "symbol": "VGASW",
+      "name": "Verde Clean Fuels Inc",
+      "exchange": "NASDAQ",
+      "change": 0.0117,
+      "change_pct": 0.3634
+    },
+    {
+      "symbol": "VGAS",
+      "name": "Verde Clean Fuels Inc",
+      "exchange": "NASDAQ",
+      "change": 0.31,
+      "change_pct": 0.1975
+    },
+    {
+      "symbol": "EVGOW",
+      "name": "Evgo Inc.",
+      "exchange": "NASDAQ",
+      "change": 0.0034,
+      "change_pct": 0.1182
+    },
+    {
+      "symbol": "VVPR",
+      "name": "Vivopower International Plc",
+      "exchange": "NASDAQ",
+      "change": 0.2,
+      "change_pct": 0.107
+    },
+    {
+      "symbol": "WAVE",
+      "name": "Eco Wave Power Global Ab (Publ)",
+      "exchange": "NASDAQ",
+      "change": 0.38,
+      "change_pct": 0.069
+    },
+    {
+      "symbol": "GWRS",
+      "name": "Global Water",
+      "exchange": "NASDAQ",
+      "change": 0.2,
+      "change_pct": 0.0279
+    },
+    {
+      "symbol": "OTTR",
+      "name": "Otter Tail Corp",
+      "exchange": "NASDAQ",
+      "change": 2.38,
+      "change_pct": 0.0279
+    },
+    {
+      "symbol": "NWE",
+      "name": "Northwestern Corp",
+      "exchange": "NASDAQ",
+      "change": 1.84,
+      "change_pct": 0.0276
+    },
+    {
+      "symbol": "HTO",
+      "name": "H2O America",
+      "exchange": "NASDAQ",
+      "change": 1.57,
+      "change_pct": 0.0274
+    },
+    {
+      "symbol": "NFG",
+      "name": "Natl Fuel Gas Co",
+      "exchange": "NYSE",
+      "change": 2.56,
+      "change_pct": 0.0273
+    },
+    {
+      "symbol": "BKH",
+      "name": "Black Hills",
+      "exchange": "NYSE",
+      "change": 1.81,
+      "change_pct": 0.0256
+    },
+    {
+      "symbol": "XEL",
+      "name": "Xcel Energy Inc",
+      "exchange": "NASDAQ",
+      "change": 1.68,
+      "change_pct": 0.021
+    },
+    {
+      "symbol": "SRE",
+      "name": "Sempra Energy",
+      "exchange": "NYSE",
+      "change": 1.92,
+      "change_pct": 0.0206
+    },
+    {
+      "symbol": "WEC",
+      "name": "WEC Energy",
+      "exchange": "NYSE",
+      "change": 2.3,
+      "change_pct": 0.02
+    },
+    {
+      "symbol": "PCYO",
+      "name": "Pure Cycle Corp",
+      "exchange": "NASDAQ",
+      "change": 0.19,
+      "change_pct": 0.0188
+    },
+    {
+      "symbol": "CWT",
+      "name": "California Wtr Svc Group",
+      "exchange": "NYSE",
+      "change": 0.83,
+      "change_pct": 0.0187
+    },
+    {
+      "symbol": "AEE",
+      "name": "Ameren",
+      "exchange": "NYSE",
+      "change": 2.04,
+      "change_pct": 0.0185
+    },
+    {
+      "symbol": "ENLT",
+      "name": "Enlight Renewabl",
+      "exchange": "NASDAQ",
+      "change": 1.25,
+      "change_pct": 0.0181
+    },
+    {
+      "symbol": "LNT",
+      "name": "Alliant Energy Corp",
+      "exchange": "NASDAQ",
+      "change": 1.22,
+      "change_pct": 0.017
+    },
+    {
+      "symbol": "SR",
+      "name": "Spire Inc",
+      "exchange": "NYSE",
+      "change": 1.54,
+      "change_pct": 0.0169
+    },
+    {
+      "symbol": "POR",
+      "name": "Portland General",
+      "exchange": "NYSE",
+      "change": 0.85,
+      "change_pct": 0.0161
+    },
+    {
+      "symbol": "PCG-PRA",
+      "name": "Pacific Gas",
+      "exchange": "AMEX",
+      "change": 0.36,
+      "change_pct": 0.0161
+    },
+    {
+      "symbol": "AWR",
+      "name": "Amer States Wtr Co",
+      "exchange": "NYSE",
+      "change": 1.17,
+      "change_pct": 0.0157
+    },
+    {
+      "symbol": "ED",
+      "name": "Consolidated Edison Inc",
+      "exchange": "NYSE",
+      "change": 1.75,
+      "change_pct": 0.0155
+    },
+    {
+      "symbol": "PEG",
+      "name": "Publ Svc Enter",
+      "exchange": "NYSE",
+      "change": 1.26,
+      "change_pct": 0.0153
+    },
+    {
+      "symbol": "TLN",
+      "name": "Talen Energy Corp",
+      "exchange": "NASDAQ",
+      "change": 4.69,
+      "change_pct": 0.0151
+    },
+    {
+      "symbol": "KEP",
+      "name": "Korea Electric Power",
+      "exchange": "NYSE",
+      "change": 0.24,
+      "change_pct": 0.015
+    },
+    {
+      "symbol": "CDTG",
+      "name": "CDT Environmental Technology Investment Holdings Ltd",
+      "exchange": "NASDAQ",
+      "change": 0.006,
+      "change_pct": 0.015
+    },
+    {
+      "symbol": "NI",
+      "name": "NiSource",
+      "exchange": "NYSE",
+      "change": 0.7,
+      "change_pct": 0.015
+    },
+    {
+      "symbol": "AVA",
+      "name": "Avista US",
+      "exchange": "NYSE",
+      "change": 0.58,
+      "change_pct": 0.0148
+    },
+    {
+      "symbol": "WTRG",
+      "name": "Essential Utilities Inc",
+      "exchange": "NYSE",
+      "change": 0.59,
+      "change_pct": 0.0144
+    },
+    {
+      "symbol": "PNW",
+      "name": "Pinnacl West Cap",
+      "exchange": "NYSE",
+      "change": 1.43,
+      "change_pct": 0.0141
+    },
+    {
+      "symbol": "CNP",
+      "name": "Centerpoint Energy Inc",
+      "exchange": "NYSE",
+      "change": 0.61,
+      "change_pct": 0.0141
+    },
+    {
+      "symbol": "CMS",
+      "name": "CMS ENERGY CORP",
+      "exchange": "NYSE",
+      "change": 1.05,
+      "change_pct": 0.0137
+    },
+    {
+      "symbol": "NJR",
+      "name": "New Jersey Res",
+      "exchange": "NYSE",
+      "change": 0.74,
+      "change_pct": 0.0136
+    },
+    {
+      "symbol": "MGEE",
+      "name": "Mge Energy Inc",
+      "exchange": "NASDAQ",
+      "change": 1.0,
+      "change_pct": 0.0136
+    },
+    {
+      "symbol": "DTE",
+      "name": "Dte Energy Co",
+      "exchange": "NYSE",
+      "change": 1.93,
+      "change_pct": 0.0131
+    },
+    {
+      "symbol": "NWN",
+      "name": "Northwest Natrl",
+      "exchange": "NYSE",
+      "change": 0.62,
+      "change_pct": 0.0119
+    },
+    {
+      "symbol": "PPL",
+      "name": "PPL",
+      "exchange": "NYSE",
+      "change": 0.44,
+      "change_pct": 0.0116
+    },
+    {
+      "symbol": "NEE",
+      "name": "Nextera Energy Inc",
+      "exchange": "NYSE",
+      "change": 1.05,
+      "change_pct": 0.0114
+    },
+    {
+      "symbol": "CPK",
+      "name": "Chesapeake Utils Corp",
+      "exchange": "NYSE",
+      "change": 1.43,
+      "change_pct": 0.0111
+    },
+    {
+      "symbol": "EVRG",
+      "name": "Evergy Inc",
+      "exchange": "NASDAQ",
+      "change": 0.89,
+      "change_pct": 0.0109
+    },
+    {
+      "symbol": "EIX",
+      "name": "Edison Intl",
+      "exchange": "NYSE",
+      "change": 0.77,
+      "change_pct": 0.0109
+    },
+    {
+      "symbol": "AEP",
+      "name": "Americn Electric",
+      "exchange": "NASDAQ",
+      "change": 1.39,
+      "change_pct": 0.0105
+    },
+    {
+      "symbol": "AWK",
+      "name": "American Wtr Wks Co Inc",
+      "exchange": "NYSE",
+      "change": 1.44,
+      "change_pct": 0.0104
+    },
+    {
+      "symbol": "OGE",
+      "name": "Oge Energy",
+      "exchange": "NYSE",
+      "change": 0.49,
+      "change_pct": 0.0102
+    },
+    {
+      "symbol": "ARTNA",
+      "name": "Artesian Res Corp",
+      "exchange": "NASDAQ",
+      "change": 0.33,
+      "change_pct": 0.0102
+    },
+    {
+      "symbol": "CWCO",
+      "name": "Consolidated Water",
+      "exchange": "NASDAQ",
+      "change": 0.35,
+      "change_pct": 0.0102
+    },
+    {
+      "symbol": "ETR",
+      "name": "Entergy Corp",
+      "exchange": "NYSE",
+      "change": 1.06,
+      "change_pct": 0.0101
+    },
+    {
+      "symbol": "DUK",
+      "name": "Duke Energy Corp",
+      "exchange": "NYSE",
+      "change": 1.33,
+      "change_pct": 0.0101
+    }
+  ]
+}
