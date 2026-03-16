@@ -6,7 +6,6 @@ import html as _html
 import json
 import logging
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any
 
 from dotenv import load_dotenv
@@ -14,6 +13,7 @@ from dotenv import load_dotenv
 from stock_utils.ai_agent_client import TradingAnalysisAgent
 from stock_utils.config import Settings
 from stock_utils.data_fetcher import DataFetcher
+from stock_utils.paths import OUTPUT_DIR, SECTORS_DIR
 from stock_utils.screener import Screener
 from stock_utils.telegram_notifier import send_markdown_message
 
@@ -22,9 +22,6 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(name)s - %(message)s",
 )
 LOGGER = logging.getLogger(__name__)
-
-OUTPUT_DIR   = Path("data/output")
-SECTORS_DIR  = Path("data/sectors")
 
 # Three screening passes in priority order — shown first to last.
 _PASSES = [

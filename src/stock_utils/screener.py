@@ -7,6 +7,7 @@ import logging
 from typing import Any
 
 from .data_fetcher import DataFetcher
+from .paths import DEFAULT_WATCHLIST_FILE
 import pandas as pd
 from .indicators import (
     add_core_indicators,
@@ -25,7 +26,7 @@ class Screener:
     """Runs screening logic for a universe of symbols."""
 
     data_fetcher: DataFetcher
-    watchlist_file: str = "data/watchlist.txt"
+    watchlist_file: str = str(DEFAULT_WATCHLIST_FILE)
     period: str = "6mo"
     interval: str = "1d"
     strategy: str = "default"

@@ -56,6 +56,9 @@ export TELEGRAM_MESSAGE_THREAD_ID="1421"                  # optional, e.g. US St
 
 3. Update `data/watchlist.txt` with tickers to screen (one per line).
 
+All repo-managed paths under `data/` are resolved from the repository root, so local
+runs and GitHub Actions write to the same files even if you launch a job from `src/`.
+
 4. Run from the **project root** (where `pyproject.toml` lives):
 
 ```bash

@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import logging
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any
 
 from dotenv import load_dotenv
@@ -14,6 +13,7 @@ from stock_utils.ai_agent_client import TradingAnalysisAgent
 from stock_utils.config import Settings
 from stock_utils.data_fetcher import DataFetcher
 from stock_utils.indicators import add_core_indicators, is_candidate
+from stock_utils.paths import SECTORS_DIR, SECTORS_FILE
 from stock_utils.sector_scraper import SectorScraper
 from stock_utils.telegram_notifier import send_markdown_message
 
@@ -23,8 +23,6 @@ logging.basicConfig(
 )
 LOGGER = logging.getLogger(__name__)
 
-SECTORS_FILE = Path("data/sectors.json")
-SECTORS_DIR  = Path("data/sectors")
 MAX_STOCKS_PER_SECTOR = 50   # Webull returns up to 50 per sector page
 MAX_SECTORS = 30              # all available sectors
 
@@ -115,7 +113,6 @@ def load_sectors() -> list[dict[str, Any]]:
 
 def _load_sector_stocks(sector_id: int, sector_name: str) -> list[dict[str, Any]]:
     """Load pre-fetched sector stocks from data/sectors/<id>-*.json."""
-    import re
     pattern = f"{sector_id}-*.json"
     matches = list(SECTORS_DIR.glob(pattern))
     if matches:

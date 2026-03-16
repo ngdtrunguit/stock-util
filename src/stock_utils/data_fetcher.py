@@ -9,6 +9,8 @@ from typing import Any
 import pandas as pd
 import yfinance as yf
 
+from stock_utils.paths import DEFAULT_WATCHLIST_FILE, resolve_repo_path
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -76,11 +78,11 @@ class DataFetcher:
             "longName": info.get("longName"),
         }
 
-    def get_watchlist(self, watchlist_file: str = "data/watchlist.txt") -> list[str]:
-        path = Path(watchlist_file)
+    def get_watchlist(self, watchlist_file: str = str(DEFAULT_WATCHLIST_FILE)) -> list[str]:
+        path = resolve_repo_path(watchlist_file)
         if not path.exists():
-            raise ValueError(f"Watchlist file does not exist: {watchlist_file}")
+            raise ValueError(f"Watchlist file does not exist: {path}")
         symbols = [line.strip().upper() for line in path.read_text().splitlines() if line.strip()]
         if not symbols:
-            raise ValueError(f"Watchlist file is empty: {watchlist_file}")
+            raise ValueError(f"Watchlist file is empty: {path}")
         return symbols

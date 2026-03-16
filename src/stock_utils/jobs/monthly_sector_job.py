@@ -5,12 +5,12 @@ from __future__ import annotations
 import json
 import logging
 from datetime import datetime, timezone
-from pathlib import Path
 
 from dotenv import load_dotenv
 
 from stock_utils.sector_scraper import SectorScraper
 from stock_utils.config import Settings
+from stock_utils.paths import SECTORS_FILE
 from stock_utils.telegram_notifier import send_markdown_message
 
 logging.basicConfig(
@@ -18,9 +18,6 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(name)s - %(message)s",
 )
 LOGGER = logging.getLogger(__name__)
-
-SECTORS_FILE = Path("data/sectors.json")
-
 
 def build_table(sectors: list[dict]) -> str:
     """Render sector list as Markdown table."""
