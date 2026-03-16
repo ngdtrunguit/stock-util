@@ -26,7 +26,7 @@ src/stock_utils/
   telegram_notifier.py
   jobs/daily_screen_job.py
 data/watchlist.txt
-infra/github-actions/daily-screen.yml
+.github/workflows/daily-screen.yml
 ```
 
 ## Quickstart
@@ -51,6 +51,7 @@ export PROJECT_ENDPOINT="https://<your-foundry-endpoint>"  # optional
 export AGENT_NAME="<your-agent-name>"                      # optional
 export TELEGRAM_BOT_TOKEN="<bot-token>"                    # optional
 export TELEGRAM_CHAT_ID="<chat-id>"                        # optional
+export TELEGRAM_MESSAGE_THREAD_ID="1421"                  # optional, e.g. US Stock Signal topic
 ```
 
 3. Update `data/watchlist.txt` with tickers to screen (one per line).

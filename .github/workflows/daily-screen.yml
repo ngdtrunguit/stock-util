@@ -2,7 +2,8 @@ name: Daily Stock Screen
 
 on:
   schedule:
-    - cron: "0 13 * * 1-5"
+    # Every weekday at 00:00 UTC
+    - cron: "0 0 * * 1-5"
   workflow_dispatch:
 
 permissions:
@@ -43,6 +44,7 @@ jobs:
           AGENT_NAME: ${{ secrets.AGENT_NAME }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_MESSAGE_THREAD_ID: "1421"
           PYTHONUNBUFFERED: "1"
         run: |
           python -m stock_utils.jobs.daily_screen_job

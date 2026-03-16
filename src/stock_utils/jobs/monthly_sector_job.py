@@ -94,6 +94,7 @@ def main() -> None:
         bot_token=settings.telegram_bot_token,
         chat_id=settings.telegram_chat_id,
         text=msg,
+        message_thread_id=settings.telegram_message_thread_id,
     )
     LOGGER.info("Monthly sector sync complete")
 

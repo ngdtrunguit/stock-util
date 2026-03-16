@@ -1,13 +1,13 @@
-name: Weekly Sector Screen
+name: Monthly Sector Sync
 
 on:
   schedule:
-    # Every Monday at 09:00 UTC
-    - cron: "0 9 * * 1"
+    # 1st of every month at 09:00 UTC
+    - cron: "0 9 1 * *"
   workflow_dispatch:
 
 jobs:
-  screen:
+  sync:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,11 +25,16 @@ jobs:
           pip install -r requirements.txt
           pip install -e .
 
-      - name: Run weekly sector screen
+      - name: Run monthly sector sync
         env:
-          PROJECT_ENDPOINT: ${{ secrets.PROJECT_ENDPOINT }}
-          AGENT_NAME: ${{ secrets.AGENT_NAME }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_MESSAGE_THREAD_ID: ${{ secrets.TELEGRAM_MESSAGE_THREAD_ID }}
         run: |
-          python -m stock_utils.jobs.weekly_screen_job
+          python -m stock_utils.jobs.monthly_sector_job
+
+      - name: Commit updated sectors.json
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update sectors.json [monthly-sync]"
+          file_pattern: data/sectors.json
