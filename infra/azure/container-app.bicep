@@ -22,10 +22,6 @@ param environmentName string = 'dev'
 @description('Container image tag to deploy (e.g. latest or a specific SHA)')
 param imageTag string = 'latest'
 
-@description('Finnhub API key injected as a Container App secret')
-@secure()
-param finnhubApiKey string = ''
-
 // ── Derived names ─────────────────────────────────────────────────────────────
 
 var appName    = 'stock-tools-api'
@@ -121,12 +117,7 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
           identity: identity.id
         }
       ]
-      secrets: finnhubApiKey != '' ? [
-        {
-          name: 'finnhub-key'
-          value: finnhubApiKey
-        }
-      ] : []
+      secrets: []
     }
     template: {
       containers: [
@@ -137,12 +128,7 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
             cpu: json('0.5')
             memory: '1Gi'
           }
-          env: finnhubApiKey != '' ? [
-            {
-              name: 'FINNHUB_KEY'
-              secretRef: 'finnhub-key'
-            }
-          ] : []
+          env: []
           probes: [
             {
               type: 'Liveness'

@@ -71,7 +71,6 @@ jobs:
           parameters: >
             environmentName=${{ env.ENVIRONMENT_NAME }}
             imageTag=${{ env.IMAGE_TAG }}
-            finnhubApiKey=${{ secrets.FINNHUB_KEY }}
 
       # ── Build & push container image to ACR ───────────────────────────────────
       - name: Build and push image to ACR

@@ -5,17 +5,17 @@ analyst) can call with a ticker symbol received from the daily screening job:
 
   POST /price_history   — OHLCV history + current price (yfinance)
   POST /technicals      — RSI, MA50/MA200 premium, volatility, trend
-  POST /news_sentiment  — Recent headlines + simple sentiment score (Finnhub)
+  POST /news_sentiment  — Recent headlines + simple sentiment score (Yahoo Finance)
+
+All data sources are free and open — no third-party API keys required.
 """
 
 from __future__ import annotations
 
-import os
 from datetime import datetime, timedelta
 
 import numpy as np
 import pandas as pd
-import requests
 import yfinance as yf
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
@@ -39,6 +39,11 @@ class TickerRequest(BaseModel):
 
 class HistoryRequest(BaseModel):
     history: list[dict] = Field(default_factory=list)
+
+
+# ── Constants ─────────────────────────────────────────────────────────────────
+
+MAX_HEADLINES = 10  # Maximum number of news articles to analyse per request
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -155,33 +160,29 @@ def compute_technicals(history_data: HistoryRequest) -> dict:
 
 @app.post("/news_sentiment")
 def get_news_sentiment(req: TickerRequest) -> dict:
-    """Fetch recent headlines from Finnhub and return a simple sentiment score."""
-    ticker = req.ticker.upper().strip()
-    api_key = os.environ.get("FINNHUB_KEY", "")
-    if not api_key:
-        raise HTTPException(
-            status_code=503,
-            detail="FINNHUB_KEY environment variable is not set",
-        )
+    """Fetch recent headlines from Yahoo Finance and return a simple sentiment score.
 
-    start = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
-    end = datetime.now().strftime("%Y-%m-%d")
-    url = (
-        f"https://finnhub.io/api/v1/company-news"
-        f"?symbol={ticker}&from={start}&to={end}&token={api_key}"
-    )
+    Uses ``yfinance.Ticker.news`` — no API key required.
+    """
+    ticker = req.ticker.upper().strip()
 
     try:
-        resp = requests.get(url, timeout=10)
-        resp.raise_for_status()
-        articles = resp.json()
-    except requests.RequestException as exc:
-        raise HTTPException(status_code=502, detail=f"Finnhub request failed: {exc}") from exc
+        articles = yf.Ticker(ticker).news or []
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Yahoo Finance news fetch failed: {exc}") from exc
 
-    if not isinstance(articles, list):
-        raise HTTPException(status_code=502, detail="Unexpected response from Finnhub")
+    # Each article dict has at least: title, publisher, link, providerPublishTime
+    cutoff_ts = (datetime.now() - timedelta(days=30)).timestamp()
+    recent = [
+        a for a in articles
+        if isinstance(a.get("providerPublishTime"), (int, float))
+        and a["providerPublishTime"] >= cutoff_ts
+    ]
 
-    headlines = [a["headline"] for a in articles[:10] if isinstance(a.get("headline"), str)]
+    headlines = [
+        a["title"] for a in recent[:MAX_HEADLINES]
+        if isinstance(a.get("title"), str) and a["title"].strip()
+    ]
 
     positive_words = {"beat", "growth", "buy", "upgrade", "profit", "gain"}
     negative_words = {"miss", "decline", "sell", "downgrade", "loss", "drop"}
@@ -200,4 +201,5 @@ def get_news_sentiment(req: TickerRequest) -> dict:
         "sentiment_score": score,
         "positive_signals": pos,
         "negative_signals": neg,
+        "source": "Yahoo Finance",
     }
