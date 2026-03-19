@@ -11,6 +11,7 @@ OUTPUT_DIR = DATA_DIR / "output"
 SECTORS_DIR = DATA_DIR / "sectors"
 SECTORS_FILE = DATA_DIR / "sectors.json"
 DEFAULT_WATCHLIST_FILE = DATA_DIR / "watchlist.txt"
+DB_PATH = DATA_DIR / "stock_screen.db"
 
 
 def resolve_repo_path(path_value: str | Path) -> Path:

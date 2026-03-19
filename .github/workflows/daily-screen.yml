@@ -38,6 +38,13 @@ jobs:
           pip install -r requirements.txt
           pip install -e .
 
+      - name: Restore screening database
+        uses: actions/download-artifact@v4
+        with:
+          name: stock-screen-db
+          path: data/
+        continue-on-error: true
+
       - name: Run daily screen job
         env:
           PROJECT_ENDPOINT: ${{ secrets.PROJECT_ENDPOINT }}
@@ -48,6 +55,18 @@ jobs:
           PYTHONUNBUFFERED: "1"
         run: |
           python -m stock_utils.jobs.daily_screen_job
+
+      # Replace the previous artifact with the updated database file.
+      # The SQLite file itself accumulates rows from every run;
+      # overwrite replaces the stale artifact copy with the current one.
+      - name: Upload screening database
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stock-screen-db
+          path: data/stock_screen.db
+          if-no-files-found: warn
+          overwrite: true
 
       - name: Upload daily output artifacts
         uses: actions/upload-artifact@v4

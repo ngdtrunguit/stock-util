@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 from stock_utils.ai_agent_client import TradingAnalysisAgent
 from stock_utils.config import Settings
 from stock_utils.data_fetcher import DataFetcher
+from stock_utils.database import ScreeningDatabase
 from stock_utils.paths import OUTPUT_DIR, SECTORS_DIR
 from stock_utils.screener import Screener
 from stock_utils.telegram_notifier import send_markdown_message
@@ -485,6 +486,17 @@ def main() -> None:
             strategy,
             pass_cfg["title"],
             pass_cfg["rule"],
+        )
+
+    # ── 4b. Persist candidates to SQLite for longitudinal analysis ────────────
+    db = ScreeningDatabase()
+    for pass_cfg in _PASSES:
+        strategy = pass_cfg["strategy"]
+        db.save_candidates(
+            candidates_by_pass[strategy],
+            strategy=strategy,
+            run_date=run_date,
+            run_timestamp=run_timestamp,
         )
 
     # ── 5. Optional AI summary on golden-cross candidates ─────────────────────
