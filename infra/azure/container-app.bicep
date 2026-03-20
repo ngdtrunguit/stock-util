@@ -24,10 +24,10 @@ param imageTag string = 'latest'
 
 // ── Derived names ─────────────────────────────────────────────────────────────
 
-var appName    = 'stock-tools-api'
-var prefix     = '${appName}-${environmentName}'
-var acrName    = replace('acr${appName}${environmentName}', '-', '')  // ACR names: alphanumeric only
-var imageName  = '${acrName}.azurecr.io/${appName}:${imageTag}'
+var appName = 'stock-tools-api'
+var prefix = '${appName}-${environmentName}'
+var acrName = replace('acr${appName}${environmentName}', '-', '') // ACR names: alphanumeric only
+var imageName = '${acrName}.azurecr.io/${appName}:${imageTag}'
 
 // ── Log Analytics Workspace ───────────────────────────────────────────────────
 
@@ -51,7 +51,8 @@ resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
     name: 'Basic'
   }
   properties: {
-    adminUserEnabled: false   // use managed identity pull, not admin credentials
+    // Use ACR admin credentials for pull auth to avoid RBAC assignment writes in CI.
+    adminUserEnabled: true
   }
 }
 
@@ -62,18 +63,7 @@ resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' 
   location: location
 }
 
-// Grant the identity the built-in AcrPull role on the registry
-var acrPullRoleId = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
-
-resource acrPullAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(acr.id, identity.id, acrPullRoleId)
-  scope: acr
-  properties: {
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', acrPullRoleId)
-    principalId: identity.properties.principalId
-    principalType: 'ServicePrincipal'
-  }
-}
+var acrCredentials = acr.listCredentials()
 
 // ── Container Apps Environment ────────────────────────────────────────────────
 
@@ -114,10 +104,16 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
       registries: [
         {
           server: acr.properties.loginServer
-          identity: identity.id
+          username: acrCredentials.username
+          passwordSecretRef: 'acr-password'
         }
       ]
-      secrets: []
+      secrets: [
+        {
+          name: 'acr-password'
+          value: acrCredentials.passwords[0].value
+        }
+      ]
     }
     template: {
       containers: [
@@ -152,7 +148,7 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
         }
       ]
       scale: {
-        minReplicas: 0   // scale to zero when idle
+        minReplicas: 0 // scale to zero when idle
         maxReplicas: 3
         rules: [
           {
