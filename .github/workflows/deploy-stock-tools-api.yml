@@ -74,6 +74,30 @@ jobs:
               --location "$AZURE_LOCATION"
           fi
 
+      # ── Ensure ACR exists before build/push ──────────────────────────────────
+      - name: Ensure ACR exists
+        run: |
+          if az acr show --name "$ACR_NAME" --resource-group "$AZURE_RESOURCE_GROUP" >/dev/null 2>&1; then
+            echo "ACR already exists: $ACR_NAME"
+          else
+            echo "Creating ACR: $ACR_NAME"
+            az acr create \
+              --name "$ACR_NAME" \
+              --resource-group "$AZURE_RESOURCE_GROUP" \
+              --sku Basic \
+              --admin-enabled true
+          fi
+
+      # ── Build & push container image to ACR ───────────────────────────────────
+      - name: Build and push image to ACR
+        run: |
+          az acr build \
+            --registry "$ACR_NAME" \
+            --image "stock-tools-api:$IMAGE_TAG" \
+            --image "stock-tools-api:latest" \
+            --file services/stock-tools-api/Dockerfile \
+            services/stock-tools-api/
+
       # ── Deploy / update Bicep infrastructure ─────────────────────────────────
       # This is idempotent — safe to run on every push.
       - name: Deploy Azure infrastructure (Bicep)
@@ -85,16 +109,6 @@ jobs:
           parameters: >
             environmentName=${{ env.ENVIRONMENT_NAME }}
             imageTag=${{ env.IMAGE_TAG }}
-
-      # ── Build & push container image to ACR ───────────────────────────────────
-      - name: Build and push image to ACR
-        run: |
-          az acr build \
-            --registry "$ACR_NAME" \
-            --image "stock-tools-api:$IMAGE_TAG" \
-            --image "stock-tools-api:latest" \
-            --file services/stock-tools-api/Dockerfile \
-            services/stock-tools-api/
 
       # ── Update the running Container App with the new image ───────────────────
       - name: Update Container App image
