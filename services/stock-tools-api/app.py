@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
 import yfinance as yf
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException, Query
 from pydantic import BaseModel, Field
 from ta.momentum import RSIIndicator
 from ta.trend import SMAIndicator
@@ -64,11 +64,18 @@ def _safe_float(value: object) -> float | None:
         return None
 
 
-def _require_api_key(x_api_key: str | None = Header(default=None, alias='X-API-Key')) -> None:
+def _require_api_key(
+    x_api_key: str | None = Header(default=None, alias='X-API-Key'),
+    q_x_api_key: str | None = Query(default=None, alias='X-API-Key'),
+    q_x_api_key_lc: str | None = Query(default=None, alias='x-api-key'),
+    q_api_key: str | None = Query(default=None, alias='api_key'),
+    q_apikey: str | None = Query(default=None, alias='apikey'),
+) -> None:
     """Require a valid API key for tool endpoints."""
+    provided_key = x_api_key or q_x_api_key or q_x_api_key_lc or q_api_key or q_apikey
     if not EXPECTED_API_KEY:
         raise HTTPException(status_code=503, detail=f'{API_KEY_ENV} is not configured')
-    if x_api_key != EXPECTED_API_KEY:
+    if provided_key != EXPECTED_API_KEY:
         raise HTTPException(status_code=401, detail='Invalid or missing API key')
 
 
