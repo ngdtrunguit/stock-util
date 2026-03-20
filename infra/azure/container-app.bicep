@@ -22,6 +22,10 @@ param environmentName string = 'dev'
 @description('Container image tag to deploy (e.g. latest or a specific SHA)')
 param imageTag string = 'latest'
 
+@secure()
+@description('API key required by Stock Tools API endpoints (X-API-Key header)')
+param apiKey string
+
 // ── Derived names ─────────────────────────────────────────────────────────────
 
 var appName = 'stock-tools-api'
@@ -113,6 +117,10 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
           name: 'acr-password'
           value: acrCredentials.passwords[0].value
         }
+        {
+          name: 'api-key'
+          value: apiKey
+        }
       ]
     }
     template: {
@@ -124,7 +132,12 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
             cpu: json('0.5')
             memory: '1Gi'
           }
-          env: []
+          env: [
+            {
+              name: 'STOCK_TOOLS_API_KEY'
+              secretRef: 'api-key'
+            }
+          ]
           probes: [
             {
               type: 'Liveness'

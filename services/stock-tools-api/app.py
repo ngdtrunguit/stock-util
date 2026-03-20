@@ -12,12 +12,13 @@ All data sources are free and open — no third-party API keys required.
 
 from __future__ import annotations
 
+import os
 from datetime import datetime, timedelta
 
 import numpy as np
 import pandas as pd
 import yfinance as yf
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel, Field
 from ta.momentum import RSIIndicator
 from ta.trend import SMAIndicator
@@ -46,6 +47,11 @@ class HistoryRequest(BaseModel):
 MAX_HEADLINES = 10  # Maximum number of news articles to analyse per request
 
 
+# API key used by Azure AI Foundry agent when calling tool endpoints.
+API_KEY_ENV = 'STOCK_TOOLS_API_KEY'
+EXPECTED_API_KEY = os.getenv(API_KEY_ENV, '').strip()
+
+
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 
@@ -58,6 +64,14 @@ def _safe_float(value: object) -> float | None:
         return None
 
 
+def _require_api_key(x_api_key: str | None = Header(default=None, alias='X-API-Key')) -> None:
+    """Require a valid API key for tool endpoints."""
+    if not EXPECTED_API_KEY:
+        raise HTTPException(status_code=503, detail=f'{API_KEY_ENV} is not configured')
+    if x_api_key != EXPECTED_API_KEY:
+        raise HTTPException(status_code=401, detail='Invalid or missing API key')
+
+
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 
 
@@ -68,7 +82,7 @@ def health() -> dict:
 
 
 @app.post("/price_history")
-def get_price_history(req: TickerRequest) -> dict:
+def get_price_history(req: TickerRequest, _: None = Depends(_require_api_key)) -> dict:
     """Download OHLCV history from Yahoo Finance and return the last 30 rows."""
     ticker = req.ticker.upper().strip()
     end = datetime.now()
@@ -97,7 +111,7 @@ def get_price_history(req: TickerRequest) -> dict:
 
 
 @app.post("/technicals")
-def compute_technicals(history_data: HistoryRequest) -> dict:
+def compute_technicals(history_data: HistoryRequest, _: None = Depends(_require_api_key)) -> dict:
     """Compute RSI, MA50/MA200 premium %, annualised volatility and trend."""
     records = history_data.history
     if not records:
@@ -159,7 +173,7 @@ def compute_technicals(history_data: HistoryRequest) -> dict:
 
 
 @app.post("/news_sentiment")
-def get_news_sentiment(req: TickerRequest) -> dict:
+def get_news_sentiment(req: TickerRequest, _: None = Depends(_require_api_key)) -> dict:
     """Fetch recent headlines from Yahoo Finance and return a simple sentiment score.
 
     Uses ``yfinance.Ticker.news`` — no API key required.
