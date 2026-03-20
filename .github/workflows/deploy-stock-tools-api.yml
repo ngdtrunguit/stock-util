@@ -25,6 +25,9 @@ permissions:
 
 env:
   AZURE_RESOURCE_GROUP: rg-stock-tools-${{ github.event.inputs.environment || 'dev' }}
+  # Used only when creating a new resource group.
+  # Can be overridden with a repository variable named AZURE_LOCATION.
+  AZURE_LOCATION: ${{ vars.AZURE_LOCATION || 'eastus' }}
   ENVIRONMENT_NAME: ${{ github.event.inputs.environment || 'dev' }}
   # ACR name must match the Bicep formula: 'acrstocktoolsapi' + environmentName (no hyphens)
   ACR_NAME: acrstocktoolsapi${{ github.event.inputs.environment || 'dev' }}
@@ -58,6 +61,18 @@ jobs:
         uses: azure/login@v2
         with:
           creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
+
+      # ── Ensure target resource group exists ───────────────────────────────────
+      - name: Ensure resource group exists
+        run: |
+          if az group show --name "$AZURE_RESOURCE_GROUP" >/dev/null 2>&1; then
+            echo "Resource group already exists: $AZURE_RESOURCE_GROUP"
+          else
+            echo "Creating resource group: $AZURE_RESOURCE_GROUP (location: $AZURE_LOCATION)"
+            az group create \
+              --name "$AZURE_RESOURCE_GROUP" \
+              --location "$AZURE_LOCATION"
+          fi
 
       # ── Deploy / update Bicep infrastructure ─────────────────────────────────
       # This is idempotent — safe to run on every push.
