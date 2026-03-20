@@ -10,7 +10,7 @@ from typing import Any
 
 from dotenv import load_dotenv
 
-from stock_utils.ai_agent_client import TradingAnalysisAgent
+from stock_utils.ai_agent_client import TradingAnalysisAgent, extract_tickers
 from stock_utils.config import Settings
 from stock_utils.data_fetcher import DataFetcher
 from stock_utils.database import ScreeningDatabase
@@ -518,6 +518,26 @@ def main() -> None:
         text=msg,
         message_thread_id=settings.telegram_message_thread_id,
     )
+
+    # ── 5b. Send clean ticker lists to Azure AI Foundry agents ────────────────
+    # This is a separate step from the Telegram notification above.
+    # Only ticker symbols (no indicator data) are forwarded so that downstream
+    # agents such as finrobot stock analyst can fetch and process their own data.
+    if settings.project_endpoint and settings.agent_name:
+        az_agent = TradingAnalysisAgent(
+            project_endpoint=settings.project_endpoint,
+            agent_name=settings.agent_name,
+        )
+        for pass_cfg in _PASSES:
+            strategy = pass_cfg["strategy"]
+            tickers = extract_tickers(candidates_by_pass[strategy])
+            if tickers:
+                LOGGER.info(
+                    "Sending %d clean tickers for strategy '%s' to Azure AI Foundry",
+                    len(tickers),
+                    strategy,
+                )
+                az_agent.send_tickers_for_analysis(tickers, strategy=strategy)
 
     # ── 6. Write HTML dashboard for GitHub Pages ──────────────────────────────
     html_index = OUTPUT_DIR / "index.html"

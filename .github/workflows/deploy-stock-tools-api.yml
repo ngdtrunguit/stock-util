@@ -1,0 +1,97 @@
+name: Deploy Stock Tools API
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "services/stock-tools-api/**"
+      - "infra/azure/container-app.bicep"
+      - "infra/azure/container-app.bicepparam"
+      - ".github/workflows/deploy-stock-tools-api.yml"
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment (dev / prod)"
+        required: false
+        default: "dev"
+      image_tag:
+        description: "Image tag to deploy (default: short SHA)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+env:
+  AZURE_RESOURCE_GROUP: rg-stock-tools-${{ github.event.inputs.environment || 'dev' }}
+  ENVIRONMENT_NAME: ${{ github.event.inputs.environment || 'dev' }}
+  # ACR name must match the Bicep formula: 'acrstocktoolsapi' + environmentName (no hyphens)
+  ACR_NAME: acrstocktoolsapi${{ github.event.inputs.environment || 'dev' }}
+
+jobs:
+  build-and-deploy:
+    name: Build → Push → Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      # ── Checkout ──────────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── Compute image tag ─────────────────────────────────────────────────────
+      - name: Set image tag
+        id: tag
+        run: |
+          INPUT_TAG="${{ github.event.inputs.image_tag }}"
+          if [ -n "$INPUT_TAG" ]; then
+            echo "IMAGE_TAG=$INPUT_TAG" >> "$GITHUB_ENV"
+          else
+            echo "IMAGE_TAG=sha-$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+          fi
+
+      # ── Azure login (service principal / client secret) ───────────────────────
+      # Required secrets: AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID,
+      #                   AZURE_SUBSCRIPTION_ID
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
+
+      # ── Deploy / update Bicep infrastructure ─────────────────────────────────
+      # This is idempotent — safe to run on every push.
+      - name: Deploy Azure infrastructure (Bicep)
+        uses: azure/arm-deploy@v2
+        id: bicep
+        with:
+          resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
+          template: infra/azure/container-app.bicep
+          parameters: >
+            environmentName=${{ env.ENVIRONMENT_NAME }}
+            imageTag=${{ env.IMAGE_TAG }}
+
+      # ── Build & push container image to ACR ───────────────────────────────────
+      - name: Build and push image to ACR
+        run: |
+          az acr build \
+            --registry "$ACR_NAME" \
+            --image "stock-tools-api:$IMAGE_TAG" \
+            --image "stock-tools-api:latest" \
+            --file services/stock-tools-api/Dockerfile \
+            services/stock-tools-api/
+
+      # ── Update the running Container App with the new image ───────────────────
+      - name: Update Container App image
+        run: |
+          az containerapp update \
+            --name "stock-tools-api-${{ env.ENVIRONMENT_NAME }}-app" \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --image "${{ steps.bicep.outputs.acrLoginServer }}/stock-tools-api:$IMAGE_TAG"
+
+      # ── Print the public URL for easy access ─────────────────────────────────
+      - name: Print API URL
+        run: |
+          echo "✅ API deployed: https://${{ steps.bicep.outputs.appFqdn }}"
+          echo "   Health check: https://${{ steps.bicep.outputs.appFqdn }}/health"
+          echo "   Docs:         https://${{ steps.bicep.outputs.appFqdn }}/docs"
