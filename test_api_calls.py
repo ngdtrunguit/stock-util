@@ -12,17 +12,24 @@ from __future__ import annotations
 import json
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from typing import Any
 
 import requests
+from requests import Response
 
 BASE_URL = os.getenv(
     "STOCK_TOOLS_API_BASE_URL",
     "https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io",
 )
 API_KEY = os.getenv("STOCK_TOOLS_API_KEY", "")
-TIMEOUT = 30
+CONNECT_TIMEOUT = 10
+READ_TIMEOUT = 60
+RETRYABLE_EXCEPTIONS = (
+    requests.exceptions.ConnectionError,
+    requests.exceptions.Timeout,
+)
 
 
 def _headers() -> dict[str, str]:
@@ -31,8 +38,42 @@ def _headers() -> dict[str, str]:
     return {"Content-Type": "application/json"}
 
 
+def _request_with_retries(
+    method: str,
+    path: str,
+    *,
+    attempts: int = 3,
+    backoff_seconds: float = 5.0,
+    **kwargs: Any,
+) -> Response:
+    url = f"{BASE_URL}{path}"
+    last_error: Exception | None = None
+
+    for attempt in range(1, attempts + 1):
+        try:
+            return requests.request(
+                method,
+                url,
+                timeout=(CONNECT_TIMEOUT, READ_TIMEOUT),
+                **kwargs,
+            )
+        except RETRYABLE_EXCEPTIONS as exc:
+            last_error = exc
+            if attempt == attempts:
+                break
+            sleep_for = backoff_seconds * attempt
+            print(
+                f"  {method.upper()} {path} attempt {attempt}/{attempts} failed: {exc}. "
+                f"Retrying in {sleep_for:.0f}s..."
+            )
+            time.sleep(sleep_for)
+
+    assert last_error is not None
+    raise last_error
+
+
 def check_health() -> bool:
-    resp = requests.get(f"{BASE_URL}/health", timeout=TIMEOUT)
+    resp = _request_with_retries("GET", "/health", attempts=4, backoff_seconds=10)
     resp.raise_for_status()
     data = resp.json()
     print(f"  /health → {data}")
@@ -40,33 +81,33 @@ def check_health() -> bool:
 
 
 def post_price_history(ticker: str, days: int = 180) -> dict[str, Any]:
-    resp = requests.post(
-        f"{BASE_URL}/price_history",
+    resp = _request_with_retries(
+        "POST",
+        "/price_history",
         headers=_headers(),
         json={"ticker": ticker, "days": days},
-        timeout=TIMEOUT,
     )
     resp.raise_for_status()
     return resp.json()
 
 
 def post_technicals(history: list[dict]) -> dict[str, Any]:
-    resp = requests.post(
-        f"{BASE_URL}/technicals",
+    resp = _request_with_retries(
+        "POST",
+        "/technicals",
         headers=_headers(),
         json={"history": history},
-        timeout=TIMEOUT,
     )
     resp.raise_for_status()
     return resp.json()
 
 
 def post_news_sentiment(ticker: str, days: int = 30) -> dict[str, Any]:
-    resp = requests.post(
-        f"{BASE_URL}/news_sentiment",
+    resp = _request_with_retries(
+        "POST",
+        "/news_sentiment",
         headers=_headers(),
         json={"ticker": ticker, "days": days},
-        timeout=TIMEOUT,
     )
     resp.raise_for_status()
     return resp.json()
@@ -85,15 +126,20 @@ def run_pipeline(ticker: str) -> None:
     print(f"  history rows     : {len(ph['history'])} (last-30 of 180-day window)")
     if ph["history"]:
         first = ph["history"][0]
-        last  = ph["history"][-1]
+        last = ph["history"][-1]
         print(f"  date range       : {first['Date']}  →  {last['Date']}")
-        print(f"  latest OHLCV row : {json.dumps({k: round(v, 2) if isinstance(v, float) else v for k, v in last.items()})}")
+        print(
+            "  latest OHLCV row : "
+            f"{json.dumps({k: round(v, 2) if isinstance(v, float) else v for k, v in last.items()})}"
+        )
 
     # ── 2 / technicals ───────────────────────────────────────────────────
     print("\n[2/3] POST /technicals")
     tech = post_technicals(ph["history"])
     rsi = tech.get("rsi")
-    rsi_label = "(overbought >70)" if rsi and rsi > 70 else "(oversold <30)" if rsi and rsi < 30 else "(neutral)"
+    rsi_label = (
+        "(overbought >70)" if rsi and rsi > 70 else "(oversold <30)" if rsi and rsi < 30 else "(neutral)"
+    )
     print(f"  rsi              : {rsi:.1f}  {rsi_label}" if rsi else f"  rsi              : {rsi}")
     print(f"  ma50_premium     : {tech['ma50_premium_pct']:+.2f}%   (price vs 50-day MA)")
     print(f"  ma200_premium    : {tech['ma200_premium_pct']:+.2f}%   (price vs 200-day MA)")
@@ -120,7 +166,7 @@ def run_pipeline(ticker: str) -> None:
 def main() -> None:
     tickers = [t.upper() for t in sys.argv[1:]] if len(sys.argv) > 1 else ["TSLA", "MSFT"]
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-    print(f"Stock Tools API — validation run")
+    print("Stock Tools API — validation run")
     print(f"Base URL  : {BASE_URL}")
     print(f"Tickers   : {tickers}")
     print(f"Timestamp : {ts}")
