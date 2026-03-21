@@ -143,8 +143,15 @@ jobs:
           if [ "$status" -eq 0 ]; then
             echo "Existing Foundry agent is reachable; continuing without refresh."
           elif [ "$status" -eq 10 ]; then
-            echo "Configured Foundry agent was not found. Recreating it before running prompt tests."
-            python infra/azure/foundry-agent-setup.py
+            if [ -n "${AZURE_AI_AGENT_MODEL_DEPLOYMENT}" ]; then
+              echo "Configured Foundry agent was not found. Recreating it with AZURE_AI_AGENT_MODEL_DEPLOYMENT=${AZURE_AI_AGENT_MODEL_DEPLOYMENT}."
+              python infra/azure/foundry-agent-setup.py --model "${AZURE_AI_AGENT_MODEL_DEPLOYMENT}"
+            else
+              echo "::error::Configured Foundry agent was not found, and AZURE_AI_AGENT_MODEL_DEPLOYMENT is empty."
+              echo "::error::Automatic reprovisioning is disabled in this workflow mode because the setup script would need Foundry deployments/read permission to auto-resolve a model deployment."
+              echo "::error::Pre-provision the agent, set the workflow input agent_model_deployment (or repo var AZURE_AI_AGENT_MODEL_DEPLOYMENT), or run with refresh_agent=true after granting the workflow principal Foundry deployments/read access."
+              exit 10
+            fi
           else
             echo "::error::Agent reachability check failed with exit code $status"
             exit "$status"
