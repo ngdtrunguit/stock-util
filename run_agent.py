@@ -201,7 +201,20 @@ def main() -> None:
         return
 
     result = run_agent_prompt(prompt=args.prompt, stream=args.stream)
-    print("Tool calls:", result.tool_calls)
+
+    sep = "─" * 68
+    print(f"\n{sep}")
+    print(f"Prompt : {result.prompt}")
+    print(f"{sep}")
+    if result.tool_calls:
+        print(f"OpenAPI tool calls made by agent ({len(result.tool_calls)}):")
+        for i, tc in enumerate(result.tool_calls, 1):
+            print(f"  {i}. {tc}")
+        order_ok = verify_tool_order(result.tool_calls)
+        print(f"Tool order (price_history → technicals → news_sentiment): {'✅ OK' if order_ok else '⚠️  unexpected order'}")
+    else:
+        print("⚠️  No tool calls recorded in response — agent may have answered from training data.")
+    print(f"{sep}")
     print("\nAgent response:\n")
     print(result.output_text)
 
