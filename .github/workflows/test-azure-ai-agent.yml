@@ -26,8 +26,8 @@ jobs:
       STOCK_TOOLS_API_BASE_URL: ${{ vars.STOCK_TOOLS_API_BASE_URL || 'https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io' }}
       AZURE_AI_PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
       AZURE_AI_AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
-      AZURE_AI_AGENT_MODEL_DEPLOYMENT: ${{ vars.AZURE_AI_AGENT_MODEL_DEPLOYMENT }}
-      AZURE_AI_OPENAPI_CONNECTION_ID: ${{ secrets.AZURE_AI_OPENAPI_CONNECTION_ID }}
+      AZURE_AI_AGENT_MODEL_DEPLOYMENT: ${{ vars.AZURE_AI_AGENT_MODEL_DEPLOYMENT || '' }}
+      AZURE_AI_OPENAPI_CONNECTION_ID: ${{ secrets.AZURE_AI_OPENAPI_CONNECTION_ID || '' }}
       AZURE_AI_OPENAPI_API_KEY_HEADER_NAME: ${{ vars.AZURE_AI_OPENAPI_API_KEY_HEADER_NAME || 'x-api-key' }}
       STOCK_TOOLS_OPENAPI_URL: ${{ vars.STOCK_TOOLS_OPENAPI_URL || 'https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io/openapi.json' }}
 
@@ -61,13 +61,25 @@ jobs:
               'AZURE_CLIENT_SECRET': os.getenv('AZURE_CLIENT_SECRET', ''),
               'AZURE_TENANT_ID': os.getenv('AZURE_TENANT_ID', ''),
               'AZURE_SUBSCRIPTION_ID': os.getenv('AZURE_SUBSCRIPTION_ID', ''),
-              'AZURE_AI_AGENT_MODEL_DEPLOYMENT': os.getenv('AZURE_AI_AGENT_MODEL_DEPLOYMENT', ''),
-              'AZURE_AI_OPENAPI_CONNECTION_ID': os.getenv('AZURE_AI_OPENAPI_CONNECTION_ID', ''),
           }
           missing = [name for name, value in required.items() if not value.strip()]
           if missing:
               print('::error::Missing required GitHub secrets / vars: ' + ', '.join(missing))
               sys.exit(1)
+
+          model = os.getenv('AZURE_AI_AGENT_MODEL_DEPLOYMENT', '').strip()
+          connection_id = os.getenv('AZURE_AI_OPENAPI_CONNECTION_ID', '').strip()
+
+          if model:
+              print(f'✅ Found AZURE_AI_AGENT_MODEL_DEPLOYMENT={model}. Workflow will refresh the agent registration.')
+          else:
+              print('::warning::AZURE_AI_AGENT_MODEL_DEPLOYMENT is not set. Workflow will skip OpenAPI tool re-registration and test the existing agent as-is.')
+
+          if connection_id:
+              print('✅ Found AZURE_AI_OPENAPI_CONNECTION_ID. Workflow will provision the tool with project-connection auth.')
+          else:
+              print('::notice::AZURE_AI_OPENAPI_CONNECTION_ID is not set. Workflow will rely on anonymous OpenAPI auth, which is supported when the Stock Tools API is publicly reachable.')
+
           print('✅ Required secrets and vars are present.')
           EOF
 
@@ -91,10 +103,16 @@ jobs:
           EOF
 
       - name: Refresh Foundry agent OpenAPI tool registration
+        if: ${{ env.AZURE_AI_AGENT_MODEL_DEPLOYMENT != '' }}
         env:
           STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
         run: |
           python infra/azure/foundry-agent-setup.py --model "$AZURE_AI_AGENT_MODEL_DEPLOYMENT"
+
+      - name: Skip Foundry agent refresh when model deployment is unset
+        if: ${{ env.AZURE_AI_AGENT_MODEL_DEPLOYMENT == '' }}
+        run: |
+          echo "AZURE_AI_AGENT_MODEL_DEPLOYMENT is unset; skipping Foundry agent OpenAPI tool refresh."
 
       - name: Run configured prompts through the agent
         env:
