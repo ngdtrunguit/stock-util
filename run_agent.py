@@ -15,15 +15,15 @@ import os
 import time
 from dataclasses import dataclass
 from typing import Any
+from urllib.parse import quote
 
 from openai import OpenAI
 
 try:
-    from azure.ai.projects import AIProjectClient
-    from azure.identity import DefaultAzureCredential
+    from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 except Exception:
-    AIProjectClient = None
     DefaultAzureCredential = None
+    get_bearer_token_provider = None
 
 PROJECT_ENDPOINT = os.getenv(
     "AZURE_AI_PROJECT_ENDPOINT",
@@ -31,6 +31,7 @@ PROJECT_ENDPOINT = os.getenv(
 )
 PROJECT_API_KEY = os.getenv("AZURE_AI_PROJECT_API_KEY", "")
 AGENT_NAME = os.getenv("AZURE_AI_AGENT_NAME", "stock-forecast-agent")
+AGENT_API_VERSION = os.getenv("AZURE_AI_AGENT_API_VERSION", "2025-11-15-preview")
 
 
 @dataclass
@@ -44,24 +45,37 @@ def _allow_interactive_browser() -> bool:
     return os.getenv("AZURE_AI_ALLOW_INTERACTIVE_BROWSER", "").strip().lower() in {"1", "true", "yes", "on"}
 
 
-def create_openai_client() -> OpenAI:
-    if PROJECT_API_KEY:
-        return OpenAI(
-            api_key=PROJECT_API_KEY,
-            base_url=f"{PROJECT_ENDPOINT.rstrip('/')}/openai/v1",
-        )
+def build_application_base_url(project_endpoint: str, agent_name: str) -> str:
+    return (
+        f"{project_endpoint.rstrip('/')}"
+        f"/applications/{quote(agent_name, safe='')}/protocols/openai"
+    )
 
-    if AIProjectClient is None or DefaultAzureCredential is None:
+
+def create_openai_client() -> OpenAI:
+    if DefaultAzureCredential is None or get_bearer_token_provider is None:
         raise RuntimeError(
-            "Install azure-ai-projects and azure-identity to use DefaultAzureCredential mode, "
-            "or set AZURE_AI_PROJECT_API_KEY."
+            "Install azure-identity to invoke Azure AI Foundry agents, then authenticate with "
+            "DefaultAzureCredential (for example via az login or azure/login in GitHub Actions)."
         )
 
     credential = DefaultAzureCredential(
         exclude_interactive_browser_credential=not _allow_interactive_browser()
     )
-    project_client = AIProjectClient(endpoint=PROJECT_ENDPOINT, credential=credential)
-    return project_client.get_openai_client()
+    token_provider = get_bearer_token_provider(credential, "https://ai.azure.com/.default")
+    base_url = build_application_base_url(PROJECT_ENDPOINT, AGENT_NAME)
+
+    if PROJECT_API_KEY:
+        print(
+            "⚠️  AZURE_AI_PROJECT_API_KEY is set, but Azure AI Foundry agent applications use Entra "
+            "authentication. Falling back to DefaultAzureCredential."
+        )
+
+    return OpenAI(
+        api_key=token_provider,
+        base_url=base_url,
+        default_query={"api-version": AGENT_API_VERSION},
+    )
 
 
 def _safe_get(obj: Any, key: str, default: Any = None) -> Any:
@@ -117,7 +131,6 @@ def run_agent_prompt(prompt: str, stream: bool = False, retries: int = 2) -> Age
         try:
             if stream:
                 with client.responses.stream(
-                    model=AGENT_NAME,
                     input=prompt,
                 ) as stream_ctx:
                     for event in stream_ctx:
@@ -130,7 +143,6 @@ def run_agent_prompt(prompt: str, stream: bool = False, retries: int = 2) -> Age
                     final_response = stream_ctx.get_final_response()
             else:
                 final_response = client.responses.create(
-                    model=AGENT_NAME,
                     input=prompt,
                 )
 

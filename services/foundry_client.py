@@ -14,9 +14,10 @@ from __future__ import annotations
 
 import os
 import sys
+from urllib.parse import quote
 
-from azure.ai.projects import AIProjectClient
-from azure.identity import DefaultAzureCredential
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+from openai import OpenAI
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
@@ -26,24 +27,23 @@ ENDPOINT = os.environ.get(
 )
 AGENT_NAME = os.environ.get("AZURE_AI_AGENT_NAME", "stock-forecast-agent")
 
-# Optional API key override (uses DefaultAzureCredential when not set).
-PROJECT_API_KEY = os.environ.get("AZURE_AI_PROJECT_API_KEY", "")
+AGENT_API_VERSION = os.environ.get("AZURE_AI_AGENT_API_VERSION", "2025-11-15-preview")
 
 # ── Client ────────────────────────────────────────────────────────────────────
 
 
 def _build_openai_client():
-    if PROJECT_API_KEY:
-        from openai import OpenAI
-
-        return OpenAI(
-            api_key=PROJECT_API_KEY,
-            base_url=f"{ENDPOINT.rstrip('/')}/openai/v1",
-        )
-
     credential = DefaultAzureCredential()
-    project_client = AIProjectClient(endpoint=ENDPOINT, credential=credential)
-    return project_client.get_openai_client()
+    token_provider = get_bearer_token_provider(credential, "https://ai.azure.com/.default")
+    base_url = (
+        f"{ENDPOINT.rstrip('/')}"
+        f"/applications/{quote(AGENT_NAME, safe='')}/protocols/openai"
+    )
+    return OpenAI(
+        api_key=token_provider,
+        base_url=base_url,
+        default_query={"api-version": AGENT_API_VERSION},
+    )
 
 
 # ── Run ───────────────────────────────────────────────────────────────────────
@@ -55,10 +55,7 @@ def main() -> None:
 
     client = _build_openai_client()
 
-    response = client.responses.create(
-        model=AGENT_NAME,
-        input=user_message,
-    )
+    response = client.responses.create(input=user_message)
 
     # Print the assistant output
     output_text = getattr(response, "output_text", None)

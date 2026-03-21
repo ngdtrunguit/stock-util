@@ -20,6 +20,8 @@ from urllib.parse import urlparse, urlunparse
 import requests
 from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import (
+    Connection,
+    ModelDeployment,
     OpenApiAnonymousAuthDetails,
     OpenApiFunctionDefinition,
     OpenApiProjectConnectionAuthDetails,
@@ -41,6 +43,7 @@ OPENAPI_SPEC_URL = os.getenv(
 AGENT_NAME = os.getenv("AZURE_AI_AGENT_NAME", "stock-forecast-agent")
 AGENT_MODEL_DEPLOYMENT = os.getenv("AZURE_AI_AGENT_MODEL_DEPLOYMENT", "")
 OPENAPI_CONNECTION_ID = os.getenv("AZURE_AI_OPENAPI_CONNECTION_ID", "")
+OPENAPI_CONNECTION_NAME = os.getenv("AZURE_AI_OPENAPI_CONNECTION_NAME", "")
 OPENAPI_API_KEY_HEADER_NAME = os.getenv("AZURE_AI_OPENAPI_API_KEY_HEADER_NAME", "x-api-key")
 
 REQUIRED_POST_ENDPOINTS = (
@@ -48,6 +51,130 @@ REQUIRED_POST_ENDPOINTS = (
     "/technicals",
     "/news_sentiment",
 )
+
+PREFERRED_MODEL_NAMES = (
+    "gpt-5.1-chat",
+    "gpt-5-chat",
+    "gpt-4.1",
+    "gpt-4o",
+    "gpt-4.1-mini",
+)
+
+
+def _safe_attr(obj: Any, key: str, default: Any = None) -> Any:
+    if isinstance(obj, dict):
+        return obj.get(key, default)
+    return getattr(obj, key, default)
+
+
+def _normalize_openapi_target(url: str) -> str:
+    parsed = urlparse(url.strip())
+    path = parsed.path or "/"
+    if path.endswith('/openapi.json'):
+        path = path[: -len('/openapi.json')] or '/'
+    return urlunparse((parsed.scheme, parsed.netloc, path.rstrip('/') or '/', '', '', ''))
+
+
+def resolve_model_deployment(project_client: AIProjectClient, requested_model: str) -> str:
+    requested_model = requested_model.strip()
+    if requested_model:
+        return requested_model
+
+    deployments = list(project_client.deployments.list())
+    if not deployments:
+        raise SystemExit(
+            "No Azure AI Foundry model deployments were found. Set AZURE_AI_AGENT_MODEL_DEPLOYMENT explicitly."
+        )
+
+    def rank(deployment: ModelDeployment) -> tuple[int, int, str]:
+        name = str(_safe_attr(deployment, 'name', '') or '')
+        model_name = str(_safe_attr(deployment, 'model_name', _safe_attr(deployment, 'modelName', '')) or '')
+        candidates = {name.lower(), model_name.lower()}
+        for idx, preferred in enumerate(PREFERRED_MODEL_NAMES):
+            pref = preferred.lower()
+            if pref in candidates:
+                return (0, idx, name)
+        for idx, preferred in enumerate(PREFERRED_MODEL_NAMES):
+            pref = preferred.lower()
+            if any(pref in candidate for candidate in candidates if candidate):
+                return (1, idx, name)
+        return (2, 999, name)
+
+    selected = sorted(deployments, key=rank)[0]
+    resolved_name = str(_safe_attr(selected, 'name', '') or '')
+    resolved_model_name = str(_safe_attr(selected, 'model_name', _safe_attr(selected, 'modelName', '')) or '')
+    if not resolved_name:
+        raise SystemExit(
+            "Could not resolve a valid Azure AI Foundry deployment name. Set AZURE_AI_AGENT_MODEL_DEPLOYMENT explicitly."
+        )
+
+    print(
+        "Resolved AZURE_AI_AGENT_MODEL_DEPLOYMENT automatically "
+        f"to '{resolved_name}' (model: {resolved_model_name or 'unknown'})."
+    )
+    return resolved_name
+
+
+def resolve_openapi_connection_id(project_client: AIProjectClient, explicit_id: str, explicit_name: str, openapi_spec_url: str) -> str:
+    explicit_id = explicit_id.strip()
+    if explicit_id:
+        return explicit_id
+
+    connections = list(project_client.connections.list(connection_type='CustomKeys'))
+    if not connections:
+        return ''
+
+    explicit_name = explicit_name.strip()
+    if explicit_name:
+        for connection in connections:
+            if str(_safe_attr(connection, 'name', '') or '').strip() == explicit_name:
+                resolved_id = str(_safe_attr(connection, 'id', '') or '')
+                print(
+                    "Resolved AZURE_AI_OPENAPI_CONNECTION_ID from AZURE_AI_OPENAPI_CONNECTION_NAME "
+                    f"'{explicit_name}'."
+                )
+                return resolved_id
+        raise SystemExit(
+            f"Could not find Foundry connection named '{explicit_name}'. Set AZURE_AI_OPENAPI_CONNECTION_ID explicitly."
+        )
+
+    normalized_openapi_target = _normalize_openapi_target(openapi_spec_url)
+    matching_connections: list[Connection] = []
+    for connection in connections:
+        target = str(_safe_attr(connection, 'target', '') or '').strip()
+        if not target:
+            continue
+        normalized_target = _normalize_openapi_target(target)
+        if normalized_target == normalized_openapi_target:
+            matching_connections.append(connection)
+
+    if len(matching_connections) == 1:
+        resolved = str(_safe_attr(matching_connections[0], 'id', '') or '')
+        print(
+            "Resolved AZURE_AI_OPENAPI_CONNECTION_ID automatically from the matching CustomKeys connection "
+            f"'{_safe_attr(matching_connections[0], 'name', '')}'."
+        )
+        return resolved
+
+    default_matches = [c for c in matching_connections if bool(_safe_attr(c, 'is_default', False))]
+    if len(default_matches) == 1:
+        resolved = str(_safe_attr(default_matches[0], 'id', '') or '')
+        print(
+            "Resolved AZURE_AI_OPENAPI_CONNECTION_ID automatically from the default matching CustomKeys connection "
+            f"'{_safe_attr(default_matches[0], 'name', '')}'."
+        )
+        return resolved
+
+    if len(connections) == 1:
+        resolved = str(_safe_attr(connections[0], 'id', '') or '')
+        print(
+            "Resolved AZURE_AI_OPENAPI_CONNECTION_ID automatically from the only CustomKeys connection in the project "
+            f"'{_safe_attr(connections[0], 'name', '')}'."
+        )
+        return resolved
+
+    return ''
+
 
 AGENT_INSTRUCTIONS = """You are stock-forecast-agent.
 
@@ -242,14 +369,14 @@ def _inject_api_key_security(spec: dict[str, Any], header_name: str) -> dict[str
     return normalized_spec
 
 
-def build_openapi_tool(spec: dict[str, Any]) -> OpenApiTool:
+def build_openapi_tool(spec: dict[str, Any], connection_id: str) -> OpenApiTool:
     spec = normalize_openapi_for_foundry(spec)
 
-    if OPENAPI_CONNECTION_ID:
+    if connection_id:
         spec = _inject_api_key_security(spec, OPENAPI_API_KEY_HEADER_NAME)
         auth_details = OpenApiProjectConnectionAuthDetails(
             security_scheme=OpenApiProjectConnectionSecurityScheme(
-                project_connection_id=OPENAPI_CONNECTION_ID
+                project_connection_id=connection_id
             )
         )
     else:
@@ -303,16 +430,14 @@ def upsert_agent(project_client: AIProjectClient, model_deployment: str, tool: O
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Create or update stock-forecast-agent in Azure AI Foundry.")
-    parser.add_argument("--model", default=AGENT_MODEL_DEPLOYMENT, help="Model deployment name (for example, gpt-4.1).")
+    parser.add_argument("--model", default=AGENT_MODEL_DEPLOYMENT, help="Model deployment name (for example, gpt-4.1). Auto-resolved when omitted.")
+    parser.add_argument("--connection-id", default=OPENAPI_CONNECTION_ID, help="Optional Foundry CustomKeys connection ID for the OpenAPI tool. Auto-resolved when omitted.")
+    parser.add_argument("--connection-name", default=OPENAPI_CONNECTION_NAME, help="Optional Foundry CustomKeys connection name to resolve before falling back to auto-detection.")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    if not args.model:
-        raise SystemExit(
-            "Missing model deployment name. Set AZURE_AI_AGENT_MODEL_DEPLOYMENT or pass --model."
-        )
 
     spec = fetch_openapi_spec(OPENAPI_SPEC_URL)
     warnings, errors = validate_openapi_spec(spec)
@@ -328,20 +453,33 @@ def main() -> None:
             print(f"- {item}")
         raise SystemExit("OpenAPI validation failed; fix the spec before registration.")
 
-    if OPENAPI_CONNECTION_ID:
-        print(
-            "Using project connection auth for OpenAPI tool "
-            f"(connection id: {OPENAPI_CONNECTION_ID}, header: {OPENAPI_API_KEY_HEADER_NAME})."
-        )
-    else:
-        print("Using anonymous auth for OpenAPI tool.")
-
     credential = DefaultAzureCredential(exclude_interactive_browser_credential=not _allow_interactive_browser())
 
     try:
         with AIProjectClient(endpoint=PROJECT_ENDPOINT, credential=credential) as project_client:
-            tool = build_openapi_tool(spec)
-            upsert_agent(project_client, args.model, tool)
+            model_deployment = resolve_model_deployment(project_client, args.model)
+            connection_id = resolve_openapi_connection_id(
+                project_client,
+                explicit_id=args.connection_id,
+                explicit_name=args.connection_name,
+                openapi_spec_url=OPENAPI_SPEC_URL,
+            )
+
+            if connection_id:
+                print(
+                    "Using project connection auth for OpenAPI tool "
+                    f"(connection id: {connection_id}, header: {OPENAPI_API_KEY_HEADER_NAME})."
+                )
+            elif os.getenv("STOCK_TOOLS_API_KEY", "").strip():
+                raise SystemExit(
+                    "Missing AZURE_AI_OPENAPI_CONNECTION_ID and could not auto-resolve a matching CustomKeys connection. "
+                    "Set AZURE_AI_OPENAPI_CONNECTION_ID or AZURE_AI_OPENAPI_CONNECTION_NAME so the Foundry agent can send the Stock Tools API key."
+                )
+            else:
+                print("Using anonymous auth for OpenAPI tool.")
+
+            tool = build_openapi_tool(spec, connection_id=connection_id)
+            upsert_agent(project_client, model_deployment, tool)
     except HttpResponseError as exc:
         raise SystemExit(f"Azure API error while provisioning agent: {exc}") from exc
 
