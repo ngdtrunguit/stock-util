@@ -130,10 +130,25 @@ jobs:
         run: |
           python infra/azure/foundry-agent-setup.py
 
-      - name: Skip Foundry agent refresh
+      - name: Ensure Foundry agent exists
         if: ${{ env.REFRESH_AGENT != 'true' }}
+        env:
+          STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
         run: |
-          echo "REFRESH_AGENT is false; skipping Foundry agent OpenAPI tool refresh and testing the existing agent definition."
+          set +e
+          python run_agent.py --check-agent
+          status=$?
+          set -e
+
+          if [ "$status" -eq 0 ]; then
+            echo "Existing Foundry agent is reachable; continuing without refresh."
+          elif [ "$status" -eq 10 ]; then
+            echo "Configured Foundry agent was not found. Recreating it before running prompt tests."
+            python infra/azure/foundry-agent-setup.py
+          else
+            echo "::error::Agent reachability check failed with exit code $status"
+            exit "$status"
+          fi
 
       - name: Run configured prompts through the agent
         run: |
