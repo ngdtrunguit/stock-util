@@ -26,8 +26,10 @@ jobs:
       STOCK_TOOLS_API_BASE_URL: ${{ vars.STOCK_TOOLS_API_BASE_URL || 'https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io' }}
       AZURE_AI_PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
       AZURE_AI_AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
-      AZURE_AI_AGENT_MODEL_DEPLOYMENT: ${{ vars.AZURE_AI_AGENT_MODEL_DEPLOYMENT }}
-      AZURE_AI_OPENAPI_CONNECTION_ID: ${{ secrets.AZURE_AI_OPENAPI_CONNECTION_ID }}
+      AZURE_AI_AGENT_MODEL_DEPLOYMENT: ${{ vars.AZURE_AI_AGENT_MODEL_DEPLOYMENT || '' }}
+      AZURE_AI_OPENAPI_CONNECTION_ID: ${{ secrets.AZURE_AI_OPENAPI_CONNECTION_ID || '' }}
+      AZURE_AI_OPENAPI_CONNECTION_NAME: ${{ vars.AZURE_AI_OPENAPI_CONNECTION_NAME || '' }}
+      AZURE_AI_AGENT_API_VERSION: ${{ vars.AZURE_AI_AGENT_API_VERSION || '2025-11-15-preview' }}
       AZURE_AI_OPENAPI_API_KEY_HEADER_NAME: ${{ vars.AZURE_AI_OPENAPI_API_KEY_HEADER_NAME || 'x-api-key' }}
       STOCK_TOOLS_OPENAPI_URL: ${{ vars.STOCK_TOOLS_OPENAPI_URL || 'https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io/openapi.json' }}
 
@@ -45,7 +47,6 @@ jobs:
 
       - name: Validate required secrets and vars
         env:
-          AZURE_AI_PROJECT_API_KEY: ${{ secrets.AZURE_AI_PROJECT_API_KEY }}
           STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -55,19 +56,33 @@ jobs:
           python - <<'EOF'
           import os, sys
           required = {
-              'AZURE_AI_PROJECT_API_KEY': os.getenv('AZURE_AI_PROJECT_API_KEY', ''),
               'STOCK_TOOLS_API_KEY': os.getenv('STOCK_TOOLS_API_KEY', ''),
               'AZURE_CLIENT_ID': os.getenv('AZURE_CLIENT_ID', ''),
               'AZURE_CLIENT_SECRET': os.getenv('AZURE_CLIENT_SECRET', ''),
               'AZURE_TENANT_ID': os.getenv('AZURE_TENANT_ID', ''),
               'AZURE_SUBSCRIPTION_ID': os.getenv('AZURE_SUBSCRIPTION_ID', ''),
-              'AZURE_AI_AGENT_MODEL_DEPLOYMENT': os.getenv('AZURE_AI_AGENT_MODEL_DEPLOYMENT', ''),
-              'AZURE_AI_OPENAPI_CONNECTION_ID': os.getenv('AZURE_AI_OPENAPI_CONNECTION_ID', ''),
           }
           missing = [name for name, value in required.items() if not value.strip()]
           if missing:
               print('::error::Missing required GitHub secrets / vars: ' + ', '.join(missing))
               sys.exit(1)
+
+          model = os.getenv('AZURE_AI_AGENT_MODEL_DEPLOYMENT', '').strip()
+          connection_id = os.getenv('AZURE_AI_OPENAPI_CONNECTION_ID', '').strip()
+          connection_name = os.getenv('AZURE_AI_OPENAPI_CONNECTION_NAME', '').strip()
+
+          if model:
+              print(f'✅ Found AZURE_AI_AGENT_MODEL_DEPLOYMENT={model}. Workflow will reuse that deployment when refreshing the agent.')
+          else:
+              print('::notice::AZURE_AI_AGENT_MODEL_DEPLOYMENT is not set. The setup script will auto-resolve a model deployment from the Foundry project after Azure login.')
+
+          if connection_id:
+              print('✅ Found AZURE_AI_OPENAPI_CONNECTION_ID. Workflow will provision the tool with project-connection auth.')
+          elif connection_name:
+              print(f'::notice::AZURE_AI_OPENAPI_CONNECTION_NAME={connection_name}. The setup script will resolve its connection ID after Azure login.')
+          else:
+              print('::notice::No explicit Foundry connection ID/name was provided. The setup script will attempt to auto-resolve a matching CustomKeys connection for the Stock Tools API.')
+
           print('✅ Required secrets and vars are present.')
           EOF
 
@@ -94,11 +109,9 @@ jobs:
         env:
           STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
         run: |
-          python infra/azure/foundry-agent-setup.py --model "$AZURE_AI_AGENT_MODEL_DEPLOYMENT"
+          python infra/azure/foundry-agent-setup.py
 
       - name: Run configured prompts through the agent
-        env:
-          AZURE_AI_PROJECT_API_KEY: ${{ secrets.AZURE_AI_PROJECT_API_KEY }}
         run: |
           python - <<'EOF'
           import os, subprocess, sys
@@ -119,8 +132,6 @@ jobs:
           EOF
 
       - name: Run full --tests suite (TSLA, NVDA, invalid ticker)
-        env:
-          AZURE_AI_PROJECT_API_KEY: ${{ secrets.AZURE_AI_PROJECT_API_KEY }}
         run: |
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo "  Full test suite — verifies tool call order:"

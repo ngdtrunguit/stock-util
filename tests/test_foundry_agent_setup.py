@@ -11,6 +11,29 @@ MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
 
+
+
+class _FakeDeployments:
+    def __init__(self, deployments):
+        self._deployments = deployments
+
+    def list(self):
+        return list(self._deployments)
+
+
+class _FakeConnections:
+    def __init__(self, connections):
+        self._connections = connections
+
+    def list(self, connection_type=None):
+        return list(self._connections)
+
+
+class _FakeProjectClient:
+    def __init__(self, deployments=None, connections=None):
+        self.deployments = _FakeDeployments(deployments or [])
+        self.connections = _FakeConnections(connections or [])
+
 class FoundryAgentSetupTests(unittest.TestCase):
     def test_normalize_openapi_adds_servers_and_converts_nullable_anyof(self) -> None:
         original_url = MODULE.OPENAPI_SPEC_URL
@@ -67,6 +90,56 @@ class FoundryAgentSetupTests(unittest.TestCase):
         self.assertEqual(scheme['name'], 'x-api-key')
         params = secured['paths']['/price_history']['post']['parameters']
         self.assertEqual(params, [{'name': 'ticker', 'in': 'query'}])
+
+    def test_resolve_model_deployment_prefers_known_models(self) -> None:
+        client = _FakeProjectClient(
+            deployments=[
+                {'name': 'custom-model', 'modelName': 'phi-4'},
+                {'name': 'gpt5-chat-prod', 'modelName': 'gpt-5.1-chat'},
+            ]
+        )
+
+        resolved = MODULE.resolve_model_deployment(client, '')
+
+        self.assertEqual(resolved, 'gpt5-chat-prod')
+
+    def test_resolve_openapi_connection_id_prefers_exact_target_match(self) -> None:
+        client = _FakeProjectClient(
+            connections=[
+                {'name': 'other', 'id': 'conn-other', 'target': 'https://example.test/', 'is_default': False},
+                {
+                    'name': 'stock-tools',
+                    'id': 'conn-stock-tools',
+                    'target': 'https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io/',
+                    'is_default': False,
+                },
+            ]
+        )
+
+        resolved = MODULE.resolve_openapi_connection_id(
+            client,
+            explicit_id='',
+            explicit_name='',
+            openapi_spec_url='https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io/openapi.json',
+        )
+
+        self.assertEqual(resolved, 'conn-stock-tools')
+
+    def test_resolve_openapi_connection_id_uses_named_connection(self) -> None:
+        client = _FakeProjectClient(
+            connections=[
+                {'name': 'stock-tools', 'id': 'conn-stock-tools', 'target': 'https://example.test/', 'is_default': False},
+            ]
+        )
+
+        resolved = MODULE.resolve_openapi_connection_id(
+            client,
+            explicit_id='',
+            explicit_name='stock-tools',
+            openapi_spec_url='https://irrelevant.test/openapi.json',
+        )
+
+        self.assertEqual(resolved, 'conn-stock-tools')
 
 
 if __name__ == '__main__':
