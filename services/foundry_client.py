@@ -1,77 +1,36 @@
-"""Azure AI Foundry — stock-forecast-agent client.
-
-Calls the stock-forecast-agent using the Azure AI Foundry Responses API
-via the azure-ai-projects SDK.
+"""Thin wrapper around run_agent.py for ad hoc Foundry calls.
 
 Usage:
     pip install azure-ai-projects azure-identity openai
     az login
     python services/foundry_client.py
+    python services/foundry_client.py NVDA
     python services/foundry_client.py "Analyze NVDA with 90-day context"
 """
 
 from __future__ import annotations
 
-import os
+from pathlib import Path
 import sys
-from urllib.parse import quote
 
-from azure.identity import DefaultAzureCredential, get_bearer_token_provider
-from openai import OpenAI
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-# ── Config ────────────────────────────────────────────────────────────────────
-
-ENDPOINT = os.environ.get(
-    "AZURE_AI_PROJECT_ENDPOINT",
-    "https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper",
-)
-AGENT_NAME = os.environ.get("AZURE_AI_AGENT_NAME", "stock-forecast-agent")
-
-AGENT_API_VERSION = os.environ.get("AZURE_AI_AGENT_API_VERSION", "2025-11-15-preview")
-
-# ── Client ────────────────────────────────────────────────────────────────────
-
-
-def _build_openai_client():
-    credential = DefaultAzureCredential()
-    token_provider = get_bearer_token_provider(credential, "https://ai.azure.com/.default")
-    base_url = (
-        f"{ENDPOINT.rstrip('/')}"
-        f"/applications/{quote(AGENT_NAME, safe='')}/protocols/openai"
-    )
-    return OpenAI(
-        api_key=token_provider,
-        base_url=base_url,
-        default_query={"api-version": AGENT_API_VERSION},
-    )
+import run_agent
 
 
 # ── Run ───────────────────────────────────────────────────────────────────────
 
 
 def main() -> None:
-    user_message = sys.argv[1] if len(sys.argv) > 1 else "Analyze TSLA with 180-day context."
-    print(f"Asking agent '{AGENT_NAME}': {user_message}\n")
+    user_message = sys.argv[1] if len(sys.argv) > 1 else run_agent.DEFAULT_ANALYSIS_TICKER
+    prompt = run_agent.resolve_prompt(user_message)
 
-    client = _build_openai_client()
+    print(f"Asking agent '{run_agent.AGENT_NAME}': {prompt}\n")
 
-    response = client.responses.create(input=user_message)
-
-    # Print the assistant output
-    output_text = getattr(response, "output_text", None)
-    if isinstance(output_text, str) and output_text.strip():
-        print(output_text)
-        return
-
-    # Fallback: iterate output items for message content
-    output_items = getattr(response, "output", []) or []
-    for item in output_items:
-        if getattr(item, "type", None) == "message":
-            for block in getattr(item, "content", []) or []:
-                if getattr(block, "type", None) == "output_text":
-                    text = getattr(block, "text", "")
-                    if text:
-                        print(text)
+    result = run_agent.run_agent_prompt(prompt=prompt)
+    print(result.output_text)
 
 
 if __name__ == "__main__":
