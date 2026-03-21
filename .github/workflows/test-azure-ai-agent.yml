@@ -165,7 +165,12 @@ jobs:
               reprovision_status=$?
               set -e
 
-              if [ "$reprovision_status" -ne 0 ]; then
+              if [ "$reprovision_status" -eq 11 ]; then
+                echo "::warning::Foundry agent reprovisioning skipped: the workflow principal lacks 'Microsoft.CognitiveServices/accounts/AIServices/deployments/read'."
+                echo "::warning::Grant the principal that data action, or set the 'agent_model_deployment' workflow input (or repo var AZURE_AI_AGENT_MODEL_DEPLOYMENT) to skip deployment auto-resolution."
+                echo "::warning::Agent tests will be skipped."
+                echo "AGENT_AVAILABLE=false" >> "$GITHUB_ENV"
+              elif [ "$reprovision_status" -ne 0 ]; then
                 echo "::error::Automatic reprovisioning failed with exit code ${reprovision_status}."
                 echo "::error::If the failure mentions Foundry deployments/read, either grant that permission or set the workflow input agent_model_deployment (or repo var AZURE_AI_AGENT_MODEL_DEPLOYMENT) to an existing deployment name."
                 exit "$reprovision_status"
@@ -177,6 +182,7 @@ jobs:
           fi
 
       - name: Run configured prompts through the agent
+        if: ${{ env.AGENT_AVAILABLE != 'false' }}
         run: |
           python - <<'EOF'
           import os, subprocess, sys
@@ -197,6 +203,7 @@ jobs:
           EOF
 
       - name: Run full --tests suite (TSLA, NVDA, invalid ticker)
+        if: ${{ env.AGENT_AVAILABLE != 'false' }}
         run: |
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo "  Full test suite — verifies tool call order:"
