@@ -20,7 +20,16 @@ jobs:
   test-agent:
     name: Run Azure AI Foundry agent end-to-end
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+
+    env:
+      STOCK_TOOLS_API_BASE_URL: ${{ vars.STOCK_TOOLS_API_BASE_URL || 'https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io' }}
+      AZURE_AI_PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
+      AZURE_AI_AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
+      AZURE_AI_AGENT_MODEL_DEPLOYMENT: ${{ vars.AZURE_AI_AGENT_MODEL_DEPLOYMENT }}
+      AZURE_AI_OPENAPI_CONNECTION_ID: ${{ secrets.AZURE_AI_OPENAPI_CONNECTION_ID }}
+      AZURE_AI_OPENAPI_API_KEY_HEADER_NAME: ${{ vars.AZURE_AI_OPENAPI_API_KEY_HEADER_NAME || 'x-api-key' }}
+      STOCK_TOOLS_OPENAPI_URL: ${{ vars.STOCK_TOOLS_OPENAPI_URL || 'https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io/openapi.json' }}
 
     steps:
       - name: Checkout
@@ -34,54 +43,84 @@ jobs:
       - name: Install agent dependencies
         run: pip install -r requirements.txt --quiet
 
-      # ── Probe the Stock Tools API directly first ──────────────────────────
-      # This validates the OpenAPI backend is up before the agent tries to use it.
-      - name: Probe Stock Tools API health
+      - name: Validate required secrets and vars
+        env:
+          AZURE_AI_PROJECT_API_KEY: ${{ secrets.AZURE_AI_PROJECT_API_KEY }}
+          STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          python - <<'EOF'
+          import os, sys
+          required = {
+              'AZURE_AI_PROJECT_API_KEY': os.getenv('AZURE_AI_PROJECT_API_KEY', ''),
+              'STOCK_TOOLS_API_KEY': os.getenv('STOCK_TOOLS_API_KEY', ''),
+              'AZURE_CLIENT_ID': os.getenv('AZURE_CLIENT_ID', ''),
+              'AZURE_CLIENT_SECRET': os.getenv('AZURE_CLIENT_SECRET', ''),
+              'AZURE_TENANT_ID': os.getenv('AZURE_TENANT_ID', ''),
+              'AZURE_SUBSCRIPTION_ID': os.getenv('AZURE_SUBSCRIPTION_ID', ''),
+              'AZURE_AI_AGENT_MODEL_DEPLOYMENT': os.getenv('AZURE_AI_AGENT_MODEL_DEPLOYMENT', ''),
+              'AZURE_AI_OPENAPI_CONNECTION_ID': os.getenv('AZURE_AI_OPENAPI_CONNECTION_ID', ''),
+          }
+          missing = [name for name, value in required.items() if not value.strip()]
+          if missing:
+              print('::error::Missing required GitHub secrets / vars: ' + ', '.join(missing))
+              sys.exit(1)
+          print('✅ Required secrets and vars are present.')
+          EOF
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
+
+      - name: Validate Stock Tools API pipeline
         env:
           STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
         run: |
           python - <<'EOF'
-          import os, requests, sys
-          base = "https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io"
-          key  = os.getenv("STOCK_TOOLS_API_KEY", "")
+          import os, subprocess, sys
+          env = os.environ.copy()
           try:
-              r = requests.get(f"{base}/health", timeout=15, headers={"X-API-Key": key} if key else {})
-              r.raise_for_status()
-              print(f"✅  Stock Tools API /health → {r.json()}")
-          except Exception as exc:
-              print(f"⚠️  Stock Tools API health check failed: {exc}", file=sys.stderr)
-              sys.exit(1)
+              subprocess.run([sys.executable, 'test_api_calls.py', 'TSLA'], check=True, env=env)
+          except subprocess.CalledProcessError as exc:
+              print(f"::error::Stock Tools API validation failed with exit code {exc.returncode}")
+              sys.exit(exc.returncode)
           EOF
 
-      # ── Run the agent for each prompt ─────────────────────────────────────
-      - name: Run agent — Analyze TSLA
+      - name: Refresh Foundry agent OpenAPI tool registration
+        env:
+          STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
+        run: |
+          python infra/azure/foundry-agent-setup.py --model "$AZURE_AI_AGENT_MODEL_DEPLOYMENT"
+
+      - name: Run configured prompts through the agent
         env:
           AZURE_AI_PROJECT_API_KEY: ${{ secrets.AZURE_AI_PROJECT_API_KEY }}
-          AZURE_AI_PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
-          AZURE_AI_AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
         run: |
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "  AGENT CALL: Analyze TSLA with 180-day context."
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          python run_agent.py "Analyze TSLA with 180-day context."
+          python - <<'EOF'
+          import os, subprocess, sys
 
-      - name: Run agent — Analyze MSFT
-        env:
-          AZURE_AI_PROJECT_API_KEY: ${{ secrets.AZURE_AI_PROJECT_API_KEY }}
-          AZURE_AI_PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
-          AZURE_AI_AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
-        run: |
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "  AGENT CALL: Analyze MSFT with 180-day context."
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          python run_agent.py "Analyze MSFT with 180-day context."
+          raw_prompts = """${{ github.event.inputs.prompts || 'Analyze TSLA with 180-day context.\nAnalyze MSFT with 180-day context.' }}"""
+          prompts = [line.strip() for line in raw_prompts.splitlines() if line.strip()]
+          if not prompts:
+              print('::error::No prompts provided to workflow_dispatch input.')
+              sys.exit(1)
 
-      # ── Full end-to-end test suite (tool order verification) ─────────────
+          stream_flag = ['--stream'] if "${{ github.event.inputs.stream || 'false' }}".lower() == 'true' else []
+
+          for prompt in prompts:
+              print('━' * 76)
+              print(f'AGENT CALL: {prompt}')
+              print('━' * 76)
+              subprocess.run([sys.executable, 'run_agent.py', *stream_flag, prompt], check=True)
+          EOF
+
       - name: Run full --tests suite (TSLA, NVDA, invalid ticker)
         env:
           AZURE_AI_PROJECT_API_KEY: ${{ secrets.AZURE_AI_PROJECT_API_KEY }}
-          AZURE_AI_PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
-          AZURE_AI_AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
         run: |
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo "  Full test suite — verifies tool call order:"

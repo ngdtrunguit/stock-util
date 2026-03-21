@@ -94,6 +94,10 @@ Output format:
 - Key risks"""
 
 
+def _allow_interactive_browser() -> bool:
+    return os.getenv("AZURE_AI_ALLOW_INTERACTIVE_BROWSER", "").strip().lower() in {"1", "true", "yes", "on"}
+
+
 def fetch_openapi_spec(url: str) -> dict[str, Any]:
     response = requests.get(url, timeout=30)
     response.raise_for_status()
@@ -332,7 +336,7 @@ def main() -> None:
     else:
         print("Using anonymous auth for OpenAPI tool.")
 
-    credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
+    credential = DefaultAzureCredential(exclude_interactive_browser_credential=not _allow_interactive_browser())
 
     try:
         with AIProjectClient(endpoint=PROJECT_ENDPOINT, credential=credential) as project_client:

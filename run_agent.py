@@ -40,6 +40,10 @@ class AgentRunResult:
     tool_calls: list[str]
 
 
+def _allow_interactive_browser() -> bool:
+    return os.getenv("AZURE_AI_ALLOW_INTERACTIVE_BROWSER", "").strip().lower() in {"1", "true", "yes", "on"}
+
+
 def create_openai_client() -> OpenAI:
     if PROJECT_API_KEY:
         return OpenAI(
@@ -53,7 +57,9 @@ def create_openai_client() -> OpenAI:
             "or set AZURE_AI_PROJECT_API_KEY."
         )
 
-    credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
+    credential = DefaultAzureCredential(
+        exclude_interactive_browser_credential=not _allow_interactive_browser()
+    )
     project_client = AIProjectClient(endpoint=PROJECT_ENDPOINT, credential=credential)
     return project_client.get_openai_client()
 
