@@ -481,6 +481,13 @@ def main() -> None:
             tool = build_openapi_tool(spec, connection_id=connection_id)
             upsert_agent(project_client, model_deployment, tool)
     except HttpResponseError as exc:
+        detail = str(exc)
+        if "deployments/read" in detail:
+            raise SystemExit(
+                "Azure API error while provisioning agent: missing Foundry deployment read permission. "
+                "Grant the workflow principal the required Foundry data-plane access or skip agent refresh in CI. "
+                f"Original error: {exc}"
+            ) from exc
         raise SystemExit(f"Azure API error while provisioning agent: {exc}") from exc
 
     print("OpenAPI tool + agent provisioning complete.")

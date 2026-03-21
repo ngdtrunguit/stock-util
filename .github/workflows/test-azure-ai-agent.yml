@@ -15,6 +15,14 @@ on:
         description: "Enable streaming output (true/false)"
         required: false
         default: "false"
+      refresh_agent:
+        description: "Refresh the Foundry agent/tool before tests (true/false)"
+        required: false
+        default: "false"
+      agent_model_deployment:
+        description: "Optional model deployment override used when refresh_agent=true"
+        required: false
+        default: ""
 
 jobs:
   test-agent:
@@ -26,7 +34,8 @@ jobs:
       STOCK_TOOLS_API_BASE_URL: ${{ vars.STOCK_TOOLS_API_BASE_URL || 'https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io' }}
       AZURE_AI_PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
       AZURE_AI_AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
-      AZURE_AI_AGENT_MODEL_DEPLOYMENT: ${{ vars.AZURE_AI_AGENT_MODEL_DEPLOYMENT || '' }}
+      REFRESH_AGENT: ${{ github.event.inputs.refresh_agent || 'false' }}
+      AZURE_AI_AGENT_MODEL_DEPLOYMENT: ${{ github.event.inputs.agent_model_deployment || vars.AZURE_AI_AGENT_MODEL_DEPLOYMENT || '' }}
       AZURE_AI_OPENAPI_CONNECTION_ID: ${{ secrets.AZURE_AI_OPENAPI_CONNECTION_ID || '' }}
       AZURE_AI_OPENAPI_CONNECTION_NAME: ${{ vars.AZURE_AI_OPENAPI_CONNECTION_NAME || '' }}
       AZURE_AI_AGENT_API_VERSION: ${{ vars.AZURE_AI_AGENT_API_VERSION || '2025-11-15-preview' }}
@@ -55,6 +64,7 @@ jobs:
         run: |
           python - <<'EOF'
           import os, sys
+          refresh_agent = os.getenv('REFRESH_AGENT', '') == 'true'
           required = {
               'STOCK_TOOLS_API_KEY': os.getenv('STOCK_TOOLS_API_KEY', ''),
               'AZURE_CLIENT_ID': os.getenv('AZURE_CLIENT_ID', ''),
@@ -77,13 +87,21 @@ jobs:
               print('::notice::AZURE_AI_AGENT_MODEL_DEPLOYMENT is not set. The setup script will auto-resolve a model deployment from the Foundry project after Azure login.')
 
           if connection_id:
-              print('✅ Found AZURE_AI_OPENAPI_CONNECTION_ID. Workflow will provision the tool with project-connection auth.')
+              print('✅ Found AZURE_AI_OPENAPI_CONNECTION_ID. Any refresh run will provision the tool with project-connection auth.')
           elif connection_name:
               print(f'::notice::AZURE_AI_OPENAPI_CONNECTION_NAME={connection_name}. The setup script will resolve its connection ID after Azure login.')
           else:
               print('::notice::No explicit Foundry connection ID/name was provided. The setup script will attempt to auto-resolve a matching CustomKeys connection for the Stock Tools API.')
 
-          print('✅ Required secrets and vars are present.')
+          if refresh_agent:
+              if model:
+                  print(f'✅ REFRESH_AGENT=true. Workflow will refresh the agent registration with model {model}.')
+              else:
+                  print('::notice::REFRESH_AGENT=true. Workflow will refresh the agent registration and let the setup script auto-resolve the model deployment.')
+          else:
+              print('::notice::REFRESH_AGENT is false. Workflow will test the existing Foundry agent without reprovisioning it.')
+
+          print('✅ Required secrets and vars are present for the selected workflow mode.')
           EOF
 
       - name: Azure login
@@ -106,10 +124,16 @@ jobs:
           EOF
 
       - name: Refresh Foundry agent OpenAPI tool registration
+        if: ${{ env.REFRESH_AGENT == 'true' }}
         env:
           STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
         run: |
           python infra/azure/foundry-agent-setup.py
+
+      - name: Skip Foundry agent refresh
+        if: ${{ env.REFRESH_AGENT != 'true' }}
+        run: |
+          echo "REFRESH_AGENT is false; skipping Foundry agent OpenAPI tool refresh and testing the existing agent definition."
 
       - name: Run configured prompts through the agent
         run: |
