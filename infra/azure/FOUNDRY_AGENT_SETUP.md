@@ -8,7 +8,7 @@ export AZURE_AI_PROJECT_API_KEY="<project-api-key>"
 export AZURE_AI_AGENT_NAME="stock-forecast-agent"
 export AZURE_AI_AGENT_MODEL_DEPLOYMENT="gpt-4.1"
 export STOCK_TOOLS_OPENAPI_URL="https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io/openapi.json"
-export AZURE_AI_OPENAPI_CONNECTION_ID="<optional-project-connection-id>"
+export AZURE_AI_OPENAPI_CONNECTION_ID="<optional-project-connection-id>"  # optional
 export AZURE_AI_OPENAPI_API_KEY_HEADER_NAME="x-api-key"
 ```
 
@@ -35,6 +35,7 @@ What the setup script does:
   - Anonymous auth when `AZURE_AI_OPENAPI_CONNECTION_ID` is not set
   - Project connection auth when `AZURE_AI_OPENAPI_CONNECTION_ID` is set
 - Creates `stock-forecast-agent` if missing, or publishes a new version if it exists
+- Requires a model deployment name only when you want to create/update the agent definition
 
 ## 4. Run one prompt via responses.create
 
@@ -47,6 +48,10 @@ python run_agent.py "Analyze AAPL stock"
 ```bash
 python run_agent.py --tests
 ```
+
+GitHub Actions note:
+- The `test-azure-ai-agent` workflow should normally run against the already-provisioned agent.
+- Only enable workflow-side refresh/provisioning when you intentionally want to republish the agent and the Azure principal has Foundry data-plane permissions such as deployment read access.
 
 Test prompts:
 - Analyze TSLA
@@ -72,14 +77,16 @@ Included servers:
 
 - Tool calls fail with `401 Invalid or missing API key`:
   - Create a custom keys project connection in Foundry with API key header `x-api-key`.
-  - Set `AZURE_AI_OPENAPI_CONNECTION_ID` to that connection ID.
+  - Set `AZURE_AI_OPENAPI_CONNECTION_ID` to that project connection resource ID.
   - Re-run `foundry-agent-setup.py` so the tool uses project-connection auth.
+  - Do not hardcode this value across environments unless every environment reuses the same Foundry project, because connection IDs are environment-specific.
 
 - `setup.py auth failure`:
   - Provisioning uses Entra auth. Run `az login` and ensure access to the Foundry project.
 
 - `missing model deployment`:
-  - Set `AZURE_AI_AGENT_MODEL_DEPLOYMENT` to a deployed model name in your Foundry project.
+  - Set `AZURE_AI_AGENT_MODEL_DEPLOYMENT` to a deployed model name in your Foundry project when you need to create or refresh the agent definition.
+  - Do not assume `gpt-5.1-chat` exists in every Foundry project; deployment names are project-specific.
 
 - Tool not called in expected order:
   - Re-run setup to ensure latest instructions were published.
