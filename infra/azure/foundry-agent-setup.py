@@ -14,6 +14,7 @@ import argparse
 import copy
 import os
 import re
+import sys
 from typing import Any
 from urllib.parse import urlparse, urlunparse
 
@@ -80,7 +81,19 @@ def resolve_model_deployment(project_client: AIProjectClient, requested_model: s
     if requested_model:
         return requested_model
 
-    deployments = list(project_client.deployments.list())
+    try:
+        deployments = list(project_client.deployments.list())
+    except HttpResponseError as exc:
+        if "deployments/read" in str(exc):
+            print(
+                "Cannot auto-resolve AZURE_AI_AGENT_MODEL_DEPLOYMENT: the workflow principal "
+                "lacks 'Microsoft.CognitiveServices/accounts/AIServices/deployments/read'. "
+                "Set AZURE_AI_AGENT_MODEL_DEPLOYMENT explicitly (e.g., 'gpt-4.1') to bypass "
+                f"deployment listing. Original error: {exc}"
+            )
+            sys.exit(11)
+        raise
+
     if not deployments:
         raise SystemExit(
             "No Azure AI Foundry model deployments were found. Set AZURE_AI_AGENT_MODEL_DEPLOYMENT explicitly."

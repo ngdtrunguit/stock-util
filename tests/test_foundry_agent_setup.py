@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
+import sys
 import unittest
+from unittest.mock import patch
 
 MODULE_PATH = Path(__file__).resolve().parents[1] / 'infra' / 'azure' / 'foundry-agent-setup.py'
 SPEC = importlib.util.spec_from_file_location('foundry_agent_setup', MODULE_PATH)
@@ -14,10 +16,13 @@ SPEC.loader.exec_module(MODULE)
 
 
 class _FakeDeployments:
-    def __init__(self, deployments):
+    def __init__(self, deployments, raise_exc=None):
         self._deployments = deployments
+        self._raise_exc = raise_exc
 
     def list(self):
+        if self._raise_exc is not None:
+            raise self._raise_exc
         return list(self._deployments)
 
 
@@ -30,8 +35,8 @@ class _FakeConnections:
 
 
 class _FakeProjectClient:
-    def __init__(self, deployments=None, connections=None):
-        self.deployments = _FakeDeployments(deployments or [])
+    def __init__(self, deployments=None, connections=None, deployments_exc=None):
+        self.deployments = _FakeDeployments(deployments or [], raise_exc=deployments_exc)
         self.connections = _FakeConnections(connections or [])
 
 class FoundryAgentSetupTests(unittest.TestCase):
@@ -140,6 +145,21 @@ class FoundryAgentSetupTests(unittest.TestCase):
         )
 
         self.assertEqual(resolved, 'conn-stock-tools')
+
+
+    def test_resolve_model_deployment_exits_11_on_deployments_read_permission_denied(self) -> None:
+        from azure.core.exceptions import HttpResponseError
+
+        exc = HttpResponseError(
+            message="The principal lacks the required data action "
+                    "Microsoft.CognitiveServices/accounts/AIServices/deployments/read."
+        )
+        client = _FakeProjectClient(deployments_exc=exc)
+
+        with self.assertRaises(SystemExit) as cm:
+            MODULE.resolve_model_deployment(client, '')
+
+        self.assertEqual(cm.exception.code, 11)
 
 
 if __name__ == '__main__':

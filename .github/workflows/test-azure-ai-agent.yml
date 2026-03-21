@@ -128,7 +128,19 @@ jobs:
         env:
           STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
         run: |
+          set +e
           python infra/azure/foundry-agent-setup.py
+          status=$?
+          set -e
+
+          if [ "$status" -eq 11 ]; then
+            echo "::warning::Foundry agent refresh skipped: the workflow principal lacks 'Microsoft.CognitiveServices/accounts/AIServices/deployments/read'."
+            echo "::warning::Grant the principal that data action, or set the 'agent_model_deployment' workflow input (or repo var AZURE_AI_AGENT_MODEL_DEPLOYMENT) to skip deployment auto-resolution."
+            echo "::warning::Continuing with the existing agent."
+          elif [ "$status" -ne 0 ]; then
+            echo "::error::Foundry agent refresh failed with exit code ${status}."
+            exit "$status"
+          fi
 
       - name: Ensure Foundry agent exists
         if: ${{ env.REFRESH_AGENT != 'true' }}
