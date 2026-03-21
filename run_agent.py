@@ -105,21 +105,28 @@ def response_text(response: Any) -> str:
 
 def run_agent_prompt(prompt: str, stream: bool = False, retries: int = 2) -> AgentRunResult:
     client = create_openai_client()
-    conversation = client.conversations.create(
-        items=[{"type": "message", "role": "user", "content": prompt}],
-    )
 
     last_error: Exception | None = None
     for attempt in range(1, retries + 2):
         try:
             if stream:
-                print("Streaming flag enabled; using final-response mode for agent_reference compatibility.")
-
-            final_response = client.responses.create(
-                conversation=conversation.id,
-                extra_body={"agent_reference": {"type": "agent_reference", "name": AGENT_NAME}},
-                input="",
-            )
+                with client.responses.stream(
+                    model=AGENT_NAME,
+                    input=prompt,
+                ) as stream_ctx:
+                    for event in stream_ctx:
+                        event_type = str(_safe_get(event, "type", ""))
+                        if event_type == "response.output_text.delta":
+                            delta = _safe_get(event, "delta", "")
+                            if delta:
+                                print(delta, end="", flush=True)
+                    print()
+                    final_response = stream_ctx.get_final_response()
+            else:
+                final_response = client.responses.create(
+                    model=AGENT_NAME,
+                    input=prompt,
+                )
 
             return AgentRunResult(
                 prompt=prompt,
