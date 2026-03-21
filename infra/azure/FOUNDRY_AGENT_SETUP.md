@@ -40,6 +40,11 @@ What the setup script does:
 - Auto-resolves a model deployment when `AZURE_AI_AGENT_MODEL_DEPLOYMENT` is omitted
 - Auto-resolves a matching CustomKeys connection by ID, connection name, URL match, or single-connection fallback
 
+GitHub Actions note:
+- The `test-azure-ai-agent` workflow normally runs against the already-provisioned agent.
+- Set `refresh_agent=true` only when you intentionally want CI to republish the agent/tool definition.
+- `agent_model_deployment` is optional in the workflow; when omitted during refresh, `foundry-agent-setup.py` auto-resolves a deployment from the Foundry project after Azure login.
+
 ## 4. Run one prompt via responses.create
 
 ```bash
@@ -85,6 +90,10 @@ Included servers:
 
 - `setup.py auth failure`:
   - Provisioning uses Entra auth. Run `az login` and ensure access to the Foundry project.
+
+- `missing Foundry deployment read permission`:
+  - The workflow principal can invoke the agent but still fail refresh if it lacks Foundry data-plane permissions such as `deployments/read`.
+  - Grant the principal the required Foundry permissions, or run the workflow with `refresh_agent=false` to reuse the existing published agent.
 
 - `missing model deployment`:
   - Set `AZURE_AI_AGENT_MODEL_DEPLOYMENT` to a deployed model name in your Foundry project when you want to force a specific deployment.
