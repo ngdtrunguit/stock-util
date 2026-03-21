@@ -619,13 +619,19 @@ def main() -> None:
                 api_key = os.getenv("STOCK_TOOLS_API_KEY", "").strip()
                 if api_key:
                     # Auto-provision a CustomKeys connection so Foundry injects the API key at call time.
-                    connection_id = provision_openapi_connection(
+                    provisioned_name = provision_openapi_connection(
                         credential=credential,
                         api_key=api_key,
                         header_name=OPENAPI_API_KEY_HEADER_NAME,
                         base_url=_normalize_openapi_target(OPENAPI_SPEC_URL),
                     )
-                    if connection_id:
+                    if provisioned_name:
+                        # Re-query via Foundry SDK to get the canonical connection ID.
+                        try:
+                            conn = project_client.connections.get(provisioned_name)
+                            connection_id = str(_safe_attr(conn, 'id', '') or '') or provisioned_name
+                        except Exception:
+                            connection_id = provisioned_name
                         print(
                             f"Using auto-provisioned project connection auth for OpenAPI tool "
                             f"(connection: {connection_id}, header: {OPENAPI_API_KEY_HEADER_NAME})."
