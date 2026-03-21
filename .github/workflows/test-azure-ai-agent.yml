@@ -1,0 +1,90 @@
+name: Test Azure AI Agent (TSLA & MSFT)
+
+on:
+  workflow_dispatch:
+    inputs:
+      prompts:
+        description: >
+          Newline-separated prompts to send to the agent.
+          Default runs TSLA and MSFT full analysis.
+        required: false
+        default: |
+          Analyze TSLA with 180-day context.
+          Analyze MSFT with 180-day context.
+      stream:
+        description: "Enable streaming output (true/false)"
+        required: false
+        default: "false"
+
+jobs:
+  test-agent:
+    name: Run Azure AI Foundry agent end-to-end
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install agent dependencies
+        run: pip install -r requirements.txt --quiet
+
+      # ── Probe the Stock Tools API directly first ──────────────────────────
+      # This validates the OpenAPI backend is up before the agent tries to use it.
+      - name: Probe Stock Tools API health
+        env:
+          STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
+        run: |
+          python - <<'EOF'
+          import os, requests, sys
+          base = "https://stock-tools-api-dev-app.calmstone-a9644956.eastus.azurecontainerapps.io"
+          key  = os.getenv("STOCK_TOOLS_API_KEY", "")
+          try:
+              r = requests.get(f"{base}/health", timeout=15, headers={"X-API-Key": key} if key else {})
+              r.raise_for_status()
+              print(f"✅  Stock Tools API /health → {r.json()}")
+          except Exception as exc:
+              print(f"⚠️  Stock Tools API health check failed: {exc}", file=sys.stderr)
+              sys.exit(1)
+          EOF
+
+      # ── Run the agent for each prompt ─────────────────────────────────────
+      - name: Run agent — Analyze TSLA
+        env:
+          AZURE_AI_PROJECT_API_KEY: ${{ secrets.AZURE_AI_PROJECT_API_KEY }}
+          AZURE_AI_PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
+          AZURE_AI_AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "  AGENT CALL: Analyze TSLA with 180-day context."
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          python run_agent.py "Analyze TSLA with 180-day context."
+
+      - name: Run agent — Analyze MSFT
+        env:
+          AZURE_AI_PROJECT_API_KEY: ${{ secrets.AZURE_AI_PROJECT_API_KEY }}
+          AZURE_AI_PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
+          AZURE_AI_AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "  AGENT CALL: Analyze MSFT with 180-day context."
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          python run_agent.py "Analyze MSFT with 180-day context."
+
+      # ── Full end-to-end test suite (tool order verification) ─────────────
+      - name: Run full --tests suite (TSLA, NVDA, invalid ticker)
+        env:
+          AZURE_AI_PROJECT_API_KEY: ${{ secrets.AZURE_AI_PROJECT_API_KEY }}
+          AZURE_AI_PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
+          AZURE_AI_AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "  Full test suite — verifies tool call order:"
+          echo "    price_history → technicals → news_sentiment"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          python run_agent.py --tests
