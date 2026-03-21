@@ -1,5 +1,9 @@
 """Run stock-forecast-agent and validate end-to-end OpenAPI tool flow.
 
+Uses the Azure AI Foundry /openai/v1/responses endpoint with the agent definition
+(model, instructions, tools) fetched at runtime from the stored PromptAgent via
+AIProjectClient.agents.get().  This avoids the Applications/deployment layer.
+
 Usage:
     python run_agent.py
     python run_agent.py "Analyze TSLA"
@@ -14,16 +18,17 @@ import json
 import os
 import time
 from typing import Any
-from dataclasses import dataclass
-from urllib.parse import quote
+from dataclasses import dataclass, field
 
 from openai import OpenAI
 
 try:
     from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+    from azure.ai.projects import AIProjectClient
 except Exception:
     DefaultAzureCredential = None
     get_bearer_token_provider = None
+    AIProjectClient = None  # type: ignore[assignment,misc]
 
 PROJECT_ENDPOINT = os.getenv(
     "AZURE_AI_PROJECT_ENDPOINT",
@@ -31,7 +36,6 @@ PROJECT_ENDPOINT = os.getenv(
 )
 PROJECT_API_KEY = os.getenv("AZURE_AI_PROJECT_API_KEY", "")
 AGENT_NAME = os.getenv("AZURE_AI_AGENT_NAME", "stock-forecast-agent")
-AGENT_API_VERSION = os.getenv("AZURE_AI_AGENT_API_VERSION", "2025-11-15-preview")
 
 
 @dataclass
@@ -41,40 +45,88 @@ class AgentRunResult:
     tool_calls: list[str]
 
 
+@dataclass
+class AgentDefinition:
+    model: str
+    instructions: str
+    tools: list[Any] = field(default_factory=list)
+    tool_choice: str = "auto"
+
+
 def _allow_interactive_browser() -> bool:
     return os.getenv("AZURE_AI_ALLOW_INTERACTIVE_BROWSER", "").strip().lower() in {"1", "true", "yes", "on"}
 
 
-def build_application_base_url(project_endpoint: str, agent_name: str) -> str:
-    return (
-        f"{project_endpoint.rstrip('/')}"
-        f"/applications/{quote(agent_name, safe='')}/protocols/openai"
+def _build_direct_base_url(project_endpoint: str) -> str:
+    """Return the /openai/v1 base URL for the Foundry project's direct model endpoint."""
+    return f"{project_endpoint.rstrip('/')}/openai/v1"
+
+
+def _safe_attr(obj: Any, key: str, default: Any = None) -> Any:
+    if isinstance(obj, dict):
+        return obj.get(key, default)
+    return getattr(obj, key, default)
+
+
+def _get_credential() -> Any:
+    if DefaultAzureCredential is None:
+        raise RuntimeError(
+            "Install azure-identity to invoke Azure AI Foundry agents, then authenticate with "
+            "DefaultAzureCredential (for example via az login or azure/login in GitHub Actions)."
+        )
+    return DefaultAzureCredential(
+        exclude_interactive_browser_credential=not _allow_interactive_browser()
     )
 
 
+def get_agent_definition(agent_name: str) -> AgentDefinition:
+    """Fetch the agent definition (model, instructions, tools) from Azure AI Foundry."""
+    if AIProjectClient is None:
+        raise RuntimeError("azure-ai-projects is not installed.")
+
+    credential = _get_credential()
+    with AIProjectClient(endpoint=PROJECT_ENDPOINT, credential=credential) as project_client:
+        agent = project_client.agents.get(agent_name)
+
+    agent_dict = agent if isinstance(agent, dict) else (agent.as_dict() if hasattr(agent, 'as_dict') else vars(agent))
+    versions = _safe_attr(agent_dict, "versions", {})
+    latest = _safe_attr(versions, "latest", {}) if isinstance(versions, dict) else {}
+    definition = _safe_attr(latest, "definition", {})
+
+    model = str(_safe_attr(definition, "model", "") or "")
+    instructions = str(_safe_attr(definition, "instructions", "") or "")
+    tools = _safe_attr(definition, "tools", []) or []
+    tool_choice = str(_safe_attr(definition, "tool_choice", "auto") or "auto")
+
+    if not model:
+        raise ValueError(
+            f"Agent '{agent_name}' has no model set in its definition. "
+            "Run foundry-agent-setup.py to provision the agent."
+        )
+
+    return AgentDefinition(model=model, instructions=instructions, tools=list(tools), tool_choice=tool_choice)
+
+
 def create_openai_client() -> OpenAI:
-    if DefaultAzureCredential is None or get_bearer_token_provider is None:
+    if get_bearer_token_provider is None:
         raise RuntimeError(
             "Install azure-identity to invoke Azure AI Foundry agents, then authenticate with "
             "DefaultAzureCredential (for example via az login or azure/login in GitHub Actions)."
         )
 
-    credential = DefaultAzureCredential(
-        exclude_interactive_browser_credential=not _allow_interactive_browser()
-    )
+    credential = _get_credential()
     token_provider = get_bearer_token_provider(credential, "https://ai.azure.com/.default")
-    base_url = build_application_base_url(PROJECT_ENDPOINT, AGENT_NAME)
+    base_url = _build_direct_base_url(PROJECT_ENDPOINT)
 
     if PROJECT_API_KEY:
         print(
-            "⚠️  AZURE_AI_PROJECT_API_KEY is set, but Azure AI Foundry agent applications use Entra "
+            "⚠️  AZURE_AI_PROJECT_API_KEY is set, but Azure AI Foundry agent invocation uses Entra "
             "authentication. Falling back to DefaultAzureCredential."
         )
 
     return OpenAI(
         api_key=token_provider,
         base_url=base_url,
-        default_query={"api-version": AGENT_API_VERSION},
     )
 
 
@@ -114,13 +166,14 @@ def is_agent_not_found_error(exc: Exception) -> bool:
     return bool(
         status_code == 404
         or ("not_found" in message and "404" in message)
-        or ("application" in message and "not found" in message)
+        or ("resourcenotfounderror" in type(exc).__name__.lower())
+        or ("agent" in message and "not found" in message)
     )
 
 
 def check_agent_available() -> None:
-    client = create_openai_client()
-    client.responses.create(input="Respond with OK.")
+    """Confirm the agent definition exists in Azure AI Foundry."""
+    get_agent_definition(AGENT_NAME)
 
 
 def response_text(response: Any) -> str:
@@ -143,15 +196,24 @@ def response_text(response: Any) -> str:
 
 
 def run_agent_prompt(prompt: str, stream: bool = False, retries: int = 2) -> AgentRunResult:
+    agent_def = get_agent_definition(AGENT_NAME)
     client = create_openai_client()
+
+    create_kwargs: dict[str, Any] = {
+        "model": agent_def.model,
+        "input": prompt,
+    }
+    if agent_def.instructions:
+        create_kwargs["instructions"] = agent_def.instructions
+    if agent_def.tools:
+        create_kwargs["tools"] = agent_def.tools  # type: ignore[assignment]
+        create_kwargs["tool_choice"] = agent_def.tool_choice
 
     last_error: Exception | None = None
     for attempt in range(1, retries + 2):
         try:
             if stream:
-                with client.responses.stream(
-                    input=prompt,
-                ) as stream_ctx:
+                with client.responses.stream(**create_kwargs) as stream_ctx:
                     for event in stream_ctx:
                         event_type = str(_safe_get(event, "type", ""))
                         if event_type == "response.output_text.delta":
@@ -161,9 +223,7 @@ def run_agent_prompt(prompt: str, stream: bool = False, retries: int = 2) -> Age
                     print()
                     final_response = stream_ctx.get_final_response()
             else:
-                final_response = client.responses.create(
-                    input=prompt,
-                )
+                final_response = client.responses.create(**create_kwargs)
 
             return AgentRunResult(
                 prompt=prompt,
