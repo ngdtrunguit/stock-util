@@ -20,7 +20,7 @@ on:
         required: false
         default: "false"
       agent_model_deployment:
-        description: "Optional model deployment override used when refresh_agent=true"
+        description: "Optional model deployment override used when refreshing the agent or recreating a missing agent"
         required: false
         default: ""
 
@@ -147,10 +147,17 @@ jobs:
               echo "Configured Foundry agent was not found. Recreating it with AZURE_AI_AGENT_MODEL_DEPLOYMENT=${AZURE_AI_AGENT_MODEL_DEPLOYMENT}."
               python infra/azure/foundry-agent-setup.py --model "${AZURE_AI_AGENT_MODEL_DEPLOYMENT}"
             else
-              echo "::error::Configured Foundry agent was not found, and AZURE_AI_AGENT_MODEL_DEPLOYMENT is empty."
-              echo "::error::Automatic reprovisioning is disabled in this workflow mode because the setup script would need Foundry deployments/read permission to auto-resolve a model deployment."
-              echo "::error::Pre-provision the agent, set the workflow input agent_model_deployment (or repo var AZURE_AI_AGENT_MODEL_DEPLOYMENT), or run with refresh_agent=true after granting the workflow principal Foundry deployments/read access."
-              exit 10
+              echo "Configured Foundry agent was not found and AZURE_AI_AGENT_MODEL_DEPLOYMENT is empty. Attempting automatic reprovisioning via foundry-agent-setup.py."
+              set +e
+              python infra/azure/foundry-agent-setup.py
+              reprovision_status=$?
+              set -e
+
+              if [ "$reprovision_status" -ne 0 ]; then
+                echo "::error::Automatic reprovisioning failed with exit code ${reprovision_status}."
+                echo "::error::If the failure mentions Foundry deployments/read, either grant that permission or set the workflow input agent_model_deployment (or repo var AZURE_AI_AGENT_MODEL_DEPLOYMENT) to an existing deployment name."
+                exit "$reprovision_status"
+              fi
             fi
           else
             echo "::error::Agent reachability check failed with exit code $status"
