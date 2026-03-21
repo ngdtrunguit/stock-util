@@ -13,8 +13,8 @@ import argparse
 import json
 import os
 import time
-from dataclasses import dataclass
 from typing import Any
+from dataclasses import dataclass
 from urllib.parse import quote
 
 from openai import OpenAI
@@ -102,6 +102,25 @@ def extract_tool_call_names(response: Any) -> list[str]:
             calls.append(str(name))
 
     return calls
+
+
+def is_agent_not_found_error(exc: Exception) -> bool:
+    status_code = _safe_get(exc, "status_code")
+    if status_code is None:
+        response = _safe_get(exc, "response")
+        status_code = _safe_get(response, "status_code")
+
+    message = str(exc).lower()
+    return bool(
+        status_code == 404
+        or ("not_found" in message and "404" in message)
+        or ("application" in message and "not found" in message)
+    )
+
+
+def check_agent_available() -> None:
+    client = create_openai_client()
+    client.responses.create(input="Respond with OK.")
 
 
 def response_text(response: Any) -> str:
@@ -208,11 +227,31 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("prompt", nargs="?", default="Analyze AAPL stock", help="Prompt sent to the agent")
     parser.add_argument("--tests", action="store_true", help="Run required end-to-end test cases")
     parser.add_argument("--stream", action="store_true", help="Enable streaming response output when available")
+    parser.add_argument(
+        "--check-agent",
+        action="store_true",
+        help="Validate that the configured Azure AI Foundry application exists and is reachable",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+
+    if args.check_agent:
+        try:
+            check_agent_available()
+        except Exception as exc:
+            if is_agent_not_found_error(exc):
+                print(
+                    f"::warning::Azure AI Foundry application '{AGENT_NAME}' was not found at "
+                    f"{PROJECT_ENDPOINT}. Run infra/azure/foundry-agent-setup.py or set refresh_agent=true."
+                )
+                raise SystemExit(10) from exc
+            raise
+
+        print(f"✅ Azure AI Foundry application '{AGENT_NAME}' is reachable.")
+        return
 
     if args.tests:
         run_tests(stream=args.stream)
