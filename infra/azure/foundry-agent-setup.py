@@ -45,6 +45,9 @@ AGENT_MODEL_DEPLOYMENT = os.getenv("AZURE_AI_AGENT_MODEL_DEPLOYMENT", "")
 OPENAPI_CONNECTION_ID = os.getenv("AZURE_AI_OPENAPI_CONNECTION_ID", "")
 OPENAPI_CONNECTION_NAME = os.getenv("AZURE_AI_OPENAPI_CONNECTION_NAME", "")
 OPENAPI_API_KEY_HEADER_NAME = os.getenv("AZURE_AI_OPENAPI_API_KEY_HEADER_NAME", "x-api-key")
+AZURE_SUBSCRIPTION_ID = os.getenv("AZURE_SUBSCRIPTION_ID", "")
+FOUNDRY_HUB_RESOURCE_GROUP = os.getenv("AZURE_AI_FOUNDRY_HUB_RESOURCE_GROUP", "")
+AUTO_CONNECTION_NAME = os.getenv("AZURE_AI_FOUNDRY_AUTO_CONNECTION_NAME", "stock-tools-api-key")
 
 REQUIRED_POST_ENDPOINTS = (
     "/price_history",
@@ -369,6 +372,114 @@ def _inject_api_key_security(spec: dict[str, Any], header_name: str) -> dict[str
     return normalized_spec
 
 
+def _hub_name_from_endpoint(endpoint: str) -> str:
+    parsed = urlparse(endpoint)
+    hostname = parsed.hostname or ""
+    return hostname.split(".")[0] if hostname else ""
+
+
+def _get_arm_access_token(credential: DefaultAzureCredential) -> str:
+    return credential.get_token("https://management.azure.com/.default").token
+
+
+def _find_hub_resource_group(hub_name: str, subscription_id: str, token: str) -> str:
+    url = (
+        f"https://management.azure.com/subscriptions/{subscription_id}/resources"
+        f"?api-version=2021-04-01"
+        f"&$filter=resourceType eq 'Microsoft.MachineLearningServices/workspaces' and name eq '{hub_name}'"
+        f"&$top=1"
+    )
+    try:
+        resp = requests.get(url, headers={"Authorization": f"Bearer {token}"}, timeout=30)
+        resp.raise_for_status()
+        resources = resp.json().get("value", [])
+        if not resources:
+            return ""
+        resource_id = resources[0].get("id", "")
+        parts = resource_id.split("/")
+        for i, part in enumerate(parts):
+            if part.lower() == "resourcegroups" and i + 1 < len(parts):
+                return parts[i + 1]
+        return ""
+    except Exception as exc:
+        print(f"\u26a0\ufe0f  Could not discover resource group for hub '{hub_name}': {exc}")
+        return ""
+
+
+def provision_openapi_connection(
+    credential: DefaultAzureCredential,
+    api_key: str,
+    header_name: str,
+    base_url: str,
+) -> str:
+    """Create or update a Foundry CustomKeys connection for the Stock Tools API.
+
+    Returns the connection name on success, or an empty string when it cannot proceed
+    (e.g. AZURE_SUBSCRIPTION_ID not available).
+    """
+    if not AZURE_SUBSCRIPTION_ID:
+        print(
+            "\u26a0\ufe0f  AZURE_SUBSCRIPTION_ID is not set — cannot auto-create the Foundry connection. "
+            "Set AZURE_AI_OPENAPI_CONNECTION_ID explicitly, or set AZURE_SUBSCRIPTION_ID to enable auto-provisioning."
+        )
+        return ""
+
+    hub_name = _hub_name_from_endpoint(PROJECT_ENDPOINT)
+    if not hub_name:
+        print("\u26a0\ufe0f  Cannot determine Foundry hub name from PROJECT_ENDPOINT.")
+        return ""
+
+    resource_group = FOUNDRY_HUB_RESOURCE_GROUP
+    if not resource_group:
+        print(f"Discovering resource group for Foundry hub '{hub_name}' via Azure management API...")
+        token = _get_arm_access_token(credential)
+        resource_group = _find_hub_resource_group(hub_name, AZURE_SUBSCRIPTION_ID, token)
+        if not resource_group:
+            print(
+                f"\u26a0\ufe0f  Could not discover resource group for hub '{hub_name}'. "
+                "Set AZURE_AI_FOUNDRY_HUB_RESOURCE_GROUP to skip discovery."
+            )
+            return ""
+
+    connection_name = AUTO_CONNECTION_NAME
+    put_url = (
+        f"https://management.azure.com/subscriptions/{AZURE_SUBSCRIPTION_ID}"
+        f"/resourceGroups/{resource_group}"
+        f"/providers/Microsoft.MachineLearningServices/workspaces/{hub_name}"
+        f"/connections/{connection_name}?api-version=2024-04-01"
+    )
+    body = {
+        "properties": {
+            "category": "CustomKeys",
+            "target": base_url,
+            "authType": "CustomKeys",
+            "credentials": {
+                "keys": {
+                    header_name: api_key
+                }
+            },
+        }
+    }
+
+    try:
+        token = _get_arm_access_token(credential)
+        resp = requests.put(
+            put_url,
+            headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+            json=body,
+            timeout=30,
+        )
+        resp.raise_for_status()
+        print(
+            f"Provisioned Foundry CustomKeys connection '{connection_name}' "
+            f"(hub: {hub_name}, rg: {resource_group}, header: {header_name})."
+        )
+        return connection_name
+    except Exception as exc:
+        print(f"\u26a0\ufe0f  Failed to provision Foundry connection '{connection_name}': {exc}")
+        return ""
+
+
 def build_openapi_tool(spec: dict[str, Any], connection_id: str) -> OpenApiTool:
     spec = normalize_openapi_for_foundry(spec)
 
@@ -470,13 +581,29 @@ def main() -> None:
                     "Using project connection auth for OpenAPI tool "
                     f"(connection id: {connection_id}, header: {OPENAPI_API_KEY_HEADER_NAME})."
                 )
-            elif os.getenv("STOCK_TOOLS_API_KEY", "").strip():
-                raise SystemExit(
-                    "Missing AZURE_AI_OPENAPI_CONNECTION_ID and could not auto-resolve a matching CustomKeys connection. "
-                    "Set AZURE_AI_OPENAPI_CONNECTION_ID or AZURE_AI_OPENAPI_CONNECTION_NAME so the Foundry agent can send the Stock Tools API key."
-                )
             else:
-                print("Using anonymous auth for OpenAPI tool.")
+                api_key = os.getenv("STOCK_TOOLS_API_KEY", "").strip()
+                if api_key:
+                    # Auto-provision a CustomKeys connection so Foundry injects the API key at call time.
+                    connection_id = provision_openapi_connection(
+                        credential=credential,
+                        api_key=api_key,
+                        header_name=OPENAPI_API_KEY_HEADER_NAME,
+                        base_url=_normalize_openapi_target(OPENAPI_SPEC_URL),
+                    )
+                    if connection_id:
+                        print(
+                            f"Using auto-provisioned project connection auth for OpenAPI tool "
+                            f"(connection: {connection_id}, header: {OPENAPI_API_KEY_HEADER_NAME})."
+                        )
+                    else:
+                        raise SystemExit(
+                            "STOCK_TOOLS_API_KEY is set but Foundry connection auto-provisioning failed. "
+                            "Provide AZURE_SUBSCRIPTION_ID (and optionally AZURE_AI_FOUNDRY_HUB_RESOURCE_GROUP) "
+                            "for auto-provisioning, or set AZURE_AI_OPENAPI_CONNECTION_ID explicitly."
+                        )
+                else:
+                    print("Using anonymous auth for OpenAPI tool.")
 
             tool = build_openapi_tool(spec, connection_id=connection_id)
             upsert_agent(project_client, model_deployment, tool)

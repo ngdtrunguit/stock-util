@@ -127,6 +127,8 @@ jobs:
         if: ${{ env.REFRESH_AGENT == 'true' }}
         env:
           STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_AI_FOUNDRY_HUB_RESOURCE_GROUP: ${{ vars.AZURE_AI_FOUNDRY_HUB_RESOURCE_GROUP || '' }}
         run: |
           python infra/azure/foundry-agent-setup.py
 
@@ -134,6 +136,8 @@ jobs:
         if: ${{ env.REFRESH_AGENT != 'true' }}
         env:
           STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_AI_FOUNDRY_HUB_RESOURCE_GROUP: ${{ vars.AZURE_AI_FOUNDRY_HUB_RESOURCE_GROUP || '' }}
         run: |
           set +e
           python run_agent.py --check-agent
