@@ -1,0 +1,29 @@
+{
+  "servers": {
+    "microsoft-docs": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp"
+    },
+    "openapi-fastapi": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch"
+      ]
+    },
+    "azure-cli": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@azure/mcp"
+      ]
+    },
+    "terraform": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "terraform-mcp-server"
+      ]
+    }
+  }
+}
