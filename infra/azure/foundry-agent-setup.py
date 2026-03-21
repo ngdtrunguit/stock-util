@@ -123,7 +123,16 @@ def resolve_openapi_connection_id(project_client: AIProjectClient, explicit_id: 
     if explicit_id:
         return explicit_id
 
-    connections = list(project_client.connections.list(connection_type='CustomKeys'))
+    try:
+        connections = list(project_client.connections.list(connection_type='CustomKeys'))
+    except HttpResponseError as exc:
+        if "PermissionDenied" in str(type(exc).__name__) or getattr(exc, 'status_code', None) in (403, 401):
+            print(
+                f"⚠️  Cannot list Foundry connections (permission denied). "
+                "Falling back to auto-provisioning. Grant 'Azure AI Developer' role to the principal if this keeps failing."
+            )
+            return ''
+        raise
     if not connections:
         return ''
 
@@ -372,21 +381,34 @@ def _inject_api_key_security(spec: dict[str, Any], header_name: str) -> dict[str
     return normalized_spec
 
 
-def _hub_name_from_endpoint(endpoint: str) -> str:
+def _hub_name_from_endpoint(endpoint: str) -> tuple[str, str]:
+    """Return (account_name, project_name) from a Foundry project endpoint URL.
+
+    E.g. https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper
+         → ('stock-helper-resource', 'stock-helper')
+    """
     parsed = urlparse(endpoint)
     hostname = parsed.hostname or ""
-    return hostname.split(".")[0] if hostname else ""
+    account_name = hostname.split(".")[0] if hostname else ""
+    path_parts = [p for p in parsed.path.split("/") if p]
+    project_name = ""
+    for i, part in enumerate(path_parts):
+        if part == "projects" and i + 1 < len(path_parts):
+            project_name = path_parts[i + 1]
+            break
+    return account_name, project_name
 
 
 def _get_arm_access_token(credential: DefaultAzureCredential) -> str:
     return credential.get_token("https://management.azure.com/.default").token
 
 
-def _find_hub_resource_group(hub_name: str, subscription_id: str, token: str) -> str:
+def _find_hub_resource_group(account_name: str, subscription_id: str, token: str) -> str:
+    """Discover the resource group of a CognitiveServices account by name."""
     url = (
         f"https://management.azure.com/subscriptions/{subscription_id}/resources"
         f"?api-version=2021-04-01"
-        f"&$filter=resourceType eq 'Microsoft.MachineLearningServices/workspaces' and name eq '{hub_name}'"
+        f"&$filter=resourceType eq 'Microsoft.CognitiveServices/accounts' and name eq '{account_name}'"
         f"&$top=1"
     )
     try:
@@ -402,7 +424,7 @@ def _find_hub_resource_group(hub_name: str, subscription_id: str, token: str) ->
                 return parts[i + 1]
         return ""
     except Exception as exc:
-        print(f"\u26a0\ufe0f  Could not discover resource group for hub '{hub_name}': {exc}")
+        print(f"⚠️  Could not discover resource group for account '{account_name}': {exc}")
         return ""
 
 
@@ -414,29 +436,31 @@ def provision_openapi_connection(
 ) -> str:
     """Create or update a Foundry CustomKeys connection for the Stock Tools API.
 
-    Returns the connection name on success, or an empty string when it cannot proceed
-    (e.g. AZURE_SUBSCRIPTION_ID not available).
+    Uses the CognitiveServices ARM API:
+      PUT .../Microsoft.CognitiveServices/accounts/{account}/projects/{project}/connections/{name}
+
+    Returns the connection name on success, or an empty string when it cannot proceed.
     """
     if not AZURE_SUBSCRIPTION_ID:
         print(
-            "\u26a0\ufe0f  AZURE_SUBSCRIPTION_ID is not set — cannot auto-create the Foundry connection. "
+            "⚠️  AZURE_SUBSCRIPTION_ID is not set — cannot auto-create the Foundry connection. "
             "Set AZURE_AI_OPENAPI_CONNECTION_ID explicitly, or set AZURE_SUBSCRIPTION_ID to enable auto-provisioning."
         )
         return ""
 
-    hub_name = _hub_name_from_endpoint(PROJECT_ENDPOINT)
-    if not hub_name:
-        print("\u26a0\ufe0f  Cannot determine Foundry hub name from PROJECT_ENDPOINT.")
+    account_name, project_name = _hub_name_from_endpoint(PROJECT_ENDPOINT)
+    if not account_name or not project_name:
+        print("⚠️  Cannot determine Foundry account/project names from PROJECT_ENDPOINT.")
         return ""
 
     resource_group = FOUNDRY_HUB_RESOURCE_GROUP
     if not resource_group:
-        print(f"Discovering resource group for Foundry hub '{hub_name}' via Azure management API...")
+        print(f"Discovering resource group for Foundry account '{account_name}' via Azure management API...")
         token = _get_arm_access_token(credential)
-        resource_group = _find_hub_resource_group(hub_name, AZURE_SUBSCRIPTION_ID, token)
+        resource_group = _find_hub_resource_group(account_name, AZURE_SUBSCRIPTION_ID, token)
         if not resource_group:
             print(
-                f"\u26a0\ufe0f  Could not discover resource group for hub '{hub_name}'. "
+                f"⚠️  Could not discover resource group for account '{account_name}'. "
                 "Set AZURE_AI_FOUNDRY_HUB_RESOURCE_GROUP to skip discovery."
             )
             return ""
@@ -445,8 +469,9 @@ def provision_openapi_connection(
     put_url = (
         f"https://management.azure.com/subscriptions/{AZURE_SUBSCRIPTION_ID}"
         f"/resourceGroups/{resource_group}"
-        f"/providers/Microsoft.MachineLearningServices/workspaces/{hub_name}"
-        f"/connections/{connection_name}?api-version=2024-04-01"
+        f"/providers/Microsoft.CognitiveServices/accounts/{account_name}"
+        f"/projects/{project_name}"
+        f"/connections/{connection_name}?api-version=2025-04-01-preview"
     )
     body = {
         "properties": {
@@ -469,14 +494,23 @@ def provision_openapi_connection(
             json=body,
             timeout=30,
         )
+        if resp.status_code == 404:
+            # CognitiveServices project connections may not support this ARM path; fall back to
+            # reporting the connection name so the caller retries via data-plane list.
+            print(
+                f"⚠️  ARM path for project connections returned 404. "
+                "The connection may need to be created manually in Azure AI Foundry portal. "
+                f"Connection name to create: '{connection_name}' (type: CustomKeys, target: {base_url})."
+            )
+            return ""
         resp.raise_for_status()
         print(
             f"Provisioned Foundry CustomKeys connection '{connection_name}' "
-            f"(hub: {hub_name}, rg: {resource_group}, header: {header_name})."
+            f"(account: {account_name}, project: {project_name}, rg: {resource_group}, header: {header_name})."
         )
         return connection_name
     except Exception as exc:
-        print(f"\u26a0\ufe0f  Failed to provision Foundry connection '{connection_name}': {exc}")
+        print(f"⚠️  Failed to provision Foundry connection '{connection_name}': {exc}")
         return ""
 
 
@@ -609,10 +643,21 @@ def main() -> None:
             upsert_agent(project_client, model_deployment, tool)
     except HttpResponseError as exc:
         detail = str(exc)
-        if "deployments/read" in detail:
+        if "deployments/read" in detail or ("PermissionDenied" in detail and "deployments" in detail):
             raise SystemExit(
                 "Azure API error while provisioning agent: missing Foundry deployment read permission. "
                 "Grant the workflow principal the required Foundry data-plane access or skip agent refresh in CI. "
+                f"Original error: {exc}"
+            ) from exc
+        if "PermissionDenied" in detail or exc.status_code in (401, 403):
+            raise SystemExit(
+                f"Azure AI Foundry permission denied (HTTP {exc.status_code}). "
+                f"The CI service principal needs the 'Azure AI Developer' role on the Foundry resource. "
+                f"Run:\n"
+                f"  az role assignment create \\\n"
+                f"    --assignee <AZURE_CLIENT_ID> \\\n"
+                f"    --role 'Azure AI Developer' \\\n"
+                f"    --scope /subscriptions/<SUBSCRIPTION>/resourceGroups/<RG>/providers/Microsoft.CognitiveServices/accounts/stock-helper-resource\n"
                 f"Original error: {exc}"
             ) from exc
         raise SystemExit(f"Azure API error while provisioning agent: {exc}") from exc
