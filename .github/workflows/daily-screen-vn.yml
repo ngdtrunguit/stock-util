@@ -102,21 +102,5 @@ jobs:
           path: data/output/
           if-no-files-found: warn
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        if: success()
-        with:
-          path: data/output/
-
-  deploy:
-    if: ${{ github.ref_name == 'main' }}
-    needs: screen
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # Intentionally skip Pages deploy here to avoid overwriting the US site.
+      # VN output remains available through workflow artifacts.

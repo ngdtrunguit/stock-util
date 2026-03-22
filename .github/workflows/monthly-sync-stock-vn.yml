@@ -68,5 +68,6 @@ jobs:
           TELEGRAM_MESSAGE_THREAD_ID: ${{ vars.TELEGRAM_VN_MESSAGE_THREAD_ID || '1454' }}
           VNSTOCK_API_KEY: ${{ secrets.VNSTOCK_API_KEY }}
           VN_WEEKLY_MAX_HISTORY_CALLS: ${{ vars.VN_WEEKLY_MAX_HISTORY_CALLS || '20' }}
+          VN_WEEKLY_SECTOR_OFFSET: ${{ github.run_number }}
         run: |
           python -m stock_utils.jobs.weekly_screen_vn_job

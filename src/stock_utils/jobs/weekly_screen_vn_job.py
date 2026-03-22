@@ -25,6 +25,7 @@ LOGGER = logging.getLogger(__name__)
 
 MAX_STOCKS_PER_SECTOR = 80
 MAX_HISTORY_CALLS = int(os.getenv("VN_WEEKLY_MAX_HISTORY_CALLS", "15"))
+SECTOR_START_OFFSET = int(os.getenv("VN_WEEKLY_SECTOR_OFFSET", "0"))
 
 
 def _fmt_float(value: float | None, decimals: int = 2) -> str:
@@ -76,6 +77,16 @@ def load_vn_sectors() -> list[dict[str, Any]]:
     raw = json.loads(VN_SECTORS_FILE.read_text())
     sectors: list[dict[str, Any]] = raw.get("sectors", [])
     return sectors
+
+
+def rotate_sectors(sectors: list[dict[str, Any]], offset: int) -> list[dict[str, Any]]:
+    """Rotate sector order so capped runs can spread coverage over time."""
+    if not sectors:
+        return sectors
+    normalized = offset % len(sectors)
+    if normalized == 0:
+        return sectors
+    return sectors[normalized:] + sectors[:normalized]
 
 
 def _load_sector_symbols(sector_id: int) -> list[str]:
@@ -152,6 +163,9 @@ def main() -> None:
     if not sectors:
         LOGGER.error("No VN sectors found; aborting")
         return
+
+    sectors = rotate_sectors(sectors, SECTOR_START_OFFSET)
+    LOGGER.info("Using sector start offset=%d (sector count=%d)", SECTOR_START_OFFSET, len(sectors))
 
     all_candidates: list[dict[str, Any]] = []
     sector_results: list[dict[str, Any]] = []

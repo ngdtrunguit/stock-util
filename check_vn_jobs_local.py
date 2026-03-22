@@ -213,7 +213,9 @@ def main() -> None:
         print("\nTelegram env disabled for local safety.")
 
     history_calls_before = os.environ.get("VN_WEEKLY_MAX_HISTORY_CALLS")
+    sector_offset_before = os.environ.get("VN_WEEKLY_SECTOR_OFFSET")
     os.environ["VN_WEEKLY_MAX_HISTORY_CALLS"] = "8"
+    os.environ["VN_WEEKLY_SECTOR_OFFSET"] = "3"
 
     try:
         print("\nRunning monthly_sector_vn_job...")
@@ -233,6 +235,10 @@ def main() -> None:
             os.environ.pop("VN_WEEKLY_MAX_HISTORY_CALLS", None)
         else:
             os.environ["VN_WEEKLY_MAX_HISTORY_CALLS"] = history_calls_before
+        if sector_offset_before is None:
+            os.environ.pop("VN_WEEKLY_SECTOR_OFFSET", None)
+        else:
+            os.environ["VN_WEEKLY_SECTOR_OFFSET"] = sector_offset_before
         if env_backup:
             restore_env(env_backup)
 
