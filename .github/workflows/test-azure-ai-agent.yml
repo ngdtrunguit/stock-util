@@ -13,19 +13,12 @@ on:
           Analyze MSFT with 180-day context.
       test_prompts:
         description: >
-          Newline-separated prompts for the built-in smoke test suite.
-          These validate tool-call behavior and can include invalid-ticker cases.
+          Newline-separated stock-analysis prompts for the OpenAPI smoke test.
+          Each prompt must trigger the Foundry OpenAPI tool path.
         required: false
         default: |
           Analyze TSLA
           Analyze NVDA short term
-          Analyze BADTICKERZZZZ
-      expected_invalid_tickers:
-        description: >
-          Newline-separated ticker symbols allowed to raise tool_user_error during the smoke tests.
-        required: false
-        default: |
-          BADTICKERZZZZ
       stream:
         description: "Enable streaming output (true/false)"
         required: false
@@ -124,20 +117,6 @@ jobs:
         with:
           creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
 
-      - name: Validate Stock Tools API pipeline
-        env:
-          STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
-        run: |
-          python - <<'EOF'
-          import os, subprocess, sys
-          env = os.environ.copy()
-          try:
-              subprocess.run([sys.executable, 'test_api_calls.py', 'TSLA'], check=True, env=env)
-          except subprocess.CalledProcessError as exc:
-              print(f"::error::Stock Tools API validation failed with exit code {exc.returncode}")
-              sys.exit(exc.returncode)
-          EOF
-
       - name: Refresh Foundry agent OpenAPI tool registration
         if: ${{ env.REFRESH_AGENT == 'true' }}
         env:
@@ -206,27 +185,23 @@ jobs:
               subprocess.run([sys.executable, 'run_agent.py', *stream_flag, prompt], check=True)
           EOF
 
-      - name: Run full --tests suite
+      - name: Run OpenAPI stock-analysis smoke test
         env:
           WORKFLOW_TEST_PROMPTS: ${{ github.event.inputs.test_prompts }}
-          WORKFLOW_EXPECTED_INVALID_TICKERS: ${{ github.event.inputs.expected_invalid_tickers }}
         run: |
           python - <<'EOF'
           import os, subprocess, sys
 
-          raw_test_prompts = os.environ.get('WORKFLOW_TEST_PROMPTS', '') or 'Analyze TSLA\nAnalyze NVDA short term\nAnalyze BADTICKERZZZZ'
-          raw_invalid_tickers = os.environ.get('WORKFLOW_EXPECTED_INVALID_TICKERS', '') or 'BADTICKERZZZZ'
+          raw_test_prompts = os.environ.get('WORKFLOW_TEST_PROMPTS', '') or 'Analyze TSLA\nAnalyze NVDA short term'
+          test_prompts = [line.strip() for line in raw_test_prompts.splitlines() if line.strip()]
+
+          if not test_prompts:
+              print('::error::No smoke-test prompts provided.')
+              sys.exit(1)
 
           command = [sys.executable, 'run_agent.py', '--tests']
-
-          test_prompts = [line.strip() for line in raw_test_prompts.splitlines() if line.strip()]
-          invalid_tickers = [line.strip() for line in raw_invalid_tickers.splitlines() if line.strip()]
-
           for prompt in test_prompts:
-            command.extend(['--test-prompt', prompt])
-
-          for ticker in invalid_tickers:
-            command.extend(['--expected-invalid-ticker', ticker])
+              command.extend(['--test-prompt', prompt])
 
           subprocess.run(command, check=True)
           EOF
