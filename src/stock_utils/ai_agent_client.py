@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 from collections.abc import Mapping, Sequence
+import re
 from typing import Any, Callable
 
 import run_agent
@@ -109,7 +110,7 @@ class TradingAnalysisAgent:
         tickers: list[str],
         max_tickers: int = 10,
     ) -> str | None:
-        """Return a Telegram-friendly markdown ranking from RSI/golden-cross tickers."""
+        """Analyze tickers individually, rank successful results, and format for Telegram."""
         if not tickers:
             return None
 
@@ -117,34 +118,94 @@ class TradingAnalysisAgent:
             LOGGER.debug("Azure AI Foundry not configured; skipping top-ticker selection")
             return None
 
-        if AIProjectClient is None or DefaultAzureCredential is None:
-            LOGGER.warning("Azure SDK not available; skipping top-ticker selection")
+        analyses = self._analyze_tickers_individually(tickers)
+        if not analyses:
             return None
 
-        limit = min(max_tickers, len(tickers))
-        prompt = (
-            "Analyze these stock tickers from today's RSI oversold bounce and golden cross candidates: "
-            f"{', '.join(tickers)}. "
-            f"Select the top {limit} best tickers from ONLY this list. "
-            "If fewer than the requested number of tickers are provided, return all of them. "
-            "Format the response as Telegram-friendly Markdown with a short heading and a numbered list. "
-            "Format each line like: 1. *TICKER* - concise reason. "
-            "Do not include tables, JSON, code fences, or extra sections."
-        )
+        ranked = sorted(analyses, key=lambda item: (-item["score"], item["ticker"]))[:max_tickers]
+        lines = ["*AI Top Picks*", ""]
+        for index, item in enumerate(ranked, start=1):
+            lines.append(f"{index}. *{item['ticker']}* - {item['summary']}")
+        return "\n".join(lines)
+
+    def _analyze_tickers_individually(self, tickers: list[str]) -> list[dict[str, Any]]:
+        """Run one proven Azure agent analysis per ticker and score the results locally."""
+        analyses: list[dict[str, Any]] = []
+        original_endpoint = run_agent.PROJECT_ENDPOINT
+        original_agent_name = run_agent.AGENT_NAME
+        run_agent.PROJECT_ENDPOINT = self.project_endpoint
+        run_agent.AGENT_NAME = self.agent_name
         try:
-            original_endpoint = run_agent.PROJECT_ENDPOINT
-            original_agent_name = run_agent.AGENT_NAME
-            run_agent.PROJECT_ENDPOINT = self.project_endpoint
-            run_agent.AGENT_NAME = self.agent_name
-            result = run_agent.run_agent_prompt(prompt=prompt, stream=False)
-            text = (result.output_text or "").strip()
-            return text or None
-        except Exception as exc:
-            LOGGER.warning("Azure top-ticker selection failed: %s", exc)
-            return None
+            for ticker in tickers:
+                prompt = f"Analyze {ticker}"
+                try:
+                    result = run_agent.run_agent_prompt(prompt=prompt, stream=False)
+                except Exception as exc:
+                    LOGGER.warning("Azure per-ticker analysis failed for %s: %s", ticker, exc)
+                    continue
+
+                text = (result.output_text or "").strip()
+                if not text:
+                    continue
+
+                score = self._score_analysis_text(text)
+                summary = self._summarize_analysis_text(text)
+                analyses.append(
+                    {
+                        "ticker": ticker,
+                        "score": score,
+                        "summary": summary,
+                        "text": text,
+                    }
+                )
         finally:
             run_agent.PROJECT_ENDPOINT = original_endpoint
             run_agent.AGENT_NAME = original_agent_name
+
+        return analyses
+
+    @staticmethod
+    def _score_analysis_text(text: str) -> float:
+        """Heuristic ranking score from agent output text."""
+        lowered = text.lower()
+        score = 0.0
+
+        confidence_match = re.search(r"confidence[^0-9]{0,20}(\d{1,3})", lowered)
+        if confidence_match:
+            try:
+                score += min(int(confidence_match.group(1)), 100)
+            except ValueError:
+                pass
+
+        if "bullish" in lowered:
+            score += 25
+        if "bearish" in lowered:
+            score -= 20
+        if "neutral" in lowered:
+            score += 5
+        if "uptrend" in lowered or "trend: up" in lowered or "trend (up" in lowered:
+            score += 15
+        if "downtrend" in lowered or "trend: down" in lowered:
+            score -= 10
+        if "overbought" in lowered:
+            score -= 5
+        if "oversold" in lowered:
+            score += 8
+        if "positive" in lowered and "sentiment" in lowered:
+            score += 8
+        if "negative" in lowered and "sentiment" in lowered:
+            score -= 6
+
+        return score
+
+    @staticmethod
+    def _summarize_analysis_text(text: str, max_len: int = 140) -> str:
+        """Compress agent output into one Telegram-friendly line."""
+        cleaned = " ".join(text.replace("\n", " ").split())
+        if len(cleaned) <= max_len:
+            return cleaned
+        snippet = cleaned[: max_len - 1].rsplit(" ", 1)[0].rstrip(" ,;:-")
+        return f"{snippet}…"
 
     def _complete_with_payload(self, payload: dict[str, Any]) -> str | None:
         """Send a JSON payload to the configured Azure agent and return text."""
