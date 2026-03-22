@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+from collections.abc import Mapping, Sequence
 from typing import Any, Callable
 
 try:
@@ -155,9 +156,72 @@ class TradingAnalysisAgent:
             agent_id=self.agent_name,
             messages=[{"role": "user", "content": json.dumps(payload)}],
         )
-        text = getattr(response, "content", None)
-        if isinstance(text, str) and text.strip():
+        text = self._extract_text(response)
+        if text:
             return text
+        LOGGER.info(
+            "Azure agent returned no extractable text for task=%s; response_type=%s",
+            payload.get("task", ""),
+            type(response).__name__,
+        )
+        return None
+
+    @classmethod
+    def _extract_text(cls, value: Any) -> str | None:
+        """Best-effort extraction of text from Azure SDK response shapes."""
+        if value is None:
+            return None
+        if isinstance(value, str):
+            text = value.strip()
+            return text or None
+        if isinstance(value, bytes):
+            text = value.decode(errors="ignore").strip()
+            return text or None
+        if isinstance(value, Mapping):
+            for key in (
+                "content",
+                "text",
+                "value",
+                "message",
+                "output_text",
+                "response",
+                "result",
+                "data",
+            ):
+                text = cls._extract_text(value.get(key))
+                if text:
+                    return text
+            return None
+        if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+            parts = [part for item in value if (part := cls._extract_text(item))]
+            if parts:
+                return "\n".join(parts)
+            return None
+
+        for attr in ("content", "text", "value", "message", "output_text", "response", "result"):
+            if hasattr(value, attr):
+                text = cls._extract_text(getattr(value, attr))
+                if text:
+                    return text
+
+        as_dict = getattr(value, "as_dict", None)
+        if callable(as_dict):
+            try:
+                text = cls._extract_text(as_dict())
+                if text:
+                    return text
+            except Exception:
+                pass
+
+        model_dump = getattr(value, "model_dump", None)
+        if callable(model_dump):
+            try:
+                text = cls._extract_text(model_dump())
+                if text:
+                    return text
+            except Exception:
+                pass
+
         return None
 
     @staticmethod
