@@ -104,12 +104,11 @@ class TradingAnalysisAgent:
 
     def select_top_tickers_for_telegram(
         self,
-        candidates: list[dict[str, Any]],
+        tickers: list[str],
         max_tickers: int = 10,
-        total_universe_size: int | None = None,
     ) -> str | None:
-        """Return a Telegram-friendly markdown ranking from shortlisted candidates."""
-        if not candidates:
+        """Return a Telegram-friendly markdown ranking from RSI/golden-cross tickers."""
+        if not tickers:
             return None
 
         if not self.project_endpoint or not self.agent_name:
@@ -120,18 +119,16 @@ class TradingAnalysisAgent:
             LOGGER.warning("Azure SDK not available; skipping top-ticker selection")
             return None
 
-        limit = min(max_tickers, len(candidates))
+        limit = min(max_tickers, len(tickers))
         payload: dict[str, Any] = {
-            "task": "Select the best stock tickers from a shortlisted post-filter daily screen list",
-            "total_filtered_universe_size": total_universe_size or len(candidates),
-            "shortlisted_candidates": candidates,
+            "task": "Select the best stock tickers from RSI oversold bounce and golden cross candidates",
+            "tickers": tickers,
             "max_tickers": limit,
             "format": "telegram_markdown",
             "instructions": [
-                f"Choose the top {limit} best tickers from ONLY the provided shortlisted candidates.",
-                "These shortlisted candidates come from a larger combined post-filter screen universe.",
-                "Use the provided indicators and reasons to decide which setups look strongest.",
-                "Prefer names with stronger trend, momentum, relative strength, multi-pass confirmation, or cleaner setup quality.",
+                f"Choose the top {limit} best tickers from ONLY the provided ticker list.",
+                "This list contains only RSI oversold bounce and golden cross candidates from the daily screen.",
+                "Analyze those tickers and return the strongest setups with concise reasons.",
                 "If fewer than the requested number of tickers are provided, return all of them.",
                 "Format the response as Telegram-friendly Markdown using a short heading and a numbered list.",
                 "Format each line like: 1. *TICKER* - concise reason",
