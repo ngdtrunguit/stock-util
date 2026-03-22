@@ -252,6 +252,46 @@ def check_agent_available() -> None:
     get_agent_definition(AGENT_NAME)
 
 
+def _downgrade_openapi_spec_in_tools(tools: list[Any]) -> list[Any]:
+    """Recursively downgrade any embedded OpenAPI 3.1.0 spec to 3.0.0.
+
+    Azure AI Foundry Agents API rejects 3.1.0 specs.  The stored agent definition
+    may still contain a 3.1.0 spec if it was registered before the API was patched.
+    This converts:
+      anyOf: [{type: X}, {type: null}]  →  {type: X, nullable: true}
+    and sets "openapi" version to "3.0.0".
+    """
+    import copy
+
+    def _patch_schema(obj: Any) -> Any:
+        if isinstance(obj, list):
+            return [_patch_schema(item) for item in obj]
+        if not isinstance(obj, dict):
+            return obj
+
+        # Rewrite the openapi version string wherever it appears as a root key
+        result = {}
+        for k, v in obj.items():
+            if k == "openapi" and v == "3.1.0":
+                result[k] = "3.0.0"
+            elif k == "anyOf" and isinstance(v, list):
+                null_items = [s for s in v if isinstance(s, dict) and s.get("type") == "null"]
+                non_null = [s for s in v if not (isinstance(s, dict) and s.get("type") == "null")]
+                if null_items and len(non_null) == 1:
+                    merged = {**_patch_schema(non_null[0]), "nullable": True}
+                    for sk, sv in obj.items():
+                        if sk != "anyOf":
+                            merged.setdefault(sk, sv)
+                    return merged
+                else:
+                    result[k] = [_patch_schema(s) for s in v]
+            else:
+                result[k] = _patch_schema(v)
+        return result
+
+    return [_patch_schema(copy.deepcopy(tool)) for tool in tools]
+
+
 def response_text(response: Any) -> str:
     text = _safe_get(response, "output_text", "")
     if isinstance(text, str) and text.strip():
@@ -282,7 +322,7 @@ def run_agent_prompt(prompt: str, stream: bool = False, retries: int = 2) -> Age
     if agent_def.instructions:
         create_kwargs["instructions"] = agent_def.instructions
     if agent_def.tools:
-        create_kwargs["tools"] = agent_def.tools  # type: ignore[assignment]
+        create_kwargs["tools"] = _downgrade_openapi_spec_in_tools(agent_def.tools)  # type: ignore[assignment]
         create_kwargs["tool_choice"] = agent_def.tool_choice
 
     last_error: Exception | None = None
