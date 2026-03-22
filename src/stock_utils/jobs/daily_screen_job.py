@@ -539,7 +539,7 @@ def main() -> None:
                 bot_token=settings.telegram_bot_token,
                 chat_id=settings.telegram_chat_id,
                 text=top_picks_message,
-                message_thread_id=settings.telegram_message_thread_id,
+                message_thread_id=settings.telegram_ai_top_picks_thread_id,
             )
         else:
             LOGGER.info("Skipping Telegram top-picks notification; Azure response unavailable")
