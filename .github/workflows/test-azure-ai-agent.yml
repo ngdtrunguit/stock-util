@@ -184,17 +184,20 @@ jobs:
           fi
 
       - name: Run configured prompts through the agent
+        env:
+          WORKFLOW_PROMPTS: ${{ github.event.inputs.prompts }}
+          WORKFLOW_STREAM: ${{ github.event.inputs.stream || 'false' }}
         run: |
           python - <<'EOF'
           import os, subprocess, sys
 
-          raw_prompts = """${{ github.event.inputs.prompts || 'Analyze TSLA with 180-day context.\nAnalyze MSFT with 180-day context.' }}"""
+          raw_prompts = os.environ.get('WORKFLOW_PROMPTS', '') or 'Analyze TSLA with 180-day context.\nAnalyze MSFT with 180-day context.'
           prompts = [line.strip() for line in raw_prompts.splitlines() if line.strip()]
           if not prompts:
               print('::error::No prompts provided to workflow_dispatch input.')
               sys.exit(1)
 
-          stream_flag = ['--stream'] if "${{ github.event.inputs.stream || 'false' }}".lower() == 'true' else []
+          stream_flag = ['--stream'] if os.environ.get('WORKFLOW_STREAM', 'false').lower() == 'true' else []
 
           for prompt in prompts:
               print('━' * 76)
@@ -204,12 +207,15 @@ jobs:
           EOF
 
       - name: Run full --tests suite
+        env:
+          WORKFLOW_TEST_PROMPTS: ${{ github.event.inputs.test_prompts }}
+          WORKFLOW_EXPECTED_INVALID_TICKERS: ${{ github.event.inputs.expected_invalid_tickers }}
         run: |
           python - <<'EOF'
-          import subprocess, sys
+          import os, subprocess, sys
 
-          raw_test_prompts = """${{ github.event.inputs.test_prompts || 'Analyze TSLA\nAnalyze NVDA short term\nAnalyze BADTICKERZZZZ' }}"""
-          raw_invalid_tickers = """${{ github.event.inputs.expected_invalid_tickers || 'BADTICKERZZZZ' }}"""
+          raw_test_prompts = os.environ.get('WORKFLOW_TEST_PROMPTS', '') or 'Analyze TSLA\nAnalyze NVDA short term\nAnalyze BADTICKERZZZZ'
+          raw_invalid_tickers = os.environ.get('WORKFLOW_EXPECTED_INVALID_TICKERS', '') or 'BADTICKERZZZZ'
 
           command = [sys.executable, 'run_agent.py', '--tests']
 
