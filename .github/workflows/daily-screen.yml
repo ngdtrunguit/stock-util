@@ -43,11 +43,30 @@ jobs:
           pip install -e .
 
       - name: Restore screening database
-        uses: actions/download-artifact@v4
-        with:
-          name: stock-screen-db
-          path: data/
-        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p data
+
+          artifact_id="$(gh api \
+            --header 'Accept: application/vnd.github+json' \
+            "/repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=100" \
+            --paginate \
+            --jq '.artifacts[] | select(.name == "stock-screen-db" and .expired == false) | .id' \
+            | head -n 1)"
+
+          if [ -z "${artifact_id}" ]; then
+            echo "No prior stock-screen-db artifact found; starting with a fresh database."
+            exit 0
+          fi
+
+          echo "Restoring stock-screen-db artifact ${artifact_id}"
+          gh api \
+            --header 'Accept: application/vnd.github+json' \
+            "/repos/${GITHUB_REPOSITORY}/actions/artifacts/${artifact_id}/zip" \
+            > /tmp/stock-screen-db.zip
+          unzip -o /tmp/stock-screen-db.zip -d data
 
       - name: Azure login
         uses: azure/login@v2
