@@ -53,8 +53,7 @@ jobs:
             --header 'Accept: application/vnd.github+json' \
             "/repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=100" \
             --paginate \
-            --jq '.artifacts[] | select(.name == "stock-screen-db" and .expired == false) | .id' \
-            | head -n 1)"
+            --jq '[.artifacts[] | select(.name == "stock-screen-db" and .expired == false) | .id] | first // empty')"
 
           if [ -z "${artifact_id}" ]; then
             echo "No prior stock-screen-db artifact found; starting with a fresh database."
