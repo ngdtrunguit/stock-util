@@ -120,29 +120,27 @@ class TradingAnalysisAgent:
             return None
 
         limit = min(max_tickers, len(tickers))
-        payload: dict[str, Any] = {
-            "task": "Select the best stock tickers from RSI oversold bounce and golden cross candidates",
-            "tickers": tickers,
-            "max_tickers": limit,
-            "format": "telegram_markdown",
-            "instructions": [
-                f"Choose the top {limit} best tickers from ONLY the provided ticker list.",
-                "This list contains only RSI oversold bounce and golden cross candidates from the daily screen.",
-                "Analyze those tickers and return the strongest setups with concise reasons.",
-                "If fewer than the requested number of tickers are provided, return all of them.",
-                "Format the response as Telegram-friendly Markdown using a short heading and a numbered list.",
-                "Format each line like: 1. *TICKER* - concise reason",
-                "Do not include tables, JSON, code fences, or extra sections.",
-            ],
-        }
+        prompt = (
+            "Analyze these stock tickers from today's RSI oversold bounce and golden cross candidates: "
+            f"{', '.join(tickers)}. "
+            f"Select the top {limit} best tickers from ONLY this list. "
+            "If fewer than the requested number of tickers are provided, return all of them. "
+            "Format the response as Telegram-friendly Markdown with a short heading and a numbered list. "
+            "Format each line like: 1. *TICKER* - concise reason. "
+            "Do not include tables, JSON, code fences, or extra sections."
+        )
         try:
-            return self._complete_with_payload(payload)
+            return self._complete_with_message(prompt)
         except Exception as exc:
             LOGGER.warning("Azure top-ticker selection failed: %s", exc)
             return None
 
     def _complete_with_payload(self, payload: dict[str, Any]) -> str | None:
         """Send a JSON payload to the configured Azure agent and return text."""
+        return self._complete_with_message(json.dumps(payload), task_name=str(payload.get("task", "")))
+
+    def _complete_with_message(self, content: str, task_name: str = "") -> str | None:
+        """Send a plain message to the configured Azure agent and return text."""
         client = AIProjectClient(
             endpoint=self.project_endpoint,
             credential=DefaultAzureCredential(),
@@ -155,14 +153,14 @@ class TradingAnalysisAgent:
 
         response = complete_fn(
             agent_id=self.agent_name,
-            messages=[{"role": "user", "content": json.dumps(payload)}],
+            messages=[{"role": "user", "content": content}],
         )
         text = self._extract_text(response)
         if text:
             return text
         LOGGER.info(
             "Azure agent returned no extractable text for task=%s; response_type=%s",
-            payload.get("task", ""),
+            task_name,
             type(response).__name__,
         )
         return None
