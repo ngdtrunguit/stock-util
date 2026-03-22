@@ -232,7 +232,7 @@ def main() -> None:
     if calls_used >= MAX_HISTORY_CALLS or hit_rate_limit:
         msg = (
             f"{msg}\n\n"
-            f"_Note: scan truncated due VN API limits ({calls_used}/{MAX_HISTORY_CALLS} history calls)._"
+            f"_Note: scan truncated at configured history-call budget ({calls_used}/{MAX_HISTORY_CALLS})._"
         )
 
     send_markdown_message(
