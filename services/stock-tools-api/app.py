@@ -27,6 +27,8 @@ app = FastAPI(
     title="Stock Tools API",
     description="Technical analysis and news sentiment tools for stock tickers.",
     version="1.0.0",
+    # Azure AI Foundry Agents API only accepts OpenAPI 3.0.x; FastAPI defaults to 3.1.0.
+    openapi_version="3.0.0",
 )
 
 
