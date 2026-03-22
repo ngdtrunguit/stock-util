@@ -166,7 +166,6 @@ def _build_markdown_report(
 def _build_telegram_message(
     sector_results: list[dict[str, Any]],  # [{sector_name, rsi_ob_count, gc_count, ma_count, rsi_ob_candidates, gc_candidates}]
     run_date: str,
-    ai_summary: str | None = None,
 ) -> str:
     total_rsi_ob = sum(r["rsi_ob_count"] for r in sector_results)
     total_gc = sum(r["gc_count"] for r in sector_results)
@@ -221,9 +220,6 @@ def _build_telegram_message(
                     f"MA200 {_fmt_float(p['ma_200'])} ({_fmt_pct(p['pct_above_ma200'])})"
                 )
         lines.append("")
-
-    if ai_summary:
-        lines.extend(["*AI Analysis*", ai_summary])
 
     return "\n".join(lines)
 
@@ -518,14 +514,7 @@ def main() -> None:
         else None
     )
 
-    # ── 5. Optional AI summary on golden-cross candidates ─────────────────────
-    all_gc = candidates_by_pass["golden_cross_weekly"]
-    ai_summary: str | None = None
-    if all_gc and ai_agent is not None:
-        LOGGER.info("Getting AI summary for %d golden-cross candidates", len(all_gc))
-        ai_summary = ai_agent.summarize_screening_results(all_gc)
-
-    msg = _build_telegram_message(sector_results, run_date, ai_summary)
+    msg = _build_telegram_message(sector_results, run_date)
     LOGGER.info("Sending Telegram notification")
     send_markdown_message(
         bot_token=settings.telegram_bot_token,
