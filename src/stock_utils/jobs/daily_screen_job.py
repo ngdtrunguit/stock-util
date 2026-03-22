@@ -228,14 +228,72 @@ def _build_telegram_message(
     return "\n".join(lines)
 
 
-def _collect_combined_post_filter_tickers(
+def _collect_combined_post_filter_candidates(
     candidates_by_pass: dict[str, list[dict[str, Any]]],
-) -> list[str]:
-    """Collect a stable deduplicated ticker list across all screening passes."""
+) -> list[dict[str, Any]]:
+    """Collect a stable deduplicated candidate list across all screening passes."""
     combined_candidates: list[dict[str, Any]] = []
+    seen: set[str] = set()
     for pass_cfg in _PASSES:
-        combined_candidates.extend(candidates_by_pass.get(pass_cfg["strategy"], []))
-    return extract_tickers(combined_candidates)
+        for candidate in candidates_by_pass.get(pass_cfg["strategy"], []):
+            symbol = str(candidate.get("symbol", "")).strip().upper()
+            if symbol and symbol not in seen:
+                seen.add(symbol)
+                combined_candidates.append(candidate)
+    return combined_candidates
+
+
+def _select_ai_top_pick_shortlist(
+    candidates_by_pass: dict[str, list[dict[str, Any]]],
+    limit: int = 40,
+) -> list[dict[str, Any]]:
+    """Build a high-signal shortlist before asking Azure for final top picks."""
+    aggregated: dict[str, dict[str, Any]] = {}
+
+    for pass_index, pass_cfg in enumerate(_PASSES):
+        strategy = pass_cfg["strategy"]
+        weight = len(_PASSES) - pass_index
+        for candidate in candidates_by_pass.get(strategy, []):
+            symbol = str(candidate.get("symbol", "")).strip().upper()
+            if not symbol:
+                continue
+
+            indicators = candidate.get("indicators", {})
+            entry = aggregated.setdefault(
+                symbol,
+                {
+                    "symbol": symbol,
+                    "sector_name": candidate.get("sector_name", ""),
+                    "reason": candidate.get("reason", ""),
+                    "indicators": indicators,
+                    "score": 0.0,
+                    "pass_hits": [],
+                },
+            )
+            entry["score"] += float(weight)
+            entry["pass_hits"].append(strategy)
+
+            try:
+                pct_above_ma200 = _pct_above(indicators.get("close"), indicators.get("ma_200"))
+                if pct_above_ma200 is not None and pct_above_ma200 > 0:
+                    entry["score"] += min(pct_above_ma200, 25.0) / 25.0
+            except Exception:
+                pass
+
+            try:
+                rsi = float(indicators.get("rsi_14"))
+                if rsi <= 35:
+                    entry["score"] += 0.5
+                elif rsi >= 50:
+                    entry["score"] += 0.25
+            except Exception:
+                pass
+
+    ranked = sorted(
+        aggregated.values(),
+        key=lambda item: (-float(item["score"]), item["symbol"]),
+    )
+    return ranked[:limit]
 
 
 def _write_output_files(
@@ -534,15 +592,18 @@ def main() -> None:
         message_thread_id=settings.telegram_message_thread_id,
     )
 
-    combined_tickers = _collect_combined_post_filter_tickers(candidates_by_pass)
-    if combined_tickers and ai_agent is not None:
+    combined_candidates = _collect_combined_post_filter_candidates(candidates_by_pass)
+    ai_shortlist = _select_ai_top_pick_shortlist(candidates_by_pass)
+    if combined_candidates and ai_shortlist and ai_agent is not None:
         LOGGER.info(
-            "Getting AI top picks from %d combined post-filter tickers",
-            len(combined_tickers),
+            "Getting AI top picks from %d combined post-filter tickers via shortlist of %d",
+            len(combined_candidates),
+            len(ai_shortlist),
         )
         top_picks_message = ai_agent.select_top_tickers_for_telegram(
-            combined_tickers,
+            ai_shortlist,
             max_tickers=10,
+            total_universe_size=len(combined_candidates),
         )
         if top_picks_message:
             LOGGER.info("Sending Telegram top-picks notification")
