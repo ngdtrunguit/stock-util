@@ -19,6 +19,7 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 from fastapi import Depends, FastAPI, Header, HTTPException, Query
+from fastapi.openapi.utils import get_openapi
 from pydantic import BaseModel, Field
 from ta.momentum import RSIIndicator
 from ta.trend import SMAIndicator
@@ -28,6 +29,85 @@ app = FastAPI(
     description="Technical analysis and news sentiment tools for stock tickers.",
     version="1.0.0",
 )
+
+
+def _downgrade_schema_to_30(schema: dict) -> dict:
+    """Recursively convert OpenAPI 3.1.0 constructs to 3.0.0 equivalents.
+
+    Azure AI Foundry Agents API rejects 3.1.0 specs.  The main differences:
+    - Optional[X]  → anyOf:[{type:X},{type:null}]  must become  {type:X, nullable:true}
+    - {type:null}  standalone becomes {nullable:true}
+    """
+    if not isinstance(schema, dict):
+        return schema
+
+    # Handle anyOf with exactly one non-null type + {type: null}  →  nullable
+    if "anyOf" in schema:
+        any_of: list = schema["anyOf"]
+        null_entries = [s for s in any_of if s == {"type": "null"} or s.get("type") == "null"]
+        non_null_entries = [s for s in any_of if s not in null_entries and s.get("type") != "null"]
+        if null_entries and len(non_null_entries) == 1:
+            merged = {**non_null_entries[0], "nullable": True}
+            # Preserve any sibling keys (title, default, …)
+            for k, v in schema.items():
+                if k != "anyOf":
+                    merged.setdefault(k, v)
+            schema = _downgrade_schema_to_30(merged)
+            return schema
+        elif null_entries and len(non_null_entries) == 0:
+            # pure null type
+            schema = {k: v for k, v in schema.items() if k != "anyOf"}
+            schema["nullable"] = True
+
+    # Recurse into all nested dicts/lists
+    return {
+        k: (
+            _downgrade_schema_to_30(v)
+            if isinstance(v, dict)
+            else [_downgrade_schema_to_30(i) if isinstance(i, dict) else i for i in v]
+            if isinstance(v, list)
+            else v
+        )
+        for k, v in schema.items()
+    }
+
+
+def _strip_validation_schemas(schema: dict) -> dict:
+    """Remove FastAPI 422 validation-error responses and their component schemas.
+
+    Azure AI Foundry rejects specs with anyOf multi-type unions or bare-title
+    properties found inside the auto-generated ValidationError component.
+    Agents never need to parse 422 error bodies.
+    """
+    for path_item in schema.get("paths", {}).values():
+        for operation in path_item.values():
+            if isinstance(operation, dict):
+                operation.get("responses", {}).pop("422", None)
+
+    schemas = schema.get("components", {}).get("schemas", {})
+    for name in ("HTTPValidationError", "ValidationError"):
+        schemas.pop(name, None)
+
+    return schema
+
+
+def _custom_openapi() -> dict:
+    if app.openapi_schema:
+        return app.openapi_schema
+    schema = get_openapi(
+        title=app.title,
+        version=app.version,
+        description=app.description,
+        routes=app.routes,
+    )
+    schema["openapi"] = "3.0.0"
+    schema = _downgrade_schema_to_30(schema)
+    schema = _strip_validation_schemas(schema)
+    app.openapi_schema = schema
+    return schema
+
+
+app.openapi = _custom_openapi  # type: ignore[method-assign]
 
 
 # ── Request models ────────────────────────────────────────────────────────────

@@ -50,14 +50,17 @@ GitHub Actions note:
 
 ```bash
 python run_agent.py "Analyze AAPL stock"
+python run_agent.py AAPL
+python run_agent.py --ticker NVDA --days 90 --context "Focus on near-term momentum and earnings risk."
 ```
 
-`run_agent.py` calls the published agent application endpoint and uses Entra auth (`az login` locally or `azure/login` in GitHub Actions), not the project API key.
+`run_agent.py` calls the Foundry project's direct `/openai/v1/responses` endpoint with the agent definition loaded from Azure AI Foundry at runtime. It uses Entra auth (`az login` locally or `azure/login` in GitHub Actions), not the project API key.
 
 ## 5. Run required end-to-end validation prompts
 
 ```bash
 python run_agent.py --tests
+python run_agent.py --tests --test-prompt "Analyze AAPL" --test-prompt "Analyze INVALIDZZZZ" --expected-invalid-ticker INVALIDZZZZ
 ```
 
 Test prompts:

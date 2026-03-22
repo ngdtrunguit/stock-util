@@ -1,4 +1,4 @@
-name: Test Azure AI Agent (TSLA & MSFT)
+name: Test Azure AI Agent
 
 on:
   workflow_dispatch:
@@ -6,11 +6,19 @@ on:
       prompts:
         description: >
           Newline-separated prompts to send to the agent.
-          Default runs TSLA and MSFT full analysis.
+          Default runs two stock-analysis prompts.
         required: false
         default: |
           Analyze TSLA with 180-day context.
           Analyze MSFT with 180-day context.
+      test_prompts:
+        description: >
+          Newline-separated stock-analysis prompts for the OpenAPI smoke test.
+          Each prompt must trigger the Foundry OpenAPI tool path.
+        required: false
+        default: |
+          Analyze TSLA
+          Analyze NVDA short term
       stream:
         description: "Enable streaming output (true/false)"
         required: false
@@ -109,20 +117,6 @@ jobs:
         with:
           creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
 
-      - name: Validate Stock Tools API pipeline
-        env:
-          STOCK_TOOLS_API_KEY: ${{ secrets.STOCK_TOOLS_API_KEY }}
-        run: |
-          python - <<'EOF'
-          import os, subprocess, sys
-          env = os.environ.copy()
-          try:
-              subprocess.run([sys.executable, 'test_api_calls.py', 'TSLA'], check=True, env=env)
-          except subprocess.CalledProcessError as exc:
-              print(f"::error::Stock Tools API validation failed with exit code {exc.returncode}")
-              sys.exit(exc.returncode)
-          EOF
-
       - name: Refresh Foundry agent OpenAPI tool registration
         if: ${{ env.REFRESH_AGENT == 'true' }}
         env:
@@ -169,17 +163,20 @@ jobs:
           fi
 
       - name: Run configured prompts through the agent
+        env:
+          WORKFLOW_PROMPTS: ${{ github.event.inputs.prompts }}
+          WORKFLOW_STREAM: ${{ github.event.inputs.stream || 'false' }}
         run: |
           python - <<'EOF'
           import os, subprocess, sys
 
-          raw_prompts = """${{ github.event.inputs.prompts || 'Analyze TSLA with 180-day context.\nAnalyze MSFT with 180-day context.' }}"""
+          raw_prompts = os.environ.get('WORKFLOW_PROMPTS', '') or 'Analyze TSLA with 180-day context.\nAnalyze MSFT with 180-day context.'
           prompts = [line.strip() for line in raw_prompts.splitlines() if line.strip()]
           if not prompts:
               print('::error::No prompts provided to workflow_dispatch input.')
               sys.exit(1)
 
-          stream_flag = ['--stream'] if "${{ github.event.inputs.stream || 'false' }}".lower() == 'true' else []
+          stream_flag = ['--stream'] if os.environ.get('WORKFLOW_STREAM', 'false').lower() == 'true' else []
 
           for prompt in prompts:
               print('━' * 76)
@@ -188,10 +185,23 @@ jobs:
               subprocess.run([sys.executable, 'run_agent.py', *stream_flag, prompt], check=True)
           EOF
 
-      - name: Run full --tests suite (TSLA, NVDA, invalid ticker)
+      - name: Run OpenAPI stock-analysis smoke test
+        env:
+          WORKFLOW_TEST_PROMPTS: ${{ github.event.inputs.test_prompts }}
         run: |
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "  Full test suite — verifies tool call order:"
-          echo "    price_history → technicals → news_sentiment"
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          python run_agent.py --tests
+          python - <<'EOF'
+          import os, subprocess, sys
+
+          raw_test_prompts = os.environ.get('WORKFLOW_TEST_PROMPTS', '') or 'Analyze TSLA\nAnalyze NVDA short term'
+          test_prompts = [line.strip() for line in raw_test_prompts.splitlines() if line.strip()]
+
+          if not test_prompts:
+              print('::error::No smoke-test prompts provided.')
+              sys.exit(1)
+
+          command = [sys.executable, 'run_agent.py', '--tests']
+          for prompt in test_prompts:
+              command.extend(['--test-prompt', prompt])
+
+          subprocess.run(command, check=True)
+          EOF

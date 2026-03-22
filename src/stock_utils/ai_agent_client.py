@@ -1,10 +1,14 @@
-"""Azure AI Foundry wrapper for screening-result summarization."""
+"""Azure AI Foundry wrapper for screening-result summarization and ranking."""
 
 from __future__ import annotations
 
 import json
 import logging
+from collections.abc import Mapping, Sequence
+import re
 from typing import Any, Callable
+
+import run_agent
 
 try:
     from azure.ai.projects import AIProjectClient
@@ -19,8 +23,8 @@ LOGGER = logging.getLogger(__name__)
 def extract_tickers(candidates: list[dict[str, Any]]) -> list[str]:
     """Extract unique ticker symbols from a list of screening candidates.
 
-    Returns a deduplicated, sorted list of ticker symbol strings suitable
-    for passing to Azure AI Foundry agents (e.g. finrobot stock analyst).
+    Returns ticker symbol strings in stable first-seen order without duplicates,
+    suitable for passing to Azure AI Foundry agents (e.g. finrobot stock analyst).
     """
     seen: set[str] = set()
     tickers: list[str] = []
@@ -33,7 +37,7 @@ def extract_tickers(candidates: list[dict[str, Any]]) -> list[str]:
 
 
 class TradingAnalysisAgent:
-    """Summarizes screener candidates via Azure AI Foundry when configured."""
+    """Summarizes and ranks screener candidates via Azure AI Foundry when configured."""
 
     def __init__(self, project_endpoint: str, agent_name: str) -> None:
         self.project_endpoint = project_endpoint
@@ -51,31 +55,19 @@ class TradingAnalysisAgent:
             LOGGER.warning("Azure SDK not available; using fallback summary")
             return self._fallback_summary(candidates)
 
+        payload = {
+            "task": "Summarize stock screening candidates for a trading update",
+            "candidates": candidates,
+            "format": "markdown",
+        }
         try:
-            client = AIProjectClient(endpoint=self.project_endpoint, credential=DefaultAzureCredential())
-            payload = {
-                "task": "Summarize stock screening candidates for a trading update",
-                "candidates": candidates,
-                "format": "markdown",
-            }
-
-            agents_client: Any = client.agents
-            complete_fn: Callable[..., Any] | None = getattr(agents_client, "complete", None)
-            if complete_fn is None:
-                LOGGER.warning("Azure agents.complete API not available; using fallback summary")
-                return self._fallback_summary(candidates)
-
-            response = complete_fn(
-                agent_id=self.agent_name,
-                messages=[{"role": "user", "content": json.dumps(payload)}],
-            )
-            text = getattr(response, "content", None)
-            if isinstance(text, str) and text.strip():
+            text = self._complete_with_payload(payload)
+            if text:
                 return text
-            return self._fallback_summary(candidates)
         except Exception as exc:
             LOGGER.warning("Azure summarization failed: %s", exc)
             return self._fallback_summary(candidates)
+        return self._fallback_summary(candidates)
 
     def send_tickers_for_analysis(
         self,
@@ -102,38 +94,206 @@ class TradingAnalysisAgent:
             LOGGER.warning("Azure SDK not available; skipping ticker analysis")
             return None
 
+        payload: dict[str, Any] = {
+            "task": "Analyze the following stock tickers",
+            "tickers": tickers,
+            "strategy": strategy,
+        }
         try:
-            client = AIProjectClient(
-                endpoint=self.project_endpoint,
-                credential=DefaultAzureCredential(),
-            )
-            payload: dict[str, Any] = {
-                "task": "Analyze the following stock tickers",
-                "tickers": tickers,
-                "strategy": strategy,
-            }
-
-            agents_client: Any = client.agents
-            complete_fn: Callable[..., Any] | None = getattr(
-                agents_client, "complete", None
-            )
-            if complete_fn is None:
-                LOGGER.warning(
-                    "Azure agents.complete API not available; skipping ticker analysis"
-                )
-                return None
-
-            response = complete_fn(
-                agent_id=self.agent_name,
-                messages=[{"role": "user", "content": json.dumps(payload)}],
-            )
-            text = getattr(response, "content", None)
-            if isinstance(text, str) and text.strip():
-                return text
-            return None
+            return self._complete_with_payload(payload)
         except Exception as exc:
             LOGGER.warning("Azure ticker analysis failed: %s", exc)
             return None
+
+    def select_top_tickers_for_telegram(
+        self,
+        tickers: list[str],
+        max_tickers: int = 10,
+    ) -> str | None:
+        """Analyze tickers individually, rank successful results, and format for Telegram."""
+        if not tickers:
+            return None
+
+        if not self.project_endpoint or not self.agent_name:
+            LOGGER.debug("Azure AI Foundry not configured; skipping top-ticker selection")
+            return None
+
+        analyses = self._analyze_tickers_individually(tickers)
+        if not analyses:
+            return None
+
+        ranked = sorted(analyses, key=lambda item: (-item["score"], item["ticker"]))[:max_tickers]
+        lines = ["*AI Top Picks*", ""]
+        for index, item in enumerate(ranked, start=1):
+            lines.append(f"{index}. *{item['ticker']}* - {item['summary']}")
+        return "\n".join(lines)
+
+    def _analyze_tickers_individually(self, tickers: list[str]) -> list[dict[str, Any]]:
+        """Run one proven Azure agent analysis per ticker and score the results locally."""
+        analyses: list[dict[str, Any]] = []
+        original_endpoint = run_agent.PROJECT_ENDPOINT
+        original_agent_name = run_agent.AGENT_NAME
+        run_agent.PROJECT_ENDPOINT = self.project_endpoint
+        run_agent.AGENT_NAME = self.agent_name
+        try:
+            for ticker in tickers:
+                prompt = f"Analyze {ticker}"
+                try:
+                    result = run_agent.run_agent_prompt(prompt=prompt, stream=False)
+                except Exception as exc:
+                    LOGGER.warning("Azure per-ticker analysis failed for %s: %s", ticker, exc)
+                    continue
+
+                text = (result.output_text or "").strip()
+                if not text:
+                    continue
+
+                score = self._score_analysis_text(text)
+                summary = self._summarize_analysis_text(text)
+                analyses.append(
+                    {
+                        "ticker": ticker,
+                        "score": score,
+                        "summary": summary,
+                        "text": text,
+                    }
+                )
+        finally:
+            run_agent.PROJECT_ENDPOINT = original_endpoint
+            run_agent.AGENT_NAME = original_agent_name
+
+        return analyses
+
+    @staticmethod
+    def _score_analysis_text(text: str) -> float:
+        """Heuristic ranking score from agent output text."""
+        lowered = text.lower()
+        score = 0.0
+
+        confidence_match = re.search(r"confidence[^0-9]{0,20}(\d{1,3})", lowered)
+        if confidence_match:
+            try:
+                score += min(int(confidence_match.group(1)), 100)
+            except ValueError:
+                pass
+
+        if "bullish" in lowered:
+            score += 25
+        if "bearish" in lowered:
+            score -= 20
+        if "neutral" in lowered:
+            score += 5
+        if "uptrend" in lowered or "trend: up" in lowered or "trend (up" in lowered:
+            score += 15
+        if "downtrend" in lowered or "trend: down" in lowered:
+            score -= 10
+        if "overbought" in lowered:
+            score -= 5
+        if "oversold" in lowered:
+            score += 8
+        if "positive" in lowered and "sentiment" in lowered:
+            score += 8
+        if "negative" in lowered and "sentiment" in lowered:
+            score -= 6
+
+        return score
+
+    @staticmethod
+    def _summarize_analysis_text(text: str, max_len: int = 140) -> str:
+        """Compress agent output into one Telegram-friendly line."""
+        cleaned = " ".join(text.replace("\n", " ").split())
+        if len(cleaned) <= max_len:
+            return cleaned
+        snippet = cleaned[: max_len - 1].rsplit(" ", 1)[0].rstrip(" ,;:-")
+        return f"{snippet}…"
+
+    def _complete_with_payload(self, payload: dict[str, Any]) -> str | None:
+        """Send a JSON payload to the configured Azure agent and return text."""
+        return self._complete_with_message(json.dumps(payload), task_name=str(payload.get("task", "")))
+
+    def _complete_with_message(self, content: str, task_name: str = "") -> str | None:
+        """Send a plain message to the configured Azure agent and return text."""
+        client = AIProjectClient(
+            endpoint=self.project_endpoint,
+            credential=DefaultAzureCredential(),
+        )
+        agents_client: Any = client.agents
+        complete_fn: Callable[..., Any] | None = getattr(agents_client, "complete", None)
+        if complete_fn is None:
+            LOGGER.warning("Azure agents.complete API not available")
+            return None
+
+        response = complete_fn(
+            agent_id=self.agent_name,
+            messages=[{"role": "user", "content": content}],
+        )
+        text = self._extract_text(response)
+        if text:
+            return text
+        LOGGER.info(
+            "Azure agent returned no extractable text for task=%s; response_type=%s",
+            task_name,
+            type(response).__name__,
+        )
+        return None
+
+    @classmethod
+    def _extract_text(cls, value: Any) -> str | None:
+        """Best-effort extraction of text from Azure SDK response shapes."""
+        if value is None:
+            return None
+        if isinstance(value, str):
+            text = value.strip()
+            return text or None
+        if isinstance(value, bytes):
+            text = value.decode(errors="ignore").strip()
+            return text or None
+        if isinstance(value, Mapping):
+            for key in (
+                "content",
+                "text",
+                "value",
+                "message",
+                "output_text",
+                "response",
+                "result",
+                "data",
+            ):
+                text = cls._extract_text(value.get(key))
+                if text:
+                    return text
+            return None
+        if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+            parts = [part for item in value if (part := cls._extract_text(item))]
+            if parts:
+                return "\n".join(parts)
+            return None
+
+        for attr in ("content", "text", "value", "message", "output_text", "response", "result"):
+            if hasattr(value, attr):
+                text = cls._extract_text(getattr(value, attr))
+                if text:
+                    return text
+
+        as_dict = getattr(value, "as_dict", None)
+        if callable(as_dict):
+            try:
+                text = cls._extract_text(as_dict())
+                if text:
+                    return text
+            except Exception:
+                pass
+
+        model_dump = getattr(value, "model_dump", None)
+        if callable(model_dump):
+            try:
+                text = cls._extract_text(model_dump())
+                if text:
+                    return text
+            except Exception:
+                pass
+
+        return None
 
     @staticmethod
     def _fallback_summary(candidates: list[dict[str, Any]]) -> str:

@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
+    env:
+      PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
+      AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,13 +49,17 @@ jobs:
           path: data/
         continue-on-error: true
 
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
+
       - name: Run daily screen job
         env:
-          PROJECT_ENDPOINT: ${{ secrets.PROJECT_ENDPOINT }}
-          AGENT_NAME: ${{ secrets.AGENT_NAME }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_MESSAGE_THREAD_ID: "1421"
+          TELEGRAM_AI_TOP_PICKS_THREAD_ID: "1439"
           PYTHONUNBUFFERED: "1"
         run: |
           python -m stock_utils.jobs.daily_screen_job
@@ -83,6 +91,7 @@ jobs:
           path: data/output/
 
   deploy:
+    if: ${{ github.ref_name == 'main' }}
     needs: screen
     runs-on: ubuntu-latest
     environment:
