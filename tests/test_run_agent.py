@@ -47,6 +47,14 @@ class RunAgentTests(TestCase):
         self.assertTrue(run_agent.prompt_mentions_ticker('Analyze BADTICKERZZZZ', {'BADTICKERZZZZ'}))
         self.assertFalse(run_agent.prompt_mentions_ticker('Analyze NVDA', {'BADTICKERZZZZ'}))
 
+    def test_prompt_requires_tools_for_analysis_requests(self) -> None:
+        self.assertTrue(run_agent.prompt_requires_tools('Analyze TSLA'))
+        self.assertFalse(run_agent.prompt_requires_tools('Hello there'))
+
+    def test_resolve_tool_choice_requires_tools_for_analysis_requests(self) -> None:
+        self.assertEqual(run_agent.resolve_tool_choice('Analyze TSLA', 'auto'), 'required')
+        self.assertEqual(run_agent.resolve_tool_choice('Hello there', 'auto'), 'auto')
+
     def test_is_agent_not_found_error_matches_404_application_message(self) -> None:
         exc = RuntimeError(
             "Error code: 404 - {'error': {'code': 'not_found', 'message': \"Application 'stock-forecast-agent' not found\"}}"

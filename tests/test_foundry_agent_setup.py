@@ -141,6 +141,10 @@ class FoundryAgentSetupTests(unittest.TestCase):
 
         self.assertEqual(resolved, 'conn-stock-tools')
 
+    def test_foundry_agent_setup_source_uses_required_tool_choice(self) -> None:
+        source = MODULE_PATH.read_text()
+        self.assertIn('tool_choice="required"', source)
+
 
 if __name__ == '__main__':
     unittest.main()

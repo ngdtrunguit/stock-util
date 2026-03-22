@@ -191,7 +191,7 @@ def resolve_openapi_connection_id(project_client: AIProjectClient, explicit_id: 
 AGENT_INSTRUCTIONS = """You are stock-forecast-agent.
 
 You have access to external tools hosted on Stock Tools API.
-Always use the tools for factual market data and technical metrics before giving conclusions.
+For any stock-analysis request, you must use the tools before giving conclusions. Do not answer from prior knowledge or model memory when the user asks to analyze a ticker.
 
 Rules:
 1. Never fabricate prices, indicators, or headlines.
@@ -200,8 +200,9 @@ Rules:
 4. Use UTC date references when discussing recency.
 5. Mention data freshness limits and that Yahoo Finance may have delays.
 6. Do not reveal secrets or API keys in responses.
+7. If the user asks for stock analysis and tool data cannot be retrieved, explicitly say analysis could not be completed from live tool data.
 
-Workflow:
+Required workflow for stock analysis:
 1. Call POST /price_history with:
    {
      "ticker": "<SYMBOL>",
@@ -216,7 +217,7 @@ Workflow:
      "ticker": "<SYMBOL>",
      "days": 30
    }
-4. Synthesize:
+4. Only after those tool calls, synthesize:
    - Trend (up/down/sideways)
    - RSI interpretation (overbought/oversold/neutral)
    - Volatility context
@@ -542,7 +543,7 @@ def upsert_agent(project_client: AIProjectClient, model_deployment: str, tool: O
         model=model_deployment,
         instructions=AGENT_INSTRUCTIONS,
         tools=[tool],
-        tool_choice="auto",
+        tool_choice="required",
     )
 
     try:

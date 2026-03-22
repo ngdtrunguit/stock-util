@@ -61,6 +61,17 @@ class AgentDefinition:
     tool_choice: str = "auto"
 
 
+def prompt_requires_tools(prompt: str) -> bool:
+    normalized = prompt.strip().lower()
+    return normalized.startswith("analyze ") and any(char.isalpha() for char in normalized)
+
+
+def resolve_tool_choice(prompt: str, default_tool_choice: str) -> str:
+    if prompt_requires_tools(prompt):
+        return "required"
+    return default_tool_choice or "auto"
+
+
 def _allow_interactive_browser() -> bool:
     return os.getenv("AZURE_AI_ALLOW_INTERACTIVE_BROWSER", "").strip().lower() in {"1", "true", "yes", "on"}
 
@@ -339,7 +350,7 @@ def run_agent_prompt(prompt: str, stream: bool = False, retries: int = 2) -> Age
         create_kwargs["instructions"] = agent_def.instructions
     if agent_def.tools:
         create_kwargs["tools"] = _downgrade_openapi_spec_in_tools(agent_def.tools)  # type: ignore[assignment]
-        create_kwargs["tool_choice"] = agent_def.tool_choice
+        create_kwargs["tool_choice"] = resolve_tool_choice(prompt, agent_def.tool_choice)
 
     last_error: Exception | None = None
     for attempt in range(1, retries + 2):
@@ -400,6 +411,7 @@ def run_tests(
 
     print("Running end-to-end test cases...\n")
     results: list[dict[str, Any]] = []
+    failures: list[str] = []
 
     for prompt in cases:
         is_expected_invalid_ticker_case = prompt_mentions_ticker(prompt, invalid_tickers)
@@ -418,6 +430,14 @@ def run_tests(
             print(f"Tool calls: {result.tool_calls}")
             print(f"Order check (price_history -> technicals -> news_sentiment): {order_ok}")
             print(f"Output excerpt:\n{result.output_text[:500]}\n")
+
+            if not is_expected_invalid_ticker_case:
+                if not result.tool_calls:
+                    failures.append(f"Prompt '{prompt}' returned no tool calls.")
+                elif not order_ok:
+                    failures.append(
+                        f"Prompt '{prompt}' did not call tools in expected order: {result.tool_calls}"
+                    )
         except RuntimeError as exc:
             # For the invalid-ticker test case, a tool_user_error means the agent correctly
             # attempted to call the API and the API rejected the invalid ticker — acceptable.
@@ -438,6 +458,12 @@ def run_tests(
 
     print("JSON summary:")
     print(json.dumps(results, indent=2))
+
+    if failures:
+        print("\nTest failures:")
+        for failure in failures:
+            print(f"- {failure}")
+        raise SystemExit(1)
 
 
 def parse_args() -> argparse.Namespace:
