@@ -1,4 +1,4 @@
-name: Daily Stock Screen
+name: Daily Stock Screen VN
 
 on:
   schedule:
@@ -12,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-vn
   cancel-in-progress: false
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
 
     env:
       PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
-      AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME || 'stock-forecast-agent' }}
+      AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME_VN || 'stock-vn-forecast-agent' }}
 
     steps:
       - name: Checkout
@@ -53,19 +53,19 @@ jobs:
             --header 'Accept: application/vnd.github+json' \
             "/repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=100" \
             --paginate \
-            --jq '[.artifacts[] | select(.name == "stock-screen-db" and .expired == false) | .id] | first // empty')"
+            --jq '[.artifacts[] | select(.name == "stock-screen-vn-db" and .expired == false) | .id] | first // empty')"
 
           if [ -z "${artifact_id}" ]; then
-            echo "No prior stock-screen-db artifact found; starting with a fresh database."
+            echo "No prior stock-screen-vn-db artifact found; starting with a fresh database."
             exit 0
           fi
 
-          echo "Restoring stock-screen-db artifact ${artifact_id}"
+          echo "Restoring stock-screen-vn-db artifact ${artifact_id}"
           gh api \
             --header 'Accept: application/vnd.github+json' \
             "/repos/${GITHUB_REPOSITORY}/actions/artifacts/${artifact_id}/zip" \
-            > /tmp/stock-screen-db.zip
-          unzip -o /tmp/stock-screen-db.zip -d data
+            > /tmp/stock-screen-vn-db.zip
+          unzip -o /tmp/stock-screen-vn-db.zip -d data
 
       - name: Azure login
         uses: azure/login@v2
@@ -76,8 +76,8 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_MESSAGE_THREAD_ID: "1421"
-          TELEGRAM_AI_TOP_PICKS_THREAD_ID: "1439"
+          TELEGRAM_MESSAGE_THREAD_ID: ${{ vars.TELEGRAM_VN_MESSAGE_THREAD_ID || '1421' }}
+          TELEGRAM_AI_TOP_PICKS_THREAD_ID: ${{ vars.TELEGRAM_VN_AI_TOP_PICKS_THREAD_ID || '1439' }}
           PYTHONUNBUFFERED: "1"
         run: |
           python -m stock_utils.jobs.daily_screen_job
@@ -89,7 +89,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: stock-screen-db
+          name: stock-screen-vn-db
           path: data/stock_screen.db
           if-no-files-found: warn
           overwrite: true
@@ -98,7 +98,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: daily-screen-output
+          name: daily-screen-vn-output
           path: data/output/
           if-no-files-found: warn
 
