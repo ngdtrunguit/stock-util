@@ -7,6 +7,8 @@ import logging
 from collections.abc import Mapping, Sequence
 from typing import Any, Callable
 
+import run_agent
+
 try:
     from azure.ai.projects import AIProjectClient
     from azure.identity import DefaultAzureCredential
@@ -130,10 +132,19 @@ class TradingAnalysisAgent:
             "Do not include tables, JSON, code fences, or extra sections."
         )
         try:
-            return self._complete_with_message(prompt)
+            original_endpoint = run_agent.PROJECT_ENDPOINT
+            original_agent_name = run_agent.AGENT_NAME
+            run_agent.PROJECT_ENDPOINT = self.project_endpoint
+            run_agent.AGENT_NAME = self.agent_name
+            result = run_agent.run_agent_prompt(prompt=prompt, stream=False)
+            text = (result.output_text or "").strip()
+            return text or None
         except Exception as exc:
             LOGGER.warning("Azure top-ticker selection failed: %s", exc)
             return None
+        finally:
+            run_agent.PROJECT_ENDPOINT = original_endpoint
+            run_agent.AGENT_NAME = original_agent_name
 
     def _complete_with_payload(self, payload: dict[str, Any]) -> str | None:
         """Send a JSON payload to the configured Azure agent and return text."""
