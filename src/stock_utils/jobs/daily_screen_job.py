@@ -228,6 +228,16 @@ def _build_telegram_message(
     return "\n".join(lines)
 
 
+def _collect_combined_post_filter_tickers(
+    candidates_by_pass: dict[str, list[dict[str, Any]]],
+) -> list[str]:
+    """Collect a stable deduplicated ticker list across all screening passes."""
+    combined_candidates: list[dict[str, Any]] = []
+    for pass_cfg in _PASSES:
+        combined_candidates.extend(candidates_by_pass.get(pass_cfg["strategy"], []))
+    return extract_tickers(combined_candidates)
+
+
 def _write_output_files(
     candidates: list[dict[str, Any]],
     run_timestamp: str,
@@ -380,11 +390,11 @@ def _build_html_page(
 
 
 def main() -> None:
-    """Screen all sector stocks; write two merged output files (MA and golden-cross)."""
+    """Screen all sector stocks, persist per-pass outputs, and notify Telegram."""
     load_dotenv()
     settings = Settings.from_env()
 
-    LOGGER.info("Starting daily screen job (sector-driven, 2 passes)")
+    LOGGER.info("Starting daily screen job (sector-driven, 3 passes)")
 
     data_fetcher   = DataFetcher()
     run_timestamp  = datetime.now(timezone.utc).isoformat()
@@ -476,13 +486,13 @@ def main() -> None:
         total_rsi_ob, total_gc, total_ma, len(sectors),
     )
 
-    # ── 4. Write exactly two merged output files ───────────────────────────────
+    # ── 4. Write one merged output file per screening pass ────────────────────
     for pass_cfg in _PASSES:
         strategy = pass_cfg["strategy"]
         _write_output_files(
             candidates_by_pass[strategy],
             run_timestamp,
-            pass_cfg["filename_prefix"],   # "daily-candidates-ma" or "daily-candidates-golden-cross"
+            pass_cfg["filename_prefix"],
             strategy,
             pass_cfg["title"],
             pass_cfg["rule"],
@@ -499,15 +509,20 @@ def main() -> None:
             run_timestamp=run_timestamp,
         )
 
-    # ── 5. Optional AI summary on golden-cross candidates ─────────────────────
-    all_gc = candidates_by_pass["golden_cross_weekly"]
-    ai_summary: str | None = None
-    if all_gc and settings.project_endpoint and settings.agent_name:
-        LOGGER.info("Getting AI summary for %d golden-cross candidates", len(all_gc))
-        ai_agent = TradingAnalysisAgent(
+    ai_agent = (
+        TradingAnalysisAgent(
             project_endpoint=settings.project_endpoint,
             agent_name=settings.agent_name,
         )
+        if settings.project_endpoint and settings.agent_name
+        else None
+    )
+
+    # ── 5. Optional AI summary on golden-cross candidates ─────────────────────
+    all_gc = candidates_by_pass["golden_cross_weekly"]
+    ai_summary: str | None = None
+    if all_gc and ai_agent is not None:
+        LOGGER.info("Getting AI summary for %d golden-cross candidates", len(all_gc))
         ai_summary = ai_agent.summarize_screening_results(all_gc)
 
     msg = _build_telegram_message(sector_results, run_date, ai_summary)
@@ -519,15 +534,32 @@ def main() -> None:
         message_thread_id=settings.telegram_message_thread_id,
     )
 
+    combined_tickers = _collect_combined_post_filter_tickers(candidates_by_pass)
+    if combined_tickers and ai_agent is not None:
+        LOGGER.info(
+            "Getting AI top picks from %d combined post-filter tickers",
+            len(combined_tickers),
+        )
+        top_picks_message = ai_agent.select_top_tickers_for_telegram(
+            combined_tickers,
+            max_tickers=10,
+        )
+        if top_picks_message:
+            LOGGER.info("Sending Telegram top-picks notification")
+            send_markdown_message(
+                bot_token=settings.telegram_bot_token,
+                chat_id=settings.telegram_chat_id,
+                text=top_picks_message,
+                message_thread_id=settings.telegram_message_thread_id,
+            )
+        else:
+            LOGGER.info("Skipping Telegram top-picks notification; Azure response unavailable")
+
     # ── 5b. Send clean ticker lists to Azure AI Foundry agents ────────────────
     # This is a separate step from the Telegram notification above.
     # Only ticker symbols (no indicator data) are forwarded so that downstream
     # agents such as finrobot stock analyst can fetch and process their own data.
-    if settings.project_endpoint and settings.agent_name:
-        az_agent = TradingAnalysisAgent(
-            project_endpoint=settings.project_endpoint,
-            agent_name=settings.agent_name,
-        )
+    if ai_agent is not None:
         for pass_cfg in _PASSES:
             strategy = pass_cfg["strategy"]
             tickers = extract_tickers(candidates_by_pass[strategy])
@@ -537,7 +569,7 @@ def main() -> None:
                     len(tickers),
                     strategy,
                 )
-                az_agent.send_tickers_for_analysis(tickers, strategy=strategy)
+                ai_agent.send_tickers_for_analysis(tickers, strategy=strategy)
 
     # ── 6. Write HTML dashboard for GitHub Pages ──────────────────────────────
     html_index = OUTPUT_DIR / "index.html"
