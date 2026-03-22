@@ -1,0 +1,194 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 23,
+  "sector_name": "V\u1eadn t\u1ea3i - kho b\u00e3i",
+  "stock_count": 62,
+  "stocks": [
+    {
+      "symbol": "ARM"
+    },
+    {
+      "symbol": "ASG"
+    },
+    {
+      "symbol": "AST"
+    },
+    {
+      "symbol": "CAG"
+    },
+    {
+      "symbol": "CCR"
+    },
+    {
+      "symbol": "CDN"
+    },
+    {
+      "symbol": "CIA"
+    },
+    {
+      "symbol": "CLL"
+    },
+    {
+      "symbol": "DL1"
+    },
+    {
+      "symbol": "DS3"
+    },
+    {
+      "symbol": "DVP"
+    },
+    {
+      "symbol": "DXP"
+    },
+    {
+      "symbol": "GIC"
+    },
+    {
+      "symbol": "GMD"
+    },
+    {
+      "symbol": "GSP"
+    },
+    {
+      "symbol": "HAH"
+    },
+    {
+      "symbol": "HCT"
+    },
+    {
+      "symbol": "HMH"
+    },
+    {
+      "symbol": "HTV"
+    },
+    {
+      "symbol": "HVN"
+    },
+    {
+      "symbol": "ILB"
+    },
+    {
+      "symbol": "MAC"
+    },
+    {
+      "symbol": "MAS"
+    },
+    {
+      "symbol": "MHC"
+    },
+    {
+      "symbol": "NAP"
+    },
+    {
+      "symbol": "NCT"
+    },
+    {
+      "symbol": "PDN"
+    },
+    {
+      "symbol": "PDV"
+    },
+    {
+      "symbol": "PGT"
+    },
+    {
+      "symbol": "PJC"
+    },
+    {
+      "symbol": "PJT"
+    },
+    {
+      "symbol": "PRC"
+    },
+    {
+      "symbol": "PTS"
+    },
+    {
+      "symbol": "PVP"
+    },
+    {
+      "symbol": "PVT"
+    },
+    {
+      "symbol": "QNP"
+    },
+    {
+      "symbol": "SCS"
+    },
+    {
+      "symbol": "SFI"
+    },
+    {
+      "symbol": "SGN"
+    },
+    {
+      "symbol": "SKG"
+    },
+    {
+      "symbol": "STG"
+    },
+    {
+      "symbol": "TCL"
+    },
+    {
+      "symbol": "TCO"
+    },
+    {
+      "symbol": "TCT"
+    },
+    {
+      "symbol": "TJC"
+    },
+    {
+      "symbol": "TMS"
+    },
+    {
+      "symbol": "TOT"
+    },
+    {
+      "symbol": "VGP"
+    },
+    {
+      "symbol": "VIP"
+    },
+    {
+      "symbol": "VJC"
+    },
+    {
+      "symbol": "VMS"
+    },
+    {
+      "symbol": "VNF"
+    },
+    {
+      "symbol": "VNL"
+    },
+    {
+      "symbol": "VNS"
+    },
+    {
+      "symbol": "VNT"
+    },
+    {
+      "symbol": "VOS"
+    },
+    {
+      "symbol": "VSA"
+    },
+    {
+      "symbol": "VSC"
+    },
+    {
+      "symbol": "VSM"
+    },
+    {
+      "symbol": "VTO"
+    },
+    {
+      "symbol": "VTP"
+    },
+    {
+      "symbol": "WCS"
+    }
+  ]
+}

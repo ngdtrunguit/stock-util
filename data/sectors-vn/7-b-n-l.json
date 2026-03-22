@@ -1,0 +1,53 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 7,
+  "sector_name": "B\u00e1n l\u1ebb",
+  "stock_count": 15,
+  "stocks": [
+    {
+      "symbol": "BTT"
+    },
+    {
+      "symbol": "CCI"
+    },
+    {
+      "symbol": "CMV"
+    },
+    {
+      "symbol": "COM"
+    },
+    {
+      "symbol": "CTF"
+    },
+    {
+      "symbol": "FRT"
+    },
+    {
+      "symbol": "GMA"
+    },
+    {
+      "symbol": "HAX"
+    },
+    {
+      "symbol": "HTC"
+    },
+    {
+      "symbol": "MWG"
+    },
+    {
+      "symbol": "PNC"
+    },
+    {
+      "symbol": "PNJ"
+    },
+    {
+      "symbol": "SFC"
+    },
+    {
+      "symbol": "SVC"
+    },
+    {
+      "symbol": "TMC"
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 6,
+  "sector_name": "C\u00f4ng ngh\u1ec7 v\u00e0 th\u00f4ng tin",
+  "stock_count": 29,
+  "stocks": [
+    {
+      "symbol": "ABR"
+    },
+    {
+      "symbol": "ADC"
+    },
+    {
+      "symbol": "BED"
+    },
+    {
+      "symbol": "CKV"
+    },
+    {
+      "symbol": "CMG"
+    },
+    {
+      "symbol": "CTR"
+    },
+    {
+      "symbol": "DAD"
+    },
+    {
+      "symbol": "DAE"
+    },
+    {
+      "symbol": "DST"
+    },
+    {
+      "symbol": "EBS"
+    },
+    {
+      "symbol": "ECI"
+    },
+    {
+      "symbol": "EID"
+    },
+    {
+      "symbol": "ELC"
+    },
+    {
+      "symbol": "FPT"
+    },
+    {
+      "symbol": "GLT"
+    },
+    {
+      "symbol": "HEV"
+    },
+    {
+      "symbol": "ICT"
+    },
+    {
+      "symbol": "ITD"
+    },
+    {
+      "symbol": "KST"
+    },
+    {
+      "symbol": "LBE"
+    },
+    {
+      "symbol": "ONE"
+    },
+    {
+      "symbol": "PIA"
+    },
+    {
+      "symbol": "QST"
+    },
+    {
+      "symbol": "SED"
+    },
+    {
+      "symbol": "SGD"
+    },
+    {
+      "symbol": "SGT"
+    },
+    {
+      "symbol": "SMN"
+    },
+    {
+      "symbol": "STC"
+    },
+    {
+      "symbol": "VTC"
+    }
+  ]
+}

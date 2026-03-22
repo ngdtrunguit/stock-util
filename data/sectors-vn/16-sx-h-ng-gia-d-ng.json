@@ -1,0 +1,71 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 16,
+  "sector_name": "SX H\u00e0ng gia d\u1ee5ng",
+  "stock_count": 21,
+  "stocks": [
+    {
+      "symbol": "AAT"
+    },
+    {
+      "symbol": "ADS"
+    },
+    {
+      "symbol": "EVE"
+    },
+    {
+      "symbol": "GDT"
+    },
+    {
+      "symbol": "GIL"
+    },
+    {
+      "symbol": "HTG"
+    },
+    {
+      "symbol": "KMR"
+    },
+    {
+      "symbol": "MSH"
+    },
+    {
+      "symbol": "NAV"
+    },
+    {
+      "symbol": "RYG"
+    },
+    {
+      "symbol": "SAV"
+    },
+    {
+      "symbol": "SHA"
+    },
+    {
+      "symbol": "STK"
+    },
+    {
+      "symbol": "SVD"
+    },
+    {
+      "symbol": "TCM"
+    },
+    {
+      "symbol": "TDT"
+    },
+    {
+      "symbol": "TET"
+    },
+    {
+      "symbol": "TNG"
+    },
+    {
+      "symbol": "TTF"
+    },
+    {
+      "symbol": "TVT"
+    },
+    {
+      "symbol": "X20"
+    }
+  ]
+}

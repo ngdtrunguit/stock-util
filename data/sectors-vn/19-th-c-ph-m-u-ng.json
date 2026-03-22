@@ -1,0 +1,98 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 19,
+  "sector_name": "Th\u1ef1c ph\u1ea9m - \u0110\u1ed3 u\u1ed1ng",
+  "stock_count": 30,
+  "stocks": [
+    {
+      "symbol": "AFX"
+    },
+    {
+      "symbol": "ANT"
+    },
+    {
+      "symbol": "BAF"
+    },
+    {
+      "symbol": "BCF"
+    },
+    {
+      "symbol": "BHN"
+    },
+    {
+      "symbol": "BNA"
+    },
+    {
+      "symbol": "DBC"
+    },
+    {
+      "symbol": "HAD"
+    },
+    {
+      "symbol": "HAT"
+    },
+    {
+      "symbol": "HHC"
+    },
+    {
+      "symbol": "KDC"
+    },
+    {
+      "symbol": "KTS"
+    },
+    {
+      "symbol": "LAF"
+    },
+    {
+      "symbol": "LSS"
+    },
+    {
+      "symbol": "MCH"
+    },
+    {
+      "symbol": "MCM"
+    },
+    {
+      "symbol": "MSN"
+    },
+    {
+      "symbol": "NAF"
+    },
+    {
+      "symbol": "PAN"
+    },
+    {
+      "symbol": "SAB"
+    },
+    {
+      "symbol": "SAF"
+    },
+    {
+      "symbol": "SBT"
+    },
+    {
+      "symbol": "SGC"
+    },
+    {
+      "symbol": "SLS"
+    },
+    {
+      "symbol": "SMB"
+    },
+    {
+      "symbol": "THB"
+    },
+    {
+      "symbol": "VCF"
+    },
+    {
+      "symbol": "VDL"
+    },
+    {
+      "symbol": "VHE"
+    },
+    {
+      "symbol": "VNM"
+    }
+  ]
+}

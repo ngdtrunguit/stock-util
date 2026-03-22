@@ -1,0 +1,50 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 20,
+  "sector_name": "Ch\u1ebf bi\u1ebfn Th\u1ee7y s\u1ea3n",
+  "stock_count": 14,
+  "stocks": [
+    {
+      "symbol": "AAM"
+    },
+    {
+      "symbol": "ABT"
+    },
+    {
+      "symbol": "ACL"
+    },
+    {
+      "symbol": "ANV"
+    },
+    {
+      "symbol": "ASM"
+    },
+    {
+      "symbol": "CAN"
+    },
+    {
+      "symbol": "CMX"
+    },
+    {
+      "symbol": "DAT"
+    },
+    {
+      "symbol": "FMC"
+    },
+    {
+      "symbol": "IDI"
+    },
+    {
+      "symbol": "KHS"
+    },
+    {
+      "symbol": "SJ1"
+    },
+    {
+      "symbol": "TFC"
+    },
+    {
+      "symbol": "VHC"
+    }
+  ]
+}

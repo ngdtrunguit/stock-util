@@ -1,0 +1,86 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 26,
+  "sector_name": "SX Ph\u1ee5 tr\u1ee3",
+  "stock_count": 26,
+  "stocks": [
+    {
+      "symbol": "ACG"
+    },
+    {
+      "symbol": "AMV"
+    },
+    {
+      "symbol": "BKG"
+    },
+    {
+      "symbol": "BSR"
+    },
+    {
+      "symbol": "CAP"
+    },
+    {
+      "symbol": "CET"
+    },
+    {
+      "symbol": "DHC"
+    },
+    {
+      "symbol": "DLG"
+    },
+    {
+      "symbol": "GTA"
+    },
+    {
+      "symbol": "HAP"
+    },
+    {
+      "symbol": "HHP"
+    },
+    {
+      "symbol": "INN"
+    },
+    {
+      "symbol": "ITQ"
+    },
+    {
+      "symbol": "MCP"
+    },
+    {
+      "symbol": "NHT"
+    },
+    {
+      "symbol": "PLC"
+    },
+    {
+      "symbol": "PMS"
+    },
+    {
+      "symbol": "PTB"
+    },
+    {
+      "symbol": "SBV"
+    },
+    {
+      "symbol": "SHI"
+    },
+    {
+      "symbol": "SMT"
+    },
+    {
+      "symbol": "SSM"
+    },
+    {
+      "symbol": "SVT"
+    },
+    {
+      "symbol": "TLD"
+    },
+    {
+      "symbol": "TLG"
+    },
+    {
+      "symbol": "TMT"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 12,
+  "sector_name": "N\u00f4ng - L\u00e2m - Ng\u01b0",
+  "stock_count": 9,
+  "stocks": [
+    {
+      "symbol": "CTP"
+    },
+    {
+      "symbol": "HAG"
+    },
+    {
+      "symbol": "HKT"
+    },
+    {
+      "symbol": "HPA"
+    },
+    {
+      "symbol": "HSL"
+    },
+    {
+      "symbol": "NSC"
+    },
+    {
+      "symbol": "SSC"
+    },
+    {
+      "symbol": "SVN"
+    },
+    {
+      "symbol": "VIF"
+    }
+  ]
+}

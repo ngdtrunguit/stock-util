@@ -1,0 +1,77 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 11,
+  "sector_name": "Ng\u00e2n h\u00e0ng",
+  "stock_count": 23,
+  "stocks": [
+    {
+      "symbol": "ACB"
+    },
+    {
+      "symbol": "BAB"
+    },
+    {
+      "symbol": "BID"
+    },
+    {
+      "symbol": "CTG"
+    },
+    {
+      "symbol": "EIB"
+    },
+    {
+      "symbol": "EVF"
+    },
+    {
+      "symbol": "HDB"
+    },
+    {
+      "symbol": "KLB"
+    },
+    {
+      "symbol": "LPB"
+    },
+    {
+      "symbol": "MBB"
+    },
+    {
+      "symbol": "MSB"
+    },
+    {
+      "symbol": "NAB"
+    },
+    {
+      "symbol": "NVB"
+    },
+    {
+      "symbol": "OCB"
+    },
+    {
+      "symbol": "SHB"
+    },
+    {
+      "symbol": "SSB"
+    },
+    {
+      "symbol": "STB"
+    },
+    {
+      "symbol": "TCB"
+    },
+    {
+      "symbol": "TPB"
+    },
+    {
+      "symbol": "VAB"
+    },
+    {
+      "symbol": "VCB"
+    },
+    {
+      "symbol": "VIB"
+    },
+    {
+      "symbol": "VPB"
+    }
+  ]
+}

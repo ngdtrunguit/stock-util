@@ -1,0 +1,133 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "market": "VN",
+  "source": "vnstock",
+  "sector_count": 25,
+  "sectors": [
+    {
+      "id": 1,
+      "name": "B\u00e1n bu\u00f4n",
+      "stock_count": 44
+    },
+    {
+      "id": 7,
+      "name": "B\u00e1n l\u1ebb",
+      "stock_count": 15
+    },
+    {
+      "id": 2,
+      "name": "B\u1ea3o hi\u1ec3m",
+      "stock_count": 9
+    },
+    {
+      "id": 3,
+      "name": "B\u1ea5t \u0111\u1ed9ng s\u1ea3n",
+      "stock_count": 84
+    },
+    {
+      "id": 8,
+      "name": "Ch\u0103m s\u00f3c s\u1ee9c kh\u1ecfe",
+      "stock_count": 21
+    },
+    {
+      "id": 20,
+      "name": "Ch\u1ebf bi\u1ebfn Th\u1ee7y s\u1ea3n",
+      "stock_count": 14
+    },
+    {
+      "id": 5,
+      "name": "Ch\u1ee9ng kho\u00e1n",
+      "stock_count": 31
+    },
+    {
+      "id": 6,
+      "name": "C\u00f4ng ngh\u1ec7 v\u00e0 th\u00f4ng tin",
+      "stock_count": 29
+    },
+    {
+      "id": 25,
+      "name": "D\u1ecbch v\u1ee5 l\u01b0u tr\u00fa, \u0103n u\u1ed1ng, gi\u1ea3i tr\u00ed",
+      "stock_count": 8
+    },
+    {
+      "id": 28,
+      "name": "D\u1ecbch v\u1ee5 t\u01b0 v\u1ea5n, h\u1ed7 tr\u1ee3",
+      "stock_count": 7
+    },
+    {
+      "id": 10,
+      "name": "Khai kho\u00e1ng",
+      "stock_count": 28
+    },
+    {
+      "id": 11,
+      "name": "Ng\u00e2n h\u00e0ng",
+      "stock_count": 23
+    },
+    {
+      "id": 12,
+      "name": "N\u00f4ng - L\u00e2m - Ng\u01b0",
+      "stock_count": 9
+    },
+    {
+      "id": 16,
+      "name": "SX H\u00e0ng gia d\u1ee5ng",
+      "stock_count": 21
+    },
+    {
+      "id": 18,
+      "name": "SX Nh\u1ef1a - H\u00f3a ch\u1ea5t",
+      "stock_count": 53
+    },
+    {
+      "id": 26,
+      "name": "SX Ph\u1ee5 tr\u1ee3",
+      "stock_count": 26
+    },
+    {
+      "id": 15,
+      "name": "SX Thi\u1ebft b\u1ecb, m\u00e1y m\u00f3c",
+      "stock_count": 8
+    },
+    {
+      "id": 17,
+      "name": "S\u1ea3n ph\u1ea9m cao su",
+      "stock_count": 4
+    },
+    {
+      "id": 27,
+      "name": "Thi\u1ebft b\u1ecb \u0111i\u1ec7n",
+      "stock_count": 15
+    },
+    {
+      "id": 19,
+      "name": "Th\u1ef1c ph\u1ea9m - \u0110\u1ed3 u\u1ed1ng",
+      "stock_count": 30
+    },
+    {
+      "id": 22,
+      "name": "Ti\u1ec7n \u00edch",
+      "stock_count": 47
+    },
+    {
+      "id": 29,
+      "name": "T\u00e0i ch\u00ednh kh\u00e1c",
+      "stock_count": 3
+    },
+    {
+      "id": 23,
+      "name": "V\u1eadn t\u1ea3i - kho b\u00e3i",
+      "stock_count": 62
+    },
+    {
+      "id": 21,
+      "name": "V\u1eadt li\u1ec7u x\u00e2y d\u1ef1ng",
+      "stock_count": 38
+    },
+    {
+      "id": 24,
+      "name": "X\u00e2y d\u1ef1ng",
+      "stock_count": 69
+    }
+  ]
+}

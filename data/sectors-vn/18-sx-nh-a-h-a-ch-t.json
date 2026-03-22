@@ -1,0 +1,167 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 18,
+  "sector_name": "SX Nh\u1ef1a - H\u00f3a ch\u1ea5t",
+  "stock_count": 53,
+  "stocks": [
+    {
+      "symbol": "AAA"
+    },
+    {
+      "symbol": "ABS"
+    },
+    {
+      "symbol": "ADP"
+    },
+    {
+      "symbol": "ALT"
+    },
+    {
+      "symbol": "APH"
+    },
+    {
+      "symbol": "BBS"
+    },
+    {
+      "symbol": "BFC"
+    },
+    {
+      "symbol": "BMP"
+    },
+    {
+      "symbol": "BPC"
+    },
+    {
+      "symbol": "BXH"
+    },
+    {
+      "symbol": "CPC"
+    },
+    {
+      "symbol": "CSV"
+    },
+    {
+      "symbol": "DCM"
+    },
+    {
+      "symbol": "DGC"
+    },
+    {
+      "symbol": "DNP"
+    },
+    {
+      "symbol": "DPM"
+    },
+    {
+      "symbol": "DPR"
+    },
+    {
+      "symbol": "DTT"
+    },
+    {
+      "symbol": "GVR"
+    },
+    {
+      "symbol": "HCD"
+    },
+    {
+      "symbol": "HDA"
+    },
+    {
+      "symbol": "HII"
+    },
+    {
+      "symbol": "HRC"
+    },
+    {
+      "symbol": "HVT"
+    },
+    {
+      "symbol": "LAS"
+    },
+    {
+      "symbol": "LIX"
+    },
+    {
+      "symbol": "NET"
+    },
+    {
+      "symbol": "NFC"
+    },
+    {
+      "symbol": "NTP"
+    },
+    {
+      "symbol": "PBP"
+    },
+    {
+      "symbol": "PCE"
+    },
+    {
+      "symbol": "PCH"
+    },
+    {
+      "symbol": "PGN"
+    },
+    {
+      "symbol": "PHR"
+    },
+    {
+      "symbol": "PLP"
+    },
+    {
+      "symbol": "PMB"
+    },
+    {
+      "symbol": "PMP"
+    },
+    {
+      "symbol": "PSW"
+    },
+    {
+      "symbol": "SDG"
+    },
+    {
+      "symbol": "SDN"
+    },
+    {
+      "symbol": "SFG"
+    },
+    {
+      "symbol": "SFN"
+    },
+    {
+      "symbol": "SPC"
+    },
+    {
+      "symbol": "STP"
+    },
+    {
+      "symbol": "TDP"
+    },
+    {
+      "symbol": "TNC"
+    },
+    {
+      "symbol": "TPC"
+    },
+    {
+      "symbol": "TPP"
+    },
+    {
+      "symbol": "TRC"
+    },
+    {
+      "symbol": "VAF"
+    },
+    {
+      "symbol": "VBC"
+    },
+    {
+      "symbol": "VPS"
+    },
+    {
+      "symbol": "VTZ"
+    }
+  ]
+}

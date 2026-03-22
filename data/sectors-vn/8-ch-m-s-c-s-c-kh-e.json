@@ -1,0 +1,71 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 8,
+  "sector_name": "Ch\u0103m s\u00f3c s\u1ee9c kh\u1ecfe",
+  "stock_count": 21,
+  "stocks": [
+    {
+      "symbol": "DBD"
+    },
+    {
+      "symbol": "DBT"
+    },
+    {
+      "symbol": "DCL"
+    },
+    {
+      "symbol": "DHG"
+    },
+    {
+      "symbol": "DHT"
+    },
+    {
+      "symbol": "DMC"
+    },
+    {
+      "symbol": "DP3"
+    },
+    {
+      "symbol": "DTG"
+    },
+    {
+      "symbol": "DVM"
+    },
+    {
+      "symbol": "FIT"
+    },
+    {
+      "symbol": "IMP"
+    },
+    {
+      "symbol": "LDP"
+    },
+    {
+      "symbol": "MED"
+    },
+    {
+      "symbol": "MKV"
+    },
+    {
+      "symbol": "OPC"
+    },
+    {
+      "symbol": "PMC"
+    },
+    {
+      "symbol": "PPP"
+    },
+    {
+      "symbol": "SPM"
+    },
+    {
+      "symbol": "TNH"
+    },
+    {
+      "symbol": "TRA"
+    },
+    {
+      "symbol": "VDP"
+    }
+  ]
+}

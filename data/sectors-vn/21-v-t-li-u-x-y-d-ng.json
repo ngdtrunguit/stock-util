@@ -1,0 +1,122 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 21,
+  "sector_name": "V\u1eadt li\u1ec7u x\u00e2y d\u1ef1ng",
+  "stock_count": 38,
+  "stocks": [
+    {
+      "symbol": "ACC"
+    },
+    {
+      "symbol": "BCC"
+    },
+    {
+      "symbol": "BTS"
+    },
+    {
+      "symbol": "CLH"
+    },
+    {
+      "symbol": "CRC"
+    },
+    {
+      "symbol": "CVT"
+    },
+    {
+      "symbol": "DTL"
+    },
+    {
+      "symbol": "DXV"
+    },
+    {
+      "symbol": "FCM"
+    },
+    {
+      "symbol": "GKM"
+    },
+    {
+      "symbol": "GMH"
+    },
+    {
+      "symbol": "GMX"
+    },
+    {
+      "symbol": "HCC"
+    },
+    {
+      "symbol": "HOM"
+    },
+    {
+      "symbol": "HPG"
+    },
+    {
+      "symbol": "HSG"
+    },
+    {
+      "symbol": "HT1"
+    },
+    {
+      "symbol": "KKC"
+    },
+    {
+      "symbol": "LBM"
+    },
+    {
+      "symbol": "MCC"
+    },
+    {
+      "symbol": "NHC"
+    },
+    {
+      "symbol": "NKG"
+    },
+    {
+      "symbol": "NSH"
+    },
+    {
+      "symbol": "PDB"
+    },
+    {
+      "symbol": "TCR"
+    },
+    {
+      "symbol": "TEG"
+    },
+    {
+      "symbol": "THG"
+    },
+    {
+      "symbol": "TKU"
+    },
+    {
+      "symbol": "TMX"
+    },
+    {
+      "symbol": "TTC"
+    },
+    {
+      "symbol": "TXM"
+    },
+    {
+      "symbol": "VCA"
+    },
+    {
+      "symbol": "VCS"
+    },
+    {
+      "symbol": "VGC"
+    },
+    {
+      "symbol": "VGS"
+    },
+    {
+      "symbol": "VHL"
+    },
+    {
+      "symbol": "VIT"
+    },
+    {
+      "symbol": "YBM"
+    }
+  ]
+}

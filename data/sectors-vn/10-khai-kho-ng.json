@@ -1,0 +1,92 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 10,
+  "sector_name": "Khai kho\u00e1ng",
+  "stock_count": 28,
+  "stocks": [
+    {
+      "symbol": "AMC"
+    },
+    {
+      "symbol": "BKC"
+    },
+    {
+      "symbol": "BMC"
+    },
+    {
+      "symbol": "C32"
+    },
+    {
+      "symbol": "CLM"
+    },
+    {
+      "symbol": "CST"
+    },
+    {
+      "symbol": "DHA"
+    },
+    {
+      "symbol": "DHM"
+    },
+    {
+      "symbol": "HGM"
+    },
+    {
+      "symbol": "HLC"
+    },
+    {
+      "symbol": "HMR"
+    },
+    {
+      "symbol": "KSB"
+    },
+    {
+      "symbol": "KSV"
+    },
+    {
+      "symbol": "MDC"
+    },
+    {
+      "symbol": "MDG"
+    },
+    {
+      "symbol": "MIC"
+    },
+    {
+      "symbol": "MVB"
+    },
+    {
+      "symbol": "NBC"
+    },
+    {
+      "symbol": "NNC"
+    },
+    {
+      "symbol": "PVB"
+    },
+    {
+      "symbol": "PVC"
+    },
+    {
+      "symbol": "PVD"
+    },
+    {
+      "symbol": "PVS"
+    },
+    {
+      "symbol": "TD6"
+    },
+    {
+      "symbol": "THT"
+    },
+    {
+      "symbol": "TMB"
+    },
+    {
+      "symbol": "TNT"
+    },
+    {
+      "symbol": "TVD"
+    }
+  ]
+}

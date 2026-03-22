@@ -76,8 +76,8 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_MESSAGE_THREAD_ID: ${{ vars.TELEGRAM_VN_MESSAGE_THREAD_ID || '1421' }}
-          TELEGRAM_AI_TOP_PICKS_THREAD_ID: ${{ vars.TELEGRAM_VN_AI_TOP_PICKS_THREAD_ID || '1439' }}
+          TELEGRAM_MESSAGE_THREAD_ID: ${{ vars.TELEGRAM_VN_MESSAGE_THREAD_ID || '1454' }}
+          TELEGRAM_AI_TOP_PICKS_THREAD_ID: ${{ vars.TELEGRAM_VN_AI_TOP_PICKS_THREAD_ID || '1455' }}
           PYTHONUNBUFFERED: "1"
         run: |
           python -m stock_utils.jobs.daily_screen_job

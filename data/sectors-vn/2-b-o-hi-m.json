@@ -1,0 +1,35 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 2,
+  "sector_name": "B\u1ea3o hi\u1ec3m",
+  "stock_count": 9,
+  "stocks": [
+    {
+      "symbol": "BIC"
+    },
+    {
+      "symbol": "BMI"
+    },
+    {
+      "symbol": "BVH"
+    },
+    {
+      "symbol": "MIG"
+    },
+    {
+      "symbol": "PGI"
+    },
+    {
+      "symbol": "PRE"
+    },
+    {
+      "symbol": "PTI"
+    },
+    {
+      "symbol": "PVI"
+    },
+    {
+      "symbol": "VNR"
+    }
+  ]
+}

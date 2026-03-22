@@ -1,0 +1,149 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 22,
+  "sector_name": "Ti\u1ec7n \u00edch",
+  "stock_count": 47,
+  "stocks": [
+    {
+      "symbol": "ASP"
+    },
+    {
+      "symbol": "BTP"
+    },
+    {
+      "symbol": "BTW"
+    },
+    {
+      "symbol": "BWE"
+    },
+    {
+      "symbol": "CHP"
+    },
+    {
+      "symbol": "CLW"
+    },
+    {
+      "symbol": "CNG"
+    },
+    {
+      "symbol": "DDG"
+    },
+    {
+      "symbol": "DNC"
+    },
+    {
+      "symbol": "DRL"
+    },
+    {
+      "symbol": "DTK"
+    },
+    {
+      "symbol": "GAS"
+    },
+    {
+      "symbol": "GDW"
+    },
+    {
+      "symbol": "GEG"
+    },
+    {
+      "symbol": "GHC"
+    },
+    {
+      "symbol": "HID"
+    },
+    {
+      "symbol": "HJS"
+    },
+    {
+      "symbol": "HNA"
+    },
+    {
+      "symbol": "IDC"
+    },
+    {
+      "symbol": "KHP"
+    },
+    {
+      "symbol": "NBP"
+    },
+    {
+      "symbol": "NBW"
+    },
+    {
+      "symbol": "NT2"
+    },
+    {
+      "symbol": "NTH"
+    },
+    {
+      "symbol": "PGC"
+    },
+    {
+      "symbol": "PGD"
+    },
+    {
+      "symbol": "PGS"
+    },
+    {
+      "symbol": "PGV"
+    },
+    {
+      "symbol": "PIC"
+    },
+    {
+      "symbol": "POW"
+    },
+    {
+      "symbol": "PPC"
+    },
+    {
+      "symbol": "PVG"
+    },
+    {
+      "symbol": "S4A"
+    },
+    {
+      "symbol": "SBA"
+    },
+    {
+      "symbol": "SEB"
+    },
+    {
+      "symbol": "SHP"
+    },
+    {
+      "symbol": "SIP"
+    },
+    {
+      "symbol": "SJD"
+    },
+    {
+      "symbol": "TBC"
+    },
+    {
+      "symbol": "TDM"
+    },
+    {
+      "symbol": "TDW"
+    },
+    {
+      "symbol": "TMP"
+    },
+    {
+      "symbol": "TTA"
+    },
+    {
+      "symbol": "TTE"
+    },
+    {
+      "symbol": "UIC"
+    },
+    {
+      "symbol": "VPD"
+    },
+    {
+      "symbol": "VSH"
+    }
+  ]
+}

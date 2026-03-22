@@ -1,0 +1,101 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 5,
+  "sector_name": "Ch\u1ee9ng kho\u00e1n",
+  "stock_count": 31,
+  "stocks": [
+    {
+      "symbol": "AGR"
+    },
+    {
+      "symbol": "APG"
+    },
+    {
+      "symbol": "APS"
+    },
+    {
+      "symbol": "BSI"
+    },
+    {
+      "symbol": "BVS"
+    },
+    {
+      "symbol": "CTS"
+    },
+    {
+      "symbol": "DSC"
+    },
+    {
+      "symbol": "DSE"
+    },
+    {
+      "symbol": "EVS"
+    },
+    {
+      "symbol": "FTS"
+    },
+    {
+      "symbol": "HBS"
+    },
+    {
+      "symbol": "HCM"
+    },
+    {
+      "symbol": "IVS"
+    },
+    {
+      "symbol": "MBS"
+    },
+    {
+      "symbol": "ORS"
+    },
+    {
+      "symbol": "PSI"
+    },
+    {
+      "symbol": "SHS"
+    },
+    {
+      "symbol": "SSI"
+    },
+    {
+      "symbol": "TCI"
+    },
+    {
+      "symbol": "TCX"
+    },
+    {
+      "symbol": "TVB"
+    },
+    {
+      "symbol": "TVS"
+    },
+    {
+      "symbol": "VCI"
+    },
+    {
+      "symbol": "VCK"
+    },
+    {
+      "symbol": "VDS"
+    },
+    {
+      "symbol": "VFS"
+    },
+    {
+      "symbol": "VIG"
+    },
+    {
+      "symbol": "VIX"
+    },
+    {
+      "symbol": "VND"
+    },
+    {
+      "symbol": "VPX"
+    },
+    {
+      "symbol": "WSS"
+    }
+  ]
+}

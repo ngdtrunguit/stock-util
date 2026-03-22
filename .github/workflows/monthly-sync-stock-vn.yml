@@ -1,0 +1,72 @@
+name: Monthly Sync Stock VN
+
+on:
+  schedule:
+    # 1st of every month at 09:00 UTC
+    - cron: "0 9 1 * *"
+  workflow_dispatch:
+
+jobs:
+  monthly_sync:
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
+      AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME_VN || 'stock-vn-forecast-agent' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Run monthly sector sync (VN)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_MESSAGE_THREAD_ID: ${{ vars.TELEGRAM_VN_MESSAGE_THREAD_ID || '1454' }}
+          VNSTOCK_API_KEY: ${{ secrets.VNSTOCK_API_KEY }}
+        run: |
+          python -m stock_utils.jobs.monthly_sector_vn_job
+
+  weekly_screen:
+    needs: monthly_sync
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_ENDPOINT: ${{ vars.AZURE_AI_PROJECT_ENDPOINT || 'https://stock-helper-resource.services.ai.azure.com/api/projects/stock-helper' }}
+      AGENT_NAME: ${{ vars.AZURE_AI_AGENT_NAME_VN || 'stock-vn-forecast-agent' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Run weekly screen (VN)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_MESSAGE_THREAD_ID: ${{ vars.TELEGRAM_VN_MESSAGE_THREAD_ID || '1454' }}
+          VNSTOCK_API_KEY: ${{ secrets.VNSTOCK_API_KEY }}
+          VN_WEEKLY_MAX_HISTORY_CALLS: ${{ vars.VN_WEEKLY_MAX_HISTORY_CALLS || '20' }}
+        run: |
+          python -m stock_utils.jobs.weekly_screen_vn_job
