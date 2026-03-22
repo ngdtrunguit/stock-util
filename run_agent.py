@@ -226,11 +226,20 @@ def _safe_get(obj: Any, key: str, default: Any = None) -> Any:
 def extract_tool_call_names(response: Any) -> list[str]:
     calls: list[str] = []
     output_items = _safe_get(response, "output", []) or []
+    seen_call_ids: set[str] = set()
 
     for item in output_items:
-        item_type = str(_safe_get(item, "type", ""))
-        if "function_call" not in item_type and "tool_call" not in item_type:
+        item_type = str(_safe_get(item, "type", "") or "")
+        if not any(token in item_type for token in ("function_call", "tool_call", "openapi_call")):
             continue
+        if item_type.endswith("_output"):
+            continue
+
+        call_id = str(_safe_get(item, "call_id", "") or "")
+        if call_id and call_id in seen_call_ids:
+            continue
+        if call_id:
+            seen_call_ids.add(call_id)
 
         name = _safe_get(item, "name")
         if not name:

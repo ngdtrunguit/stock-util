@@ -55,6 +55,24 @@ class RunAgentTests(TestCase):
         self.assertEqual(run_agent.resolve_tool_choice('Analyze TSLA', 'auto'), 'required')
         self.assertEqual(run_agent.resolve_tool_choice('Hello there', 'auto'), 'auto')
 
+    def test_extract_tool_call_names_reads_openapi_calls(self) -> None:
+        response = {
+            'output': [
+                {'type': 'reasoning'},
+                {'type': 'openapi_call', 'call_id': '1', 'name': 'stock_tools_api_get_price_history_price_history_post'},
+                {'type': 'openapi_call_output', 'call_id': '1', 'name': 'stock_tools_api_get_price_history_price_history_post'},
+                {'type': 'openapi_call', 'call_id': '2', 'name': 'stock_tools_api_compute_technicals_technicals_post'},
+            ]
+        }
+
+        self.assertEqual(
+            run_agent.extract_tool_call_names(response),
+            [
+                'stock_tools_api_get_price_history_price_history_post',
+                'stock_tools_api_compute_technicals_technicals_post',
+            ],
+        )
+
     def test_is_agent_not_found_error_matches_404_application_message(self) -> None:
         exc = RuntimeError(
             "Error code: 404 - {'error': {'code': 'not_found', 'message': \"Application 'stock-forecast-agent' not found\"}}"
