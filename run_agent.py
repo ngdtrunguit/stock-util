@@ -269,22 +269,38 @@ def _downgrade_openapi_spec_in_tools(tools: list[Any]) -> list[Any]:
         if not isinstance(obj, dict):
             return obj
 
-        # Rewrite the openapi version string wherever it appears as a root key
         result = {}
         for k, v in obj.items():
-            if k == "openapi" and v == "3.1.0":
+            if k == "openapi" and v in ("3.1.0", "3.1"):
                 result[k] = "3.0.0"
+            elif k == "responses" and isinstance(v, dict):
+                # Drop 422 FastAPI validation-error responses
+                result[k] = {code: _patch_schema(r) for code, r in v.items() if code != "422"}
+            elif k == "schemas" and isinstance(v, dict):
+                # Drop FastAPI validation-error component schemas
+                result[k] = {
+                    name: _patch_schema(s)
+                    for name, s in v.items()
+                    if name not in ("HTTPValidationError", "ValidationError")
+                }
             elif k == "anyOf" and isinstance(v, list):
                 null_items = [s for s in v if isinstance(s, dict) and s.get("type") == "null"]
                 non_null = [s for s in v if not (isinstance(s, dict) and s.get("type") == "null")]
-                if null_items and len(non_null) == 1:
-                    merged = {**_patch_schema(non_null[0]), "nullable": True}
+                if non_null:
+                    # Use first non-null type; add nullable if null entries were present
+                    merged = dict(_patch_schema(non_null[0]))
+                    if null_items:
+                        merged["nullable"] = True
                     for sk, sv in obj.items():
                         if sk != "anyOf":
                             merged.setdefault(sk, sv)
                     return merged
                 else:
-                    result[k] = [_patch_schema(s) for s in v]
+                    result["nullable"] = True
+                    for sk, sv in obj.items():
+                        if sk != "anyOf":
+                            result[sk] = _patch_schema(sv)
+                    return result
             else:
                 result[k] = _patch_schema(v)
         return result

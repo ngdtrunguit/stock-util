@@ -72,6 +72,25 @@ def _downgrade_schema_to_30(schema: dict) -> dict:
     }
 
 
+def _strip_validation_schemas(schema: dict) -> dict:
+    """Remove FastAPI 422 validation-error responses and their component schemas.
+
+    Azure AI Foundry rejects specs with anyOf multi-type unions or bare-title
+    properties found inside the auto-generated ValidationError component.
+    Agents never need to parse 422 error bodies.
+    """
+    for path_item in schema.get("paths", {}).values():
+        for operation in path_item.values():
+            if isinstance(operation, dict):
+                operation.get("responses", {}).pop("422", None)
+
+    schemas = schema.get("components", {}).get("schemas", {})
+    for name in ("HTTPValidationError", "ValidationError"):
+        schemas.pop(name, None)
+
+    return schema
+
+
 def _custom_openapi() -> dict:
     if app.openapi_schema:
         return app.openapi_schema
@@ -83,6 +102,7 @@ def _custom_openapi() -> dict:
     )
     schema["openapi"] = "3.0.0"
     schema = _downgrade_schema_to_30(schema)
+    schema = _strip_validation_schemas(schema)
     app.openapi_schema = schema
     return schema
 
