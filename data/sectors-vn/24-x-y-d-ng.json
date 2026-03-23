@@ -1,0 +1,215 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 24,
+  "sector_name": "X\u00e2y d\u1ef1ng",
+  "stock_count": 69,
+  "stocks": [
+    {
+      "symbol": "AME"
+    },
+    {
+      "symbol": "BCG"
+    },
+    {
+      "symbol": "C47"
+    },
+    {
+      "symbol": "C69"
+    },
+    {
+      "symbol": "CCC"
+    },
+    {
+      "symbol": "CII"
+    },
+    {
+      "symbol": "CMS"
+    },
+    {
+      "symbol": "CTD"
+    },
+    {
+      "symbol": "CTI"
+    },
+    {
+      "symbol": "CX8"
+    },
+    {
+      "symbol": "DC2"
+    },
+    {
+      "symbol": "DC4"
+    },
+    {
+      "symbol": "DIH"
+    },
+    {
+      "symbol": "DPG"
+    },
+    {
+      "symbol": "FCN"
+    },
+    {
+      "symbol": "HAS"
+    },
+    {
+      "symbol": "HHV"
+    },
+    {
+      "symbol": "HTI"
+    },
+    {
+      "symbol": "HTN"
+    },
+    {
+      "symbol": "HUB"
+    },
+    {
+      "symbol": "HUT"
+    },
+    {
+      "symbol": "HVH"
+    },
+    {
+      "symbol": "L10"
+    },
+    {
+      "symbol": "L18"
+    },
+    {
+      "symbol": "L40"
+    },
+    {
+      "symbol": "LCD"
+    },
+    {
+      "symbol": "LCG"
+    },
+    {
+      "symbol": "LGC"
+    },
+    {
+      "symbol": "LHC"
+    },
+    {
+      "symbol": "LIG"
+    },
+    {
+      "symbol": "LM8"
+    },
+    {
+      "symbol": "MCO"
+    },
+    {
+      "symbol": "MST"
+    },
+    {
+      "symbol": "NDX"
+    },
+    {
+      "symbol": "PC1"
+    },
+    {
+      "symbol": "PEN"
+    },
+    {
+      "symbol": "PHC"
+    },
+    {
+      "symbol": "PPS"
+    },
+    {
+      "symbol": "PTC"
+    },
+    {
+      "symbol": "PTD"
+    },
+    {
+      "symbol": "QTC"
+    },
+    {
+      "symbol": "REE"
+    },
+    {
+      "symbol": "S55"
+    },
+    {
+      "symbol": "S99"
+    },
+    {
+      "symbol": "SC5"
+    },
+    {
+      "symbol": "SCG"
+    },
+    {
+      "symbol": "SCI"
+    },
+    {
+      "symbol": "SD5"
+    },
+    {
+      "symbol": "SD9"
+    },
+    {
+      "symbol": "SJE"
+    },
+    {
+      "symbol": "SRF"
+    },
+    {
+      "symbol": "TA9"
+    },
+    {
+      "symbol": "TCD"
+    },
+    {
+      "symbol": "THD"
+    },
+    {
+      "symbol": "TSA"
+    },
+    {
+      "symbol": "TTL"
+    },
+    {
+      "symbol": "V12"
+    },
+    {
+      "symbol": "VC1"
+    },
+    {
+      "symbol": "VC2"
+    },
+    {
+      "symbol": "VC6"
+    },
+    {
+      "symbol": "VC9"
+    },
+    {
+      "symbol": "VCC"
+    },
+    {
+      "symbol": "VCG"
+    },
+    {
+      "symbol": "VE1"
+    },
+    {
+      "symbol": "VE3"
+    },
+    {
+      "symbol": "VE4"
+    },
+    {
+      "symbol": "VMC"
+    },
+    {
+      "symbol": "VNE"
+    },
+    {
+      "symbol": "VSI"
+    }
+  ]
+}

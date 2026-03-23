@@ -1,0 +1,32 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 25,
+  "sector_name": "D\u1ecbch v\u1ee5 l\u01b0u tr\u00fa, \u0103n u\u1ed1ng, gi\u1ea3i tr\u00ed",
+  "stock_count": 8,
+  "stocks": [
+    {
+      "symbol": "DAH"
+    },
+    {
+      "symbol": "DSN"
+    },
+    {
+      "symbol": "NVT"
+    },
+    {
+      "symbol": "OCH"
+    },
+    {
+      "symbol": "SGH"
+    },
+    {
+      "symbol": "TTT"
+    },
+    {
+      "symbol": "VNG"
+    },
+    {
+      "symbol": "VPL"
+    }
+  ]
+}

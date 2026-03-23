@@ -1,0 +1,32 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 15,
+  "sector_name": "SX Thi\u1ebft b\u1ecb, m\u00e1y m\u00f3c",
+  "stock_count": 8,
+  "stocks": [
+    {
+      "symbol": "CJC"
+    },
+    {
+      "symbol": "CTB"
+    },
+    {
+      "symbol": "CTT"
+    },
+    {
+      "symbol": "NAG"
+    },
+    {
+      "symbol": "NHH"
+    },
+    {
+      "symbol": "QHD"
+    },
+    {
+      "symbol": "SBG"
+    },
+    {
+      "symbol": "SHE"
+    }
+  ]
+}

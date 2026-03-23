@@ -1,0 +1,29 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 28,
+  "sector_name": "D\u1ecbch v\u1ee5 t\u01b0 v\u1ea5n, h\u1ed7 tr\u1ee3",
+  "stock_count": 7,
+  "stocks": [
+    {
+      "symbol": "INC"
+    },
+    {
+      "symbol": "PPE"
+    },
+    {
+      "symbol": "SDC"
+    },
+    {
+      "symbol": "TV2"
+    },
+    {
+      "symbol": "TV3"
+    },
+    {
+      "symbol": "TV4"
+    },
+    {
+      "symbol": "VNC"
+    }
+  ]
+}

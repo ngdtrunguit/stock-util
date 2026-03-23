@@ -1,0 +1,140 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 1,
+  "sector_name": "B\u00e1n bu\u00f4n",
+  "stock_count": 44,
+  "stocks": [
+    {
+      "symbol": "CMC"
+    },
+    {
+      "symbol": "DGW"
+    },
+    {
+      "symbol": "FID"
+    },
+    {
+      "symbol": "GEL"
+    },
+    {
+      "symbol": "HHS"
+    },
+    {
+      "symbol": "HMC"
+    },
+    {
+      "symbol": "HTL"
+    },
+    {
+      "symbol": "JVC"
+    },
+    {
+      "symbol": "KDM"
+    },
+    {
+      "symbol": "KMT"
+    },
+    {
+      "symbol": "MCF"
+    },
+    {
+      "symbol": "MEL"
+    },
+    {
+      "symbol": "NO1"
+    },
+    {
+      "symbol": "PCT"
+    },
+    {
+      "symbol": "PET"
+    },
+    {
+      "symbol": "PIT"
+    },
+    {
+      "symbol": "PLX"
+    },
+    {
+      "symbol": "PMG"
+    },
+    {
+      "symbol": "PPT"
+    },
+    {
+      "symbol": "PPY"
+    },
+    {
+      "symbol": "PSC"
+    },
+    {
+      "symbol": "PSD"
+    },
+    {
+      "symbol": "PSE"
+    },
+    {
+      "symbol": "PTX"
+    },
+    {
+      "symbol": "SDA"
+    },
+    {
+      "symbol": "SHN"
+    },
+    {
+      "symbol": "SMA"
+    },
+    {
+      "symbol": "SMC"
+    },
+    {
+      "symbol": "SRA"
+    },
+    {
+      "symbol": "ST8"
+    },
+    {
+      "symbol": "TDG"
+    },
+    {
+      "symbol": "THS"
+    },
+    {
+      "symbol": "TLH"
+    },
+    {
+      "symbol": "TNI"
+    },
+    {
+      "symbol": "TSC"
+    },
+    {
+      "symbol": "TTH"
+    },
+    {
+      "symbol": "UNI"
+    },
+    {
+      "symbol": "VCM"
+    },
+    {
+      "symbol": "VFG"
+    },
+    {
+      "symbol": "VID"
+    },
+    {
+      "symbol": "VMD"
+    },
+    {
+      "symbol": "VPG"
+    },
+    {
+      "symbol": "VTV"
+    },
+    {
+      "symbol": "VVS"
+    }
+  ]
+}

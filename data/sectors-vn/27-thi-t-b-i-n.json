@@ -1,0 +1,53 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 27,
+  "sector_name": "Thi\u1ebft b\u1ecb \u0111i\u1ec7n",
+  "stock_count": 15,
+  "stocks": [
+    {
+      "symbol": "DHP"
+    },
+    {
+      "symbol": "DQC"
+    },
+    {
+      "symbol": "GEE"
+    },
+    {
+      "symbol": "GEX"
+    },
+    {
+      "symbol": "KSD"
+    },
+    {
+      "symbol": "MBG"
+    },
+    {
+      "symbol": "PAC"
+    },
+    {
+      "symbol": "PHN"
+    },
+    {
+      "symbol": "POT"
+    },
+    {
+      "symbol": "RAL"
+    },
+    {
+      "symbol": "SAM"
+    },
+    {
+      "symbol": "TSB"
+    },
+    {
+      "symbol": "TYA"
+    },
+    {
+      "symbol": "VTB"
+    },
+    {
+      "symbol": "VTH"
+    }
+  ]
+}

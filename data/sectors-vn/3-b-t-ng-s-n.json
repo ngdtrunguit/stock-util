@@ -1,0 +1,260 @@
+{
+  "updated_at": "2026-03-22T14:22:57.247326+00:00",
+  "sector_id": 3,
+  "sector_name": "B\u1ea5t \u0111\u1ed9ng s\u1ea3n",
+  "stock_count": 84,
+  "stocks": [
+    {
+      "symbol": "AAV"
+    },
+    {
+      "symbol": "AGG"
+    },
+    {
+      "symbol": "API"
+    },
+    {
+      "symbol": "BAX"
+    },
+    {
+      "symbol": "BCE"
+    },
+    {
+      "symbol": "BCM"
+    },
+    {
+      "symbol": "CCL"
+    },
+    {
+      "symbol": "CDC"
+    },
+    {
+      "symbol": "CEO"
+    },
+    {
+      "symbol": "CIG"
+    },
+    {
+      "symbol": "CKG"
+    },
+    {
+      "symbol": "CRE"
+    },
+    {
+      "symbol": "CRV"
+    },
+    {
+      "symbol": "CSC"
+    },
+    {
+      "symbol": "D11"
+    },
+    {
+      "symbol": "D2D"
+    },
+    {
+      "symbol": "DIG"
+    },
+    {
+      "symbol": "DRH"
+    },
+    {
+      "symbol": "DTA"
+    },
+    {
+      "symbol": "DTD"
+    },
+    {
+      "symbol": "DXG"
+    },
+    {
+      "symbol": "DXS"
+    },
+    {
+      "symbol": "EVG"
+    },
+    {
+      "symbol": "FDC"
+    },
+    {
+      "symbol": "FIR"
+    },
+    {
+      "symbol": "HAR"
+    },
+    {
+      "symbol": "HDC"
+    },
+    {
+      "symbol": "HDG"
+    },
+    {
+      "symbol": "HLD"
+    },
+    {
+      "symbol": "HPX"
+    },
+    {
+      "symbol": "HQC"
+    },
+    {
+      "symbol": "HU1"
+    },
+    {
+      "symbol": "ICG"
+    },
+    {
+      "symbol": "IDJ"
+    },
+    {
+      "symbol": "IDV"
+    },
+    {
+      "symbol": "IJC"
+    },
+    {
+      "symbol": "ITC"
+    },
+    {
+      "symbol": "KBC"
+    },
+    {
+      "symbol": "KDH"
+    },
+    {
+      "symbol": "KHG"
+    },
+    {
+      "symbol": "KOS"
+    },
+    {
+      "symbol": "KSF"
+    },
+    {
+      "symbol": "L14"
+    },
+    {
+      "symbol": "LDG"
+    },
+    {
+      "symbol": "LGL"
+    },
+    {
+      "symbol": "LHG"
+    },
+    {
+      "symbol": "NBB"
+    },
+    {
+      "symbol": "NDN"
+    },
+    {
+      "symbol": "NHA"
+    },
+    {
+      "symbol": "NLG"
+    },
+    {
+      "symbol": "NRC"
+    },
+    {
+      "symbol": "NTC"
+    },
+    {
+      "symbol": "NTL"
+    },
+    {
+      "symbol": "NVL"
+    },
+    {
+      "symbol": "PDR"
+    },
+    {
+      "symbol": "PTL"
+    },
+    {
+      "symbol": "PV2"
+    },
+    {
+      "symbol": "QCG"
+    },
+    {
+      "symbol": "RCL"
+    },
+    {
+      "symbol": "SCR"
+    },
+    {
+      "symbol": "SDU"
+    },
+    {
+      "symbol": "SGR"
+    },
+    {
+      "symbol": "SJS"
+    },
+    {
+      "symbol": "SZB"
+    },
+    {
+      "symbol": "SZC"
+    },
+    {
+      "symbol": "SZL"
+    },
+    {
+      "symbol": "TAL"
+    },
+    {
+      "symbol": "TCH"
+    },
+    {
+      "symbol": "TDC"
+    },
+    {
+      "symbol": "TDH"
+    },
+    {
+      "symbol": "TIG"
+    },
+    {
+      "symbol": "TIP"
+    },
+    {
+      "symbol": "TIX"
+    },
+    {
+      "symbol": "TN1"
+    },
+    {
+      "symbol": "V21"
+    },
+    {
+      "symbol": "VC3"
+    },
+    {
+      "symbol": "VC7"
+    },
+    {
+      "symbol": "VHM"
+    },
+    {
+      "symbol": "VIC"
+    },
+    {
+      "symbol": "VPH"
+    },
+    {
+      "symbol": "VPI"
+    },
+    {
+      "symbol": "VRC"
+    },
+    {
+      "symbol": "VRE"
+    },
+    {
+      "symbol": "VTJ"
+    }
+  ]
+}
