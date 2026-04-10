@@ -52,8 +52,10 @@ jobs:
           artifact_id="$(gh api \
             --header 'Accept: application/vnd.github+json' \
             "/repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=100" \
-            --paginate \
-            --jq '[.artifacts[] | select(.name == "stock-screen-db" and .expired == false) | .id] | first // empty')"
+            --jq '[.artifacts[] | select(.name == "stock-screen-db" and .expired == false)] | sort_by(.created_at) | last | .id // empty')"
+
+          # Safety: strip any accidental whitespace/newlines
+          artifact_id="${artifact_id%%[[:space:]]*}"
 
           if [ -z "${artifact_id}" ]; then
             echo "No prior stock-screen-db artifact found; starting with a fresh database."
